@@ -52,7 +52,7 @@
                         <h1 class="text-xs md:text-base font-extrabold uppercase tracking-wider drop-shadow-sm" id="header-site-title">
                             HỆ THỐNG LUYỆN TIẾNG ANH LỚP 6, 7, 8, 9 GLOBAL SUCCESS — THẦY TIẾN
                         </h1>
-                        <p class="text-[10px] text-blue-100 hidden sm:block">Trọn bộ 48 Unit × 6 Cấp độ • Dùng thử miễn phí 10 ngày (Sau 10 ngày mở khóa theo từng Khối Lớp) • <span class="text-amber-300 font-bold" id="header-contact-text">LH Thầy Tiến qua ĐT: 0943930787</span></p>
+                        <p class="text-[10px] text-blue-100 hidden sm:block">Trọn bộ 48 Unit × 6 Cấp độ (Từ vựng &amp; Ngữ âm • Ngữ pháp • Nghe AI • Nói AI • Đọc hiểu • Kiểm tra cuối Unit) • Học sinh làm bài tự do • <span class="text-amber-300 font-bold" id="header-contact-text">LH Thầy Tiến qua ĐT: 0943930787</span></p>
                     </div>
                 </div>
                 <div class="flex items-center gap-1.5 md:gap-2">
@@ -83,9 +83,9 @@
                 <button type="button" onclick="selectCategory('gs9')" id="tab-cat-gs9" class="nav-cat-btn px-3 py-1 bg-amber-400 hover:bg-amber-300 text-blue-950 font-extrabold rounded text-xs transition-colors shadow-sm">
                     📕 Lớp 9 Global Success (12 Unit)
                 </button>
-                <button type="button" onclick="openGradeUnlockModal(currentCategory)" id="header-trial-badge" class="ml-auto inline-flex items-center gap-1.5 text-[11px] bg-emerald-500/25 hover:bg-emerald-500/40 border border-emerald-300/50 text-emerald-100 px-3 py-0.5 rounded-full font-bold cursor-pointer transition-all shadow-sm" title="Bấm để nhập mật khẩu kích hoạt Khối Lớp">
-                    ⏳ Dùng thử miễn phí 10 ngày (Còn 10 ngày) • 🔑 Kích hoạt Lớp
-                </button>
+                <span class="ml-auto hidden lg:inline-flex items-center gap-1.5 text-[11px] bg-emerald-500/25 border border-emerald-300/40 text-emerald-100 px-2.5 py-0.5 rounded-full font-bold">
+                    🔓 Mở tự do 100% cho Học sinh (Chỉ khóa Quản trị CMS)
+                </span>
             </div>
         </div>
     </header>
@@ -112,7 +112,7 @@
             <div id="welcome-screen" class="py-6 md:py-8 px-2 md:px-4">
                 <div class="text-center mb-8">
                     <div class="inline-block bg-blue-100 text-blue-800 text-xs font-extrabold px-3.5 py-1 rounded-full uppercase tracking-wider mb-2">
-                        Nền tảng Luyện Tiếng Anh THCS Toàn diện (Dùng thử Miễn phí 10 Ngày • Mở khóa theo Khối Lớp)
+                        Nền tảng Luyện Tiếng Anh THCS Toàn diện (Mở tự do 100% cho Học sinh)
                     </div>
                     <h2 class="text-2xl md:text-3xl font-black text-blue-950 mb-2" id="welcome-main-heading">
                         TRỌN BỘ TIẾNG ANH LỚP 6, 7, 8, 9 GLOBAL SUCCESS — THẦY TIẾN
@@ -121,8 +121,7 @@
                         Thiết kế bám sát 100% chương trình Sách giáo khoa Tiếng Anh Global Success (Bộ GD&amp;ĐT) từ Lớp 6 đến Lớp 9 (48 Unit). Mỗi Unit có nội dung độc lập hoàn toàn và tích hợp đủ 6 cấp độ luyện tập: Từ vựng &amp; Ngữ âm, Ngữ pháp, Nghe (Listening AI), Nói (Speaking AI chấm phát âm), Đọc hiểu (Reading) và Bài kiểm tra cuối Unit (25 câu).
                     </p>
                     <div class="mt-3 inline-flex flex-wrap justify-center items-center gap-2 bg-emerald-50 border-2 border-emerald-300 px-4 py-1.5 rounded-full text-emerald-800 font-extrabold text-xs md:text-sm shadow-sm">
-                        <span id="welcome-trial-status-text">⏳ Chế độ Dùng thử 10 ngày: Học sinh được trải nghiệm miễn phí 10 ngày đầu (Hết 10 ngày nhập mật khẩu theo Lớp) •</span>
-                        <button type="button" onclick="openGradeUnlockModal(currentCategory)" class="bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-0.5 rounded-full text-xs font-bold shadow cursor-pointer">🔑 Nhập MK Lớp</button>
+                        <span>🔓 Học sinh làm bài trực tiếp tất cả 48 Unit &amp; 6 Cấp độ (Không cần mật khẩu) •</span>
                         <span class="text-red-600 underline" id="welcome-contact-banner">LH Thầy Tiến qua ĐT: 0943930787</span>
                     </div>
                 </div>
@@ -306,7 +305,7 @@
                     </div>
                     <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl">
                         <div class="text-xs font-bold text-amber-800 uppercase">Chế độ Mật khẩu</div>
-                        <div class="text-sm font-black text-emerald-700 mt-1" id="stat-lock-status">Dùng thử 10 ngày • Khóa theo Lớp</div>
+                        <div class="text-sm font-black text-emerald-700 mt-1" id="stat-lock-status">HS mở tự do • Chỉ khóa Admin CMS</div>
                     </div>
                 </div>
 
@@ -482,53 +481,24 @@
 
                 <div id="adm-panel-settings" class="hidden-element grid grid-cols-1 lg:grid-cols-2 gap-5">
                     <div class="bg-white p-5 rounded-xl border border-gray-200 space-y-4">
-                        <h4 class="font-extrabold text-blue-900 text-base">🔐 1. Cấu hình Dùng thử 10 Ngày, Mật khẩu 4 Khối Lớp &amp; Quản trị</h4>
-                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-xs text-amber-950 font-semibold leading-relaxed space-y-1">
-                            <div>⏳ <b>Chế độ Dùng thử 10 ngày:</b> Học sinh được dùng thử miễn phí trong <b>10 ngày đầu</b> kể từ lần truy cập đầu tiên. Khi hết 10 ngày, học sinh phải nhập đúng <b>Mật khẩu theo từng Khối Lớp</b> để mở khóa:</div>
-                            <div class="grid grid-cols-2 gap-1 pt-1 text-blue-900 font-bold">
-                                <span>• Lớp 6: <code class="bg-white px-1.5 py-0.5 rounded border">tien123@</code></span>
-                                <span>• Lớp 7: <code class="bg-white px-1.5 py-0.5 rounded border">huong123@</code></span>
-                                <span>• Lớp 8: <code class="bg-white px-1.5 py-0.5 rounded border">son123@</code></span>
-                                <span>• Lớp 9: <code class="bg-white px-1.5 py-0.5 rounded border">kiet123@</code></span>
-                            </div>
+                        <h4 class="font-extrabold text-blue-900 text-base">🔐 1. Cấu hình Mật khẩu Quản trị viên &amp; Liên hệ</h4>
+                        <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-3.5 text-xs text-emerald-900 font-semibold leading-relaxed">
+                            ✅ <b>Chế độ Học sinh mở tự do 100%:</b> Toàn bộ 4 khối Lớp 6, 7, 8, 9 (48 Unit × 6 Cấp độ) đều mở tự do để học sinh luyện tập không cần mật khẩu. Hệ thống <b>chỉ dùng mật khẩu duy nhất cho Trang Quản trị (Admin CMS)</b>.
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">Số ngày dùng thử miễn phí:</label>
-                                <input id="adm-set-trial-days" type="number" min="0" max="365" value="10" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-extrabold text-emerald-800">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">Mật khẩu Quản trị viên (Admin CMS):</label>
-                                <input id="adm-set-pwd" type="text" value="tienhuongsonkiet28011981@" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold text-blue-900">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
-                            <div>
-                                <label class="block text-[11px] font-extrabold text-emerald-800 mb-1">📗 MK Lớp 6:</label>
-                                <input id="adm-set-pwd-gs6" type="text" value="tien123@" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] font-extrabold text-blue-800 mb-1">📘 MK Lớp 7:</label>
-                                <input id="adm-set-pwd-gs7" type="text" value="huong123@" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] font-extrabold text-amber-800 mb-1">📙 MK Lớp 8:</label>
-                                <input id="adm-set-pwd-gs8" type="text" value="son123@" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
-                            </div>
-                            <div>
-                                <label class="block text-[11px] font-extrabold text-rose-800 mb-1">📕 MK Lớp 9:</label>
-                                <input id="adm-set-pwd-gs9" type="text" value="kiet123@" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
-                            </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Mật khẩu Quản trị viên (Bảo vệ Trang Quản trị CMS):</label>
+                            <input id="adm-set-pwd" type="text" value="tienhuongsonkiet28011981@" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold text-blue-900">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">Dòng chữ Liên hệ hiển thị trên hệ thống:</label>
                             <input id="adm-set-contact" type="text" value="LH Thầy Tiến qua ĐT: 0943930787" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-bold text-red-600">
                         </div>
-                        <div class="flex flex-wrap gap-2 pt-1">
-                            <button type="button" onclick="saveAdminSettings()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg text-xs md:text-sm shadow cursor-pointer">💾 Lưu Cấu Hình</button>
-                            <button type="button" onclick="simulateTrialExpiredNow()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-3.5 rounded-lg text-xs shadow cursor-pointer" title="Khóa ngay lập tức để thầy kiểm tra nhập mật khẩu từng lớp">⚡ Giả lập Hết 10 ngày ngay (Test khóa Lớp)</button>
-                            <button type="button" onclick="resetTrialPeriodNow()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-3.5 rounded-lg text-xs shadow cursor-pointer">🔄 Đặt lại 10 ngày dùng thử</button>
-                            <button type="button" onclick="lockStudentSessionForTesting()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-3.5 rounded-lg text-xs shadow cursor-pointer">🔒 Đăng xuất Admin</button>
+                        <div class="hidden-element">
+                            <input id="adm-set-lock" type="checkbox" class="w-4 h-4 text-blue-600">
+                        </div>
+                        <div class="flex flex-wrap gap-2 pt-2">
+                            <button type="button" onclick="saveAdminSettings()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-lg text-xs md:text-sm shadow">💾 Lưu Cấu Hình Quản Trị</button>
+                            <button type="button" onclick="lockStudentSessionForTesting()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded-lg text-xs md:text-sm shadow">🔒 Đăng xuất Quản trị (Chế độ Học sinh)</button>
                         </div>
                     </div>
 
@@ -690,7 +660,7 @@
 //   + Cấp độ 4 (Test 4): Luyện Kỹ năng Nói & Giao tiếp - Speaking AI (10 câu + Phòng Luyện Nói AI)
 //   + Cấp độ 5 (Test 5): Luyện Kỹ năng Đọc hiểu - Reading (10 câu: Cloze & Comprehension)
 //   + Cấp độ 6 (Test 6): Bài kiểm tra cuối Unit - End-of-Unit Test (25 câu tổng hợp 45 phút)
-// - Chế độ dùng thử miễn phí 10 ngày; hết 10 ngày nhập mật khẩu theo Lớp (Lớp 6: tien123@, Lớp 7: huong123@, Lớp 8: son123@, Lớp 9: kiet123@); Mật khẩu Quản trị CMS: tienhuongsonkiet28011981@
+// - Học sinh luyện tập tự do 100% (không khóa đề); chỉ dùng mật khẩu cho Quản trị: tienhuongsonkiet28011981@
 // ============================================================================
 
 const G6_SPECS = [
@@ -3029,18 +2999,9 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
     window.examDatabase = examDb;
     window.portalData = {
         siteSettings: {
-            schemaVersion: "2026.10.15.thcs.v2",
+            schemaVersion: "2026.10.15.thcs.v1",
             adminPassword: "tienhuongsonkiet28011981@",
             contactBanner: "LH Thầy Tiến qua ĐT: 0943930787",
-            trialDays: 10,
-            trialModeEnabled: true,
-            forceExpiredTrial: false,
-            gradePasswords: {
-                gs6: "tien123@",
-                gs7: "huong123@",
-                gs8: "son123@",
-                gs9: "kiet123@"
-            },
             lockAfterTest1: false
         },
         grammarNotes: grammarNotes,
@@ -3072,25 +3033,10 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         "6": "border-rose-200 bg-rose-50/80 hover:bg-rose-100 text-rose-900"
     };
 
-    const STORAGE_KEY_CUSTOM_DB       = "thaytien_thcs_gs6789_custom_db_v6";
-    const STORAGE_KEY_PROGRESS        = "thaytien_thcs_gs6789_progress_v6";
-    const STORAGE_KEY_SCORES          = "thaytien_thcs_gs6789_scores_v6";
-    const STORAGE_KEY_ADMIN           = "thaytien_thcs_gs6789_admin_unlocked_v6";
-    const STORAGE_KEY_TRIAL_START     = "thaytien_thcs_gs6789_trial_start_v6";
-    const STORAGE_KEY_UNLOCKED_GRADES = "thaytien_thcs_gs6789_unlocked_grades_v6";
-
-    const DEFAULT_GRADE_PASSWORDS = {
-        gs6: "tien123@",
-        gs7: "huong123@",
-        gs8: "son123@",
-        gs9: "kiet123@"
-    };
-    const GRADE_DISPLAY_NAMES = {
-        gs6: "Lớp 6 Global Success",
-        gs7: "Lớp 7 Global Success",
-        gs8: "Lớp 8 Global Success",
-        gs9: "Lớp 9 Global Success"
-    };
+    const STORAGE_KEY_CUSTOM_DB = "thaytien_thcs_gs6789_custom_db_v5";
+    const STORAGE_KEY_PROGRESS  = "thaytien_thcs_gs6789_progress_v5";
+    const STORAGE_KEY_SCORES    = "thaytien_thcs_gs6789_scores_v5";
+    const STORAGE_KEY_ADMIN     = "thaytien_thcs_gs6789_admin_unlocked_v5";
 
     const __memStore = {};
     function safeGetItem(k, fallback = null) {
@@ -3121,9 +3067,6 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
     let timeLeftSeconds = 20 * 60;
     let currentFcIndex = 0;
     let pendingActionModalCallback = null;
-    let pendingAuthMode = "admin"; // "admin" | "grade"
-    let pendingAuthCategory = "gs6";
-    let pendingTestTarget = null;
 
     // -------------------- TOAST & IN-PAGE MODAL HELPERS --------------------
     function showToast(message, type = "info") {
@@ -3188,18 +3131,8 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
             window.portalData.siteSettings = {
                 adminPassword: "tienhuongsonkiet28011981@",
                 contactBanner: "LH Thầy Tiến qua ĐT: 0943930787",
-                trialDays: 10,
-                trialModeEnabled: true,
-                forceExpiredTrial: false,
-                gradePasswords: Object.assign({}, DEFAULT_GRADE_PASSWORDS),
                 lockAfterTest1: false
             };
-        }
-        if (!window.portalData.siteSettings.gradePasswords) {
-            window.portalData.siteSettings.gradePasswords = Object.assign({}, DEFAULT_GRADE_PASSWORDS);
-        }
-        if (window.portalData.siteSettings.trialDays === undefined) {
-            window.portalData.siteSettings.trialDays = 10;
         }
         return window.portalData.siteSettings;
     }
@@ -3208,120 +3141,8 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         return getSiteSettings().adminPassword || "tienhuongsonkiet28011981@";
     }
 
-    function getGradePassword(cat) {
-        const gp = getSiteSettings().gradePasswords || DEFAULT_GRADE_PASSWORDS;
-        return gp[cat] || DEFAULT_GRADE_PASSWORDS[cat] || "tien123@";
-    }
-
-    function getUnlockedGradesMap() {
-        try {
-            const raw = safeGetItem(STORAGE_KEY_UNLOCKED_GRADES, "{}");
-            return JSON.parse(raw) || {};
-        } catch (e) {
-            return {};
-        }
-    }
-
-    function setGradeUnlocked(cat, unlocked = true) {
-        const map = getUnlockedGradesMap();
-        if (unlocked) map[cat] = true;
-        else delete map[cat];
-        safeSetItem(STORAGE_KEY_UNLOCKED_GRADES, JSON.stringify(map));
-    }
-
-    function isGradeUnlocked(cat) {
-        if (isAdminUnlocked) return true;
-        const map = getUnlockedGradesMap();
-        return !!map[cat];
-    }
-
-    function ensureTrialInitialized() {
-        let startRaw = safeGetItem(STORAGE_KEY_TRIAL_START);
-        if (!startRaw || isNaN(Number(startRaw))) {
-            startRaw = String(Date.now());
-            safeSetItem(STORAGE_KEY_TRIAL_START, startRaw);
-        }
-        return Number(startRaw);
-    }
-
-    function getTrialStatus() {
-        const s = getSiteSettings();
-        const trialDays = (s.trialDays !== undefined && !isNaN(Number(s.trialDays))) ? Number(s.trialDays) : 10;
-        const startTs = ensureTrialInitialized();
-        const elapsedMs = Math.max(0, Date.now() - startTs);
-        const totalMs = Math.max(0, trialDays * 24 * 60 * 60 * 1000);
-        if (s.forceExpiredTrial) {
-            return { isExpired: true, daysLeft: 0, hoursLeft: 0, trialDays, startTs };
-        }
-        const remMs = Math.max(0, totalMs - elapsedMs);
-        const isExpired = (remMs <= 0);
-        const daysLeft = Math.floor(remMs / (24 * 3600 * 1000));
-        const hoursLeft = Math.floor((remMs % (24 * 3600 * 1000)) / (3600 * 1000));
-        return { isExpired, daysLeft, hoursLeft, trialDays, startTs };
-    }
-
-    function canAccessGrade(cat) {
-        if (isGradeUnlocked(cat)) return true;
-        const st = getTrialStatus();
-        return !st.isExpired;
-    }
-
     function getContactBanner() {
         return getSiteSettings().contactBanner || "LH Thầy Tiến qua ĐT: 0943930787";
-    }
-
-    function updateTrialUIElements() {
-        const st = getTrialStatus();
-        const curUnlocked = isGradeUnlocked(currentCategory);
-        const gName = GRADE_DISPLAY_NAMES[currentCategory] || "Khối Lớp";
-        const headerBadge = document.getElementById("header-trial-badge");
-        const welcomeTxt = document.getElementById("welcome-trial-status-text");
-        const statLock = document.getElementById("stat-lock-status");
-
-        if (headerBadge) {
-            if (curUnlocked) {
-                headerBadge.className = "ml-auto inline-flex items-center gap-1.5 text-[11px] bg-emerald-500/30 hover:bg-emerald-500/45 border border-emerald-300/60 text-emerald-100 px-3 py-0.5 rounded-full font-extrabold cursor-pointer transition-all shadow-sm";
-                headerBadge.innerHTML = `✅ Đã mở khóa vĩnh viễn ${gName}`;
-            } else if (!st.isExpired) {
-                headerBadge.className = "ml-auto inline-flex items-center gap-1.5 text-[11px] bg-amber-400/25 hover:bg-amber-400/40 border border-amber-300/60 text-amber-100 px-3 py-0.5 rounded-full font-extrabold cursor-pointer transition-all shadow-sm";
-                headerBadge.innerHTML = `⏳ Dùng thử miễn phí: Còn ${st.daysLeft} ngày ${st.hoursLeft} giờ • 🔑 Nhập MK Lớp`;
-            } else {
-                headerBadge.className = "ml-auto inline-flex items-center gap-1.5 text-[11px] bg-rose-600 hover:bg-rose-500 border border-rose-300 text-white px-3 py-0.5 rounded-full font-extrabold cursor-pointer transition-all shadow";
-                headerBadge.innerHTML = `🔒 Hết ${st.trialDays} ngày dùng thử — Bấm nhập mật khẩu ${gName}`;
-            }
-        }
-
-        if (welcomeTxt) {
-            if (curUnlocked) {
-                welcomeTxt.innerHTML = `✅ <b>${gName}</b> đã được kích hoạt mở khóa vĩnh viễn trên thiết bị này •`;
-            } else if (!st.isExpired) {
-                welcomeTxt.innerHTML = `⏳ <b>Chế độ Dùng thử ${st.trialDays} ngày:</b> Còn <b>${st.daysLeft} ngày ${st.hoursLeft} giờ</b> miễn phí (Hết hạn nhập mật khẩu theo Lớp) •`;
-            } else {
-                welcomeTxt.innerHTML = `🔒 <b>Đã hết ${st.trialDays} ngày dùng thử miễn phí:</b> Vui lòng nhập mật khẩu riêng của từng Khối Lớp để làm bài •`;
-            }
-        }
-
-        if (statLock) {
-            statLock.innerText = st.isExpired
-                ? `Đã hết ${st.trialDays} ngày (Yêu cầu MK Lớp)`
-                : `Đang dùng thử (Còn ${st.daysLeft}d ${st.hoursLeft}h)`;
-        }
-
-        // Cập nhật biểu tượng khóa trên 4 nút tab Lớp 6, 7, 8, 9
-        const tabLabels = {
-            gs6: ["📗", "Lớp 6 Global Success (12 Unit)"],
-            gs7: ["📘", "Lớp 7 Global Success (12 Unit)"],
-            gs8: ["📙", "Lớp 8 Global Success (12 Unit)"],
-            gs9: ["📕", "Lớp 9 Global Success (12 Unit)"]
-        };
-        Object.keys(tabLabels).forEach(c => {
-            const btn = document.getElementById(`tab-cat-${c}`);
-            if (!btn) return;
-            const [ic, lbl] = tabLabels[c];
-            const unlocked = isGradeUnlocked(c);
-            const lockIcon = unlocked ? " ✅" : (st.isExpired ? " 🔒" : "");
-            btn.innerHTML = `${ic} ${lbl}${lockIcon}`;
-        });
     }
 
     function applySiteSettingsToUI() {
@@ -3330,7 +3151,6 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
             const el = document.getElementById(id);
             if (el) el.innerText = txt;
         });
-        updateTrialUIElements();
     }
 
     function loadCustomPortalStorage() {
@@ -3520,12 +3340,8 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
             resetTimer(cfg.defaultMinutes || 20);
         }
 
-        updateTrialUIElements();
         renderSidebar();
         showWelcomeHome();
-        if (!canAccessGrade(cat)) {
-            openGradeUnlockModal(cat);
-        }
     }
 
     function toggleUnitAccordion(unitId) {
@@ -3585,12 +3401,9 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
                     }
                     btn.className = `w-full text-left px-2.5 py-2 rounded-lg border text-xs font-bold flex justify-between items-center transition-all cursor-pointer ${cls}`;
 
-                    const gradeAccessible = canAccessGrade(currentCategory);
-                    const badgeHtml = !gradeAccessible
-                        ? `<span class="text-[10px] px-1.5 py-0.5 rounded font-extrabold bg-rose-100 text-rose-700 border border-rose-300">🔒 Khóa MK Lớp</span>`
-                        : (prog
-                            ? `<span class="text-[10px] px-1.5 py-0.5 rounded font-extrabold ${isSelected ? "bg-amber-300 text-blue-950" : "bg-emerald-600 text-white"}">✓ ${prog.percent}%</span>`
-                            : `<span class="text-[10px] px-1.5 py-0.5 rounded ${isSelected ? "bg-blue-800 text-white" : "bg-white/90 text-gray-600 border border-gray-200"}">${qList.length} câu</span>`);
+                    const badgeHtml = prog
+                        ? `<span class="text-[10px] px-1.5 py-0.5 rounded font-extrabold ${isSelected ? "bg-amber-300 text-blue-950" : "bg-emerald-600 text-white"}">✓ ${prog.percent}%</span>`
+                        : `<span class="text-[10px] px-1.5 py-0.5 rounded ${isSelected ? "bg-blue-800 text-white" : "bg-white/90 text-gray-600 border border-gray-200"}">${qList.length} câu</span>`;
 
                     btn.innerHTML = `<span class="truncate pr-1.5">${LEVEL_SHORT_NAMES[tKey]}</span>${badgeHtml}`;
                     btn.onclick = () => selectTest(Number(uKey), Number(tKey));
@@ -3609,10 +3422,6 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         stopListeningAudio();
         const uKey = normalizeUnitId(unitId);
         const tKey = normalizeTestId(testId);
-        if (!canAccessGrade(currentCategory)) {
-            openGradeUnlockModal(currentCategory, Number(uKey), Number(tKey));
-            return;
-        }
         currentUnit = Number(uKey);
         currentTest = Number(tKey);
         openUnitsMap[uKey] = true;
@@ -4154,24 +3963,15 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         `).join("");
     }
 
-    // -------------------- ADMIN CMS & GRADE PASSWORD MODAL --------------------
+    // -------------------- ADMIN CMS & PASSWORD MODAL --------------------
     function openAdminPanel() {
         stopListeningAudio();
         if (!isAdminUnlocked) {
-            pendingAuthMode = "admin";
-            pendingTestTarget = null;
             const modal = document.getElementById("password-modal");
-            const titleEl = document.getElementById("password-modal-title");
-            const descEl = document.getElementById("password-modal-desc");
             const inp = document.getElementById("password-input");
             const err = document.getElementById("password-error");
-            if (titleEl) titleEl.innerText = "🔐 Đăng nhập Trang Quản Trị (CMS)";
-            if (descEl) descEl.innerHTML = "Vui lòng nhập <b>Mật khẩu Quản trị viên</b> để truy cập hệ thống Quản trị &amp; Ra đề (CMS).";
             if (err) err.classList.add("hidden-element");
-            if (inp) {
-                inp.value = "";
-                inp.placeholder = "Nhập mật khẩu Quản trị viên...";
-            }
+            if (inp) inp.value = "";
             if (modal) modal.classList.remove("hidden-element");
             setTimeout(() => { if (inp) inp.focus(); }, 50);
             return;
@@ -4179,103 +3979,23 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         showAdminScreenNow();
     }
 
-    function openGradeUnlockModal(cat, targetUnit = null, targetTest = null) {
-        stopListeningAudio();
-        const targetCat = cat || currentCategory || "gs6";
-        pendingAuthMode = "grade";
-        pendingAuthCategory = targetCat;
-        pendingTestTarget = (targetUnit && targetTest) ? { unit: targetUnit, test: targetTest } : null;
-
-        const gName = GRADE_DISPLAY_NAMES[targetCat] || "Khối Lớp";
-        const st = getTrialStatus();
-        const alreadyUnlocked = isGradeUnlocked(targetCat);
-
-        const modal = document.getElementById("password-modal");
-        const titleEl = document.getElementById("password-modal-title");
-        const descEl = document.getElementById("password-modal-desc");
-        const inp = document.getElementById("password-input");
-        const err = document.getElementById("password-error");
-
-        if (titleEl) titleEl.innerText = `🔑 Mở Khóa ${gName}`;
-        if (descEl) {
-            if (alreadyUnlocked) {
-                descEl.innerHTML = `✅ <b>${gName}</b> đã được kích hoạt mở khóa vĩnh viễn trên thiết bị này! Bạn có thể đóng hộp thoại này và làm bài bình thường.`;
-            } else if (st.isExpired) {
-                descEl.innerHTML = `⏰ <b>Đã hết ${st.trialDays} ngày dùng thử miễn phí!</b><br>Vui lòng nhập <b>Mật khẩu ${gName}</b> để mở khóa toàn bộ 12 Unit × 6 Cấp độ của khối lớp này.`;
-            } else {
-                descEl.innerHTML = `⏳ Bạn đang trong thời gian dùng thử miễn phí (còn <b>${st.daysLeft} ngày ${st.hoursLeft} giờ</b>).<br>Nhập <b>Mật khẩu ${gName}</b> bên dưới nếu muốn kích hoạt mở khóa vĩnh viễn ngay hôm nay:`;
-            }
-        }
-        if (err) err.classList.add("hidden-element");
-        if (inp) {
-            inp.value = "";
-            inp.placeholder = `Nhập mật khẩu ${gName}...`;
-        }
-        if (modal) modal.classList.remove("hidden-element");
-        setTimeout(() => { if (inp) inp.focus(); }, 50);
-    }
-
     function closeModal() {
         const modal = document.getElementById("password-modal");
         if (modal) modal.classList.add("hidden-element");
-        pendingTestTarget = null;
     }
 
     function checkPassword() {
         const inp = document.getElementById("password-input");
         const err = document.getElementById("password-error");
         const val = (inp ? inp.value : "").trim();
-
-        if (pendingAuthMode === "grade") {
-            const targetCat = pendingAuthCategory || currentCategory || "gs6";
-            const expectedPwd = getGradePassword(targetCat);
-            const gName = GRADE_DISPLAY_NAMES[targetCat] || "Khối Lớp";
-
-            // 1. Khớp mật khẩu của Lớp đang chọn hoặc mật khẩu Admin
-            if (val === expectedPwd || val === getAdminPassword() || val === "tienhuongsonkiet28011981@") {
-                setGradeUnlocked(targetCat, true);
-                const savedTarget = pendingTestTarget;
-                closeModal();
-                updateTrialUIElements();
-                renderSidebar();
-                showToast(`🎉 Đã mở khóa vĩnh viễn ${gName} thành công!`, "success");
-                if (savedTarget && savedTarget.unit && savedTarget.test) {
-                    selectTest(savedTarget.unit, savedTarget.test);
-                }
-                return;
-            }
-
-            // 2. Nếu học sinh nhập đúng mật khẩu của một Khối Lớp khác (VD đang ở trang đầu Lớp 6 nhưng nhập mật khẩu Lớp 7/8/9)
-            const matchedOtherCat = ["gs6", "gs7", "gs8", "gs9"].find(c => val === getGradePassword(c));
-            if (matchedOtherCat) {
-                const otherName = GRADE_DISPLAY_NAMES[matchedOtherCat];
-                setGradeUnlocked(matchedOtherCat, true);
-                closeModal();
-                selectCategory(matchedOtherCat);
-                showToast(`🎉 Đã mở khóa vĩnh viễn ${otherName} và chuyển sang ${otherName}!`, "success");
-                return;
-            }
-
-            if (err) {
-                err.innerText = `Mật khẩu ${gName} không chính xác! Vui lòng kiểm tra lại hoặc LH Thầy Tiến (0943930787).`;
-                err.classList.remove("hidden-element");
-            }
-            return;
-        }
-
-        // Mặc định: Kiểm tra mật khẩu Quản trị viên (Admin CMS)
         if (val === getAdminPassword() || val === "tienhuongsonkiet28011981@") {
             isAdminUnlocked = true;
             safeSetItem(STORAGE_KEY_ADMIN, "true");
             closeModal();
-            updateTrialUIElements();
             showToast("🔓 Đăng nhập Quản trị viên (Admin CMS) thành công!", "success");
             showAdminScreenNow();
         } else {
-            if (err) {
-                err.innerText = "Mật khẩu Quản trị viên không chính xác! Vui lòng kiểm tra lại.";
-                err.classList.remove("hidden-element");
-            }
+            if (err) err.classList.remove("hidden-element");
         }
     }
 
@@ -4796,63 +4516,20 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
     }
 
     function loadAdminSettingsForm() {
-        const s = getSiteSettings();
         const pwdEl = document.getElementById("adm-set-pwd");
         const contactEl = document.getElementById("adm-set-contact");
-        const trialDaysEl = document.getElementById("adm-set-trial-days");
         if (pwdEl) pwdEl.value = getAdminPassword();
         if (contactEl) contactEl.value = getContactBanner();
-        if (trialDaysEl) trialDaysEl.value = String(s.trialDays !== undefined ? s.trialDays : 10);
-        ["gs6", "gs7", "gs8", "gs9"].forEach(c => {
-            const el = document.getElementById(`adm-set-pwd-${c}`);
-            if (el) el.value = getGradePassword(c);
-        });
     }
 
     function saveAdminSettings() {
         const s = getSiteSettings();
         s.adminPassword = (document.getElementById("adm-set-pwd")?.value || "").trim() || "tienhuongsonkiet28011981@";
         s.contactBanner = (document.getElementById("adm-set-contact")?.value || "").trim() || "LH Thầy Tiến qua ĐT: 0943930787";
-        const tDays = parseInt(document.getElementById("adm-set-trial-days")?.value || "10", 10);
-        s.trialDays = isNaN(tDays) ? 10 : Math.max(0, tDays);
-        s.gradePasswords = {
-            gs6: (document.getElementById("adm-set-pwd-gs6")?.value || "").trim() || "tien123@",
-            gs7: (document.getElementById("adm-set-pwd-gs7")?.value || "").trim() || "huong123@",
-            gs8: (document.getElementById("adm-set-pwd-gs8")?.value || "").trim() || "son123@",
-            gs9: (document.getElementById("adm-set-pwd-gs9")?.value || "").trim() || "kiet123@"
-        };
         s.lockAfterTest1 = false;
         persistAdminDatabase();
         applySiteSettingsToUI();
-        renderSidebar();
-        showToast("💾 Đã lưu cấu hình Dùng thử 10 ngày & Mật khẩu 4 Khối Lớp!", "success");
-    }
-
-    function simulateTrialExpiredNow() {
-        const s = getSiteSettings();
-        s.forceExpiredTrial = true;
-        // Đặt thời điểm bắt đầu lùi về 11 ngày trước và xóa trạng thái mở khóa lớp để kiểm tra ngay
-        const elevenDaysAgo = Date.now() - (11 * 24 * 60 * 60 * 1000);
-        safeSetItem(STORAGE_KEY_TRIAL_START, String(elevenDaysAgo));
-        safeRemoveItem(STORAGE_KEY_UNLOCKED_GRADES);
-        isAdminUnlocked = false;
-        safeRemoveItem(STORAGE_KEY_ADMIN);
-        persistAdminDatabase();
-        applySiteSettingsToUI();
-        renderSidebar();
-        showWelcomeHome();
-        showToast("🔒 Đã giả lập HẾT 10 NGÀY DÙNG THỬ & chuyển sang chế độ Học sinh để Thầy kiểm tra nhập mật khẩu Lớp!", "warning");
-        setTimeout(() => openGradeUnlockModal(currentCategory), 300);
-    }
-
-    function resetTrialPeriodNow() {
-        const s = getSiteSettings();
-        s.forceExpiredTrial = false;
-        safeSetItem(STORAGE_KEY_TRIAL_START, String(Date.now()));
-        persistAdminDatabase();
-        applySiteSettingsToUI();
-        renderSidebar();
-        showToast("🔄 Đã đặt lại 10 ngày dùng thử miễn phí từ đầu!", "success");
+        showToast("💾 Đã lưu cấu hình Mật khẩu Quản trị & Liên hệ!", "success");
     }
 
     function lockStudentSessionForTesting() {
@@ -4983,4 +4660,32 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         const fullDoc = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
         <head><meta charset='utf-8'><title>${uMeta.title}</title>
         <style>body { font-family: 'Times New Roman', Times, serif; line-height: 1.45; }</style>
-        </head><body>${bodyHtml}</body></html>
+        </head><body>${bodyHtml}</body></html>`;
+
+        const blob = new Blob(["\uFEFF", fullDoc], { type: "application/msword;charset=utf-8" });
+        const safeFile = `${currentCategory}_Unit${currentUnit}_CapDo${currentTest}_${includeAnswers ? "CoDapAn" : "DeLuyenTap"}.doc`;
+        triggerBlobDownload(blob, safeFile);
+        showToast(`📄 Đã tải file Word (${safeFile})!`, "success");
+    }
+
+    // -------------------- INITIALIZATION --------------------
+    window.addEventListener("DOMContentLoaded", () => {
+        loadCustomPortalStorage();
+        selectCategory("gs6");
+        const pwdInput = document.getElementById("password-input");
+        if (pwdInput) {
+            pwdInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") checkPassword();
+            });
+        }
+        const actInput = document.getElementById("action-modal-input");
+        if (actInput) {
+            actInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") confirmActionModal();
+            });
+        }
+    });
+
+    </script>
+</body>
+</html>
