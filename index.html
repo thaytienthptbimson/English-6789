@@ -628,15 +628,41 @@
         </div>
     </div>
 
-    <!-- NẠP DỮ LIỆU TRỌN BỘ LỚP 6, 7, 8, 9 GLOBAL SUCCESS -->
-    <script src="portal_data.js" onerror=""></script>
+        <!-- ACTION / CONFIRM / PROMPT MODAL (THAY THẾ ALERT/CONFIRM/PROMPT) -->
+    <div id="action-modal" class="hidden-element fixed inset-0 bg-gray-900/75 backdrop-blur-sm flex justify-center items-center z-[110] p-4">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 max-w-md w-full border-2 border-indigo-200 relative">
+            <h3 class="text-lg font-extrabold text-indigo-950 mb-2" id="action-modal-title">Xác nhận thao tác</h3>
+            <p id="action-modal-message" class="text-gray-700 text-sm mb-4 leading-relaxed"></p>
+            <div id="action-modal-input-wrap" class="hidden-element mb-4">
+                <input type="text" id="action-modal-input" class="w-full bg-gray-50 border-2 border-gray-300 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-gray-800 focus:outline-none focus:border-indigo-600" placeholder="">
+            </div>
+            <div class="flex justify-end gap-2">
+                <button type="button" onclick="closeActionModal()" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl text-xs md:text-sm cursor-pointer">
+                    Hủy
+                </button>
+                <button type="button" onclick="confirmActionModal()" id="action-modal-confirm-btn" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs md:text-sm shadow cursor-pointer">
+                    Đồng ý
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DỮ LIỆU & BỘ ĐIỀU KHIỂN TRỌN BỘ LỚP 6, 7, 8, 9 GLOBAL SUCCESS (TỰ CHẠY ĐỘC LẬP 100%) -->
     <script>
-        if (typeof G6_SPECS === 'undefined') {
-            window.__inlineSpecsLoaded = true;
-        }
-    </script>
-    <script>
-    if (!window.examDatabase || !window.examDatabase.gs6) {
+// ============================================================================
+// TRỌN BỘ DỮ LIỆU LUYỆN TIẾNG ANH THCS LỚP 6, 7, 8, 9 GLOBAL SUCCESS (48 UNIT × 6 CẤP ĐỘ)
+// - Mỗi khối lớp (Lớp 6, 7, 8, 9) gồm đủ 12 Unit chuẩn SGK Global Success (Bộ GD&ĐT)
+// - Nội dung 12 Unit trong mỗi khối độc lập 100%, bám sát chủ đề từng Unit
+// - Mỗi Unit gồm đủ 6 Cấp độ:
+//   + Cấp độ 1 (Test 1): Luyện Từ vựng & Ngữ âm trong đơn vị bài học (10 câu)
+//   + Cấp độ 2 (Test 2): Luyện Ngữ pháp trong đơn vị bài học (10 câu)
+//   + Cấp độ 3 (Test 3): Luyện Kỹ năng Nghe - Listening (10 câu: Hội thoại & Độc thoại + Audio AI)
+//   + Cấp độ 4 (Test 4): Luyện Kỹ năng Nói & Giao tiếp - Speaking AI (10 câu + Phòng Luyện Nói AI)
+//   + Cấp độ 5 (Test 5): Luyện Kỹ năng Đọc hiểu - Reading (10 câu: Cloze & Comprehension)
+//   + Cấp độ 6 (Test 6): Bài kiểm tra cuối Unit - End-of-Unit Test (25 câu tổng hợp 45 phút)
+// - Học sinh luyện tập tự do 100% (không khóa đề); chỉ dùng mật khẩu cho Quản trị: tienhuongsonkiet28011981@
+// ============================================================================
+
 const G6_SPECS = [
     [1, "Unit 1: My New School", "school life, school things, subjects and after-school clubs",
      "Present Simple & Adverbs of Frequency", "Sounds /ɑː/ and /ʌ/", "Introducing someone & talking about school subjects",
@@ -1105,6 +1131,7 @@ const G6_SPECS = [
          "I think robots are very helpful to humans, but they will never replace real friends and teachers."
      ]]
 ];
+
 const G7_SPECS = [
     [1, "Unit 1: Hobbies", "hobbies, building dollhouses, horse riding, making models, gardening and collecting",
      "Present Simple & Verbs of Liking / Disliking + V-ing", "Sounds /ə/ and /ɜː/", "Talking about likes and dislikes",
@@ -1573,6 +1600,7 @@ const G7_SPECS = [
          "If I visit Australia, I will watch cute kangaroos, koalas and little penguins in their natural habitats."
      ]]
 ];
+
 const G8_SPECS = [
     [1, "Unit 1: Leisure Time", "leisure activities, DIY, origami, knitting, puzzles and balancing screen time",
      "Verbs of Liking / Disliking + V-ing vs. + to-infinitive", "Sounds /ʊ/ and /uː/", "Inviting and accepting/declining invitations",
@@ -2041,6 +2069,7 @@ const G8_SPECS = [
          "Although Mars is not habitable for humans yet, I hope astronauts will land on Mars in my lifetime."
      ]]
 ];
+
 const G9_SPECS = [
     [1, "Unit 1: Local Community", "traditional craft villages (pottery, silk, conical hats), artisans and community helpers",
      "Question Words before to-infinitives & Phrasal Verbs", "Vowel revision /æ/, /ɑː/ and /e/", "Seeking help and responding",
@@ -2509,729 +2538,984 @@ const G9_SPECS = [
          "Since technology and foreign languages are essential in modern society, mastering both will open up great career opportunities."
      ]]
 ];
-function rotateOpts(opts, targetAnsIdx) {
-    const correctVal = opts[0];
-    const wrongs = [opts[1], opts[2], opts[3]];
-    const res = [];
-    let wIdx = 0;
-    for (let i = 0; i < 4; i++) {
-        if (i === targetAnsIdx) res.push(correctVal);
-        else res.push(wrongs[wIdx++]);
-    }
-    return res;
+
+function rotateOpts(opts, ansIdx, shift) {
+    if (!opts || opts.length !== 4) return { opts: (opts || []).slice(), ans: ansIdx };
+    shift = ((shift % 4) + 4) % 4;
+    if (shift === 0) return { opts: opts.slice(), ans: ansIdx };
+    const correctVal = opts[ansIdx];
+    const newOpts = opts.slice(shift).concat(opts.slice(0, shift));
+    return { opts: newOpts, ans: newOpts.indexOf(correctVal) };
 }
 
-function buildSixLevelsFromTuple(gradeNum, uTuple) {
-    const [uNum, uTitle, topicDesc, grammarFocus, pronFocus, commFocus, pronQs, vocabQs, gramQs, commQs, speakSentences] = uTuple;
-    const gLabel = "Global Success " + gradeNum;
+function buildSixLevelsFromTuple(tup, gradeNum) {
+    const [u, title, topic, gName, pName, cName, pronRaw, vocabRaw, gramRaw, commRaw, sp] = tup;
 
-    // CẤP ĐỘ 1: TỪ VỰNG & NGỮ ÂM (10 CÂU)
-    const test1 = [];
-    for (let i = 0; i < 2; i++) {
-        const pq = pronQs[i];
-        test1.push({
-            q: `[Ngữ âm - ${uTitle} - Câu ${i + 1}] Choose the word whose underlined part is pronounced differently (${pronFocus}): ${pq[0]}`,
-            options: pq[1],
-            ans: pq[2],
-            exp: `Trọng tâm Ngữ âm ${uTitle} (${pronFocus}): ${pq[3]}`
-        });
-    }
-    for (let i = 0; i < 8; i++) {
-        const vq = vocabQs[i];
-        const ansIdx = (uNum + i) % 4;
-        const opts = rotateOpts(vq[1], ansIdx);
-        test1.push({
-            q: `[Từ vựng - ${uTitle} - Câu ${i + 3}] ${vq[0]}`,
-            options: opts,
-            ans: ansIdx,
-            exp: `Từ vựng trọng tâm ${uTitle}: Đáp án đúng là "${vq[1][0]}" (${vq[2]}).`
-        });
-    }
+    const pronItems = pronRaw.map(([chStr, opts, ans, exp]) => [
+        `Choose the word whose underlined part is pronounced differently or has a different stress pattern: ${chStr}`,
+        opts, ans, exp
+    ]);
 
-    // CẤP ĐỘ 2: NGỮ PHÁP TRỌNG TÂM (10 CÂU)
-    const test2 = [];
-    for (let i = 0; i < 10; i++) {
-        const gq = gramQs[i];
-        const ansIdx = (uNum + i + 1) % 4;
-        const opts = rotateOpts(gq[1], ansIdx);
-        test2.push({
-            q: `[Ngữ pháp - ${uTitle} - Câu ${i + 1}] ${gq[0]}`,
-            options: opts,
-            ans: ansIdx,
-            exp: `Chuyên đề Ngữ pháp ${uTitle} (${grammarFocus}): Đáp án đúng là "${gq[1][0]}" (${gq[2]}).`
-        });
-    }
-
-    // CẤP ĐỘ 3: LUYỆN NGHE (LISTENING — 10 CÂU: PART 1 DIALOGUE 1-5 & PART 2 MONOLOGUE 6-10)
-    const v0 = vocabQs[0][1][0], v1 = vocabQs[1][1][0], v2 = vocabQs[2][1][0], v3 = vocabQs[3][1][0];
-    const v4 = vocabQs[4][1][0], v5 = vocabQs[5][1][0], v6 = vocabQs[6][1][0], v7 = vocabQs[7][1][0];
-    const script1 = `Nam: Hi Mai! Welcome to our ${gLabel} English club. Today we are discussing ${uTitle}, focusing on ${topicDesc}.\nMai: Hi Nam! I really enjoy this unit. In the first activity, our teacher explained the keyword "${v0}" and showed us examples of "${v1}".\nNam: Yes! And for homework, we need to write five sentences using ${grammarFocus} and include the word "${v2}".\nMai: Don't forget our group presentation on Friday morning! We will also talk about "${v3}" and practice ${pronFocus} for fifteen minutes.`;
-    const script2 = `Hello students! Welcome to the ${gLabel} Listening Corner for ${uTitle}. In this talk, we explore practical aspects of ${topicDesc}. First, remember how important "${v4}" is in daily life. Second, many teenagers and families pay close attention to "${v5}" and "${v6}". Finally, our school project encourages every student to apply ${grammarFocus} and understand "${v7}" so that we can build strong communication skills every week.`;
-
-    const listenRaw = [
-        [`[Listening Part 1 - Câu 1] What topic are Nam and Mai discussing in their ${gLabel} English club today?`, [`${uTitle} (${topicDesc})`, "A ticket to the cinema", "Repairing a broken bicycle", "Buying winter jackets"], 1, `Trong hội thoại, Nam nói rõ: "Today we are discussing ${uTitle}, focusing on ${topicDesc}."`, script1],
-        [`[Listening Part 1 - Câu 2] Which two vocabulary items did the teacher explain in the first activity?`, [`"${v0}" and "${v1}"`, "Only mathematical numbers", "Names of foreign rivers", "Musical instruments"], 1, `Mai nhắc lại: "our teacher explained the keyword '${v0}' and showed us examples of '${v1}'."`, script1],
-        [`[Listening Part 1 - Câu 3] What grammar point do Nam and Mai need to use in their five homework sentences?`, [grammarFocus, "Past Perfect Continuous only", "Subjunctive mood in legal texts", "Inversion with Rarely"], 1, `Nam nói: "we need to write five sentences using ${grammarFocus}..."`, script1],
-        [`[Listening Part 1 - Câu 4] Which specific word must be included in their homework sentences?`, [`"${v2}"`, "A French greeting", "A chemical formula", "An ancient dynasty"], 1, `Nam nhấn mạnh: "...and include the word '${v2}'."`, script1],
-        [`[Listening Part 1 - Câu 5] When will Nam and Mai's group presentation take place, and how long will they practice ${pronFocus}?`, [`On Friday morning, practicing for fifteen minutes`, "On Sunday midnight for three hours", "Next month for five minutes", "On Tuesday afternoon for two hours"], 1, `Mai nói: "Don't forget our group presentation on Friday morning!... practice ${pronFocus} for fifteen minutes."`, script1],
-        [`[Listening Part 2 - Câu 6] What is the main theme of the speaker's talk in the ${gLabel} Listening Corner?`, [`Practical aspects of ${topicDesc} in ${uTitle}`, "How to repair a washing machine", "Rules for professional chess players", "History of steam trains"], 2, `Người nói giới thiệu: "In this talk, we explore practical aspects of ${topicDesc}."`, script2],
-        [`[Listening Part 2 - Câu 7] What is the FIRST key item highlighted by the speaker in daily life?`, [`"${v4}"`, "Buying luxury sports cars", "Building a skyscraper", "Flying a helicopter"], 2, `Người nói nêu rõ: "First, remember how important '${v4}' is in daily life."`, script2],
-        [`[Listening Part 2 - Câu 8] Which two items do teenagers and families pay close attention to in the SECOND part of the talk?`, [`"${v5}" and "${v6}"`, "Gold and silver mines", "Deep sea submarines", "Space rockets"], 2, `Bài nghe nêu: "Second, many teenagers and families pay close attention to '${v5}' and '${v6}'."`, script2],
-        [`[Listening Part 2 - Câu 9] What does the school project encourage every student to apply?`, [`${grammarFocus} and understanding "${v7}"`, "Skipping morning classes", "Only memorising phone numbers", "Playing video games all night"], 2, `Bài nghe nêu: "our school project encourages every student to apply ${grammarFocus} and understand '${v7}'."`, script2],
-        [`[Listening Part 2 - Câu 10] According to the talk, what is the goal of the school project every week?`, ["Building strong communication skills", "Winning a marathon race", "Selling old textbooks", "Closing the school library"], 2, `Câu cuối bài nghe: "...so that we can build strong communication skills every week."`, script2]
-    ];
-    const test3 = listenRaw.map((item, idx) => {
-        const ansIdx = (uNum + idx) % 4;
-        return {
-            q: item[0],
-            options: rotateOpts(item[1], ansIdx),
-            ans: ansIdx,
-            exp: item[3],
-            script: item[4],
-            audioPart: item[2]
-        };
+    const vocabItems = [];
+    const vFilled = [];
+    vocabRaw.forEach(([sent, opts, note]) => {
+        const ansWord = opts[0];
+        const filled = sent.replace("______", ansWord);
+        const exp = `Từ vựng ${title}: ${note} → đáp án đúng là '${ansWord}'.`;
+        vocabItems.push([sent, opts, 0, exp]);
+        vFilled.push([filled, ansWord, sent, opts, 0, exp]);
     });
 
-    // CẤP ĐỘ 4: LUYỆN NÓI & GIAO TIẾP (SPEAKING AI — 10 CÂU)
-    const s0 = speakSentences[0], s1 = speakSentences[1], s2 = speakSentences[2];
-    const speakRaw = [
-        [`[Giao tiếp Everyday English - Câu 1] ${commQs[0][0]}`, commQs[0][1], commQs[0][2], s0],
-        [`[Giao tiếp Everyday English - Câu 2] ${commQs[1][0]}`, commQs[1][1], commQs[1][2], s1],
-        [`[Giao tiếp Everyday English - Câu 3] ${commQs[2][0]}`, commQs[2][1], commQs[2][2], s2],
-        [`[Trọng âm & Ngữ điệu Nói - Câu 4] When speaking about ${uTitle} (${commFocus}), which response is the MOST natural and polite in a classroom discussion?`, [`"I completely agree with your point about ${v0}, and I’d like to add an example."`, `"Be quiet, I don't want to talk!"`, `"No, I never listen to anyone."`, `"Give me your notebook right now."`], `Câu giao tiếp lịch sự, tự nhiên trong thảo luận lớp học về ${uTitle}.`, s0],
-        [`[Luyện Nói theo Chủ đề - Câu 5] Which opening sentence is BEST when giving a 1-minute presentation on ${uTitle}?`, [`"Good morning everyone! Today I’m excited to share my ideas about ${topicDesc}."`, `"I forgot my presentation at home, goodbye."`, `"Don't ask me any questions today."`, `"This is the end of my talk."`], `Câu mở đầu bài thuyết trình (Speaking Presentation) chuẩn mực cho chủ đề ${uTitle}.`, s0],
-        [`[Phát âm trong Giao tiếp - Câu 6] Which sentence below contains key vocabulary from ${uTitle} that you can use in your Speaking test?`, [s1, "The submarine dived into the Mariana Trench at midnight.", "Astronauts repaired the solar panel on the space station.", "Ancient dinosaurs roamed the prehistoric swamp."], `Câu mẫu chứa trực tiếp từ vựng và cấu trúc trọng tâm của ${uTitle}.`, s1],
-        [`[Phản xạ Hỏi - Đáp Speaking - Câu 7] Teacher: "Can you give an example related to ${topicDesc} in ${uTitle}?" — Student: "______"`, [`"Certainly! A great example in our daily life is ${v1} and ${v4}."`, `"No, I don't know your name."`, `"Yes, it was raining yesterday."`, `"It costs fifty thousand dong."`], `Phản xạ trả lời câu hỏi phỏng vấn Speaking của giáo viên đúng trọng tâm ${uTitle}.`, s1],
-        [`[Kết nối ý trong bài Nói - Câu 8] Which linking phrase helps you conclude your speaking talk on ${uTitle} naturally?`, [s2, "Once upon a time in a galaxy far away.", "Please turn off the washing machine now.", "Excuse me, where is the nearest petrol station?"], `Sử dụng câu kết luận mạch lạc giúp bài thi Speaking đạt điểm Fluency & Coherence tối đa.`, s2],
-        [`[Tình huống Giao tiếp Thực tế - Câu 9] Your partner asks for your opinion on "${v5}" during a pair-work activity in ${uTitle}. How should you respond?`, [`"In my opinion, ${v5} plays an important role when we talk about ${topicDesc}."`, `"Never mind, I am going to sleep."`, `"You're welcome, see you last week."`, `"Here is your umbrella."`], `Cách nêu quan điểm cá nhân (Giving opinions) lịch sự trong hoạt động nói theo cặp (Pair-work).`, s2],
-        [`[Tổng kết Kỹ năng Speaking - Câu 10] To achieve a high score in the ${uTitle} Speaking test, what should you combine with accurate pronunciation (${pronFocus})?`, [`Fluent delivery, natural intonation, and accurate use of ${grammarFocus}`, "Speaking as fast as possible without pausing", "Whispering so the examiner cannot hear clearly", "Reading only single words without full sentences"], `Tiêu chí chấm điểm Speaking chuẩn: Phát âm (${pronFocus}), Ngữ điệu tự nhiên và Ngữ pháp (${grammarFocus}).`, s2]
-    ];
-    const test4 = speakRaw.map((item, idx) => {
-        const ansIdx = (uNum + idx + 2) % 4;
-        return {
-            q: item[0],
-            options: rotateOpts(item[1], ansIdx),
-            ans: ansIdx,
-            exp: `Kỹ năng Speaking ${uTitle}: ${item[2]}`,
-            speakText: item[3]
-        };
+    const grammarItems = [];
+    gramRaw.forEach(([sent, opts, note]) => {
+        const ansWord = opts[0];
+        const exp = `Ngữ pháp ${title} (${gName}): ${note} → '${ansWord}'.`;
+        grammarItems.push([sent, opts, 0, exp]);
     });
 
-    // CẤP ĐỘ 5: LUYỆN ĐỌC HIỂU (READING — 10 CÂU: PART 1 CLOZE 1-5 & PART 2 COMPREHENSION 6-10)
-    const passage1 = `📖 [READING PASSAGE 1 — CLOZE TEXT (${gLabel} - ${uTitle})]\nIn ${gLabel}, ${uTitle} introduces students to essential knowledge about ${topicDesc}. During the lessons, learners discover how (1) ______ "${v0}" is in real-life contexts. In addition, teachers guide students to use (2) ______ "${v1}" and "${v2}" accurately when working in pairs. From a grammar perspective, mastering ${grammarFocus} helps students avoid common mistakes and express their thoughts clearly. Many students also enjoy (3) ______ activities related to "${v3}" and "${v4}". By practicing (4) ______ every day and reviewing "${v5}", students become much more confident in both written exams and (5) ______ communication.`;
-    const passage2 = `📖 [READING PASSAGE 2 — COMPREHENSION (${gLabel} - ${uTitle})]\nLast week, Class ${gradeNum}A carried out an exciting project for ${uTitle} focusing on ${topicDesc}. The class was divided into four groups. Group 1 created a colourful poster illustrating "${v0}", "${v1}", and "${v2}" with clear examples. Group 2 wrote a short play that used ${grammarFocus} and everyday expressions for ${commFocus}. Meanwhile, Group 3 conducted a mini survey around the school about "${v5}", "${v6}", and "${v7}". They found that 85% of students wanted more practical club activities on weekends. Finally, Group 4 recorded an audio guide practicing ${pronFocus}. The teacher praised all four groups because the project made learning English both meaningful and enjoyable.`;
+    const commItems = commRaw.map(([prompt, opts, note]) => [
+        prompt, opts, 0, `Giao tiếp ${title} (${cName}): ${note}.`
+    ]);
 
-    const readRaw = [
-        [`[Reading Part 1 - Cloze Câu 1] Choose the best word/phrase to fill in blank (1) in Passage 1:`, ["important and useful", "impossible and empty", "ancient and broken", "careless and noisy"], `Dựa vào ngữ cảnh câu 2 Passage 1: "learners discover how (1) important and useful '${v0}' is in real-life contexts."`, passage1],
-        [`[Reading Part 1 - Cloze Câu 2] Choose the best word/phrase to fill in blank (2) in Passage 1:`, ["key vocabulary items such as", "musical instruments like", "railway tickets from", "kitchen cupboards under"], `Ngữ cảnh câu 3 Passage 1: "...use (2) key vocabulary items such as '${v1}' and '${v2}' accurately..."`, passage1],
-        [`[Reading Part 1 - Cloze Câu 3] Choose the best word/phrase to fill in blank (3) in Passage 1:`, ["interactive classroom", "dangerous volcano", "underwater submarine", "broken microwave"], `Ngữ cảnh câu 5 Passage 1: "Many students also enjoy (3) interactive classroom activities related to '${v3}' and '${v4}'."`, passage1],
-        [`[Reading Part 1 - Cloze Câu 4] Choose the best word/phrase to fill in blank (4) in Passage 1:`, [pronFocus, "silent sleeping", "traffic jams", "heavy rainstorms"], `Ngữ cảnh câu cuối Passage 1: "By practicing (4) ${pronFocus} every day and reviewing '${v5}'..."`, passage1],
-        [`[Reading Part 1 - Cloze Câu 5] Choose the best word/phrase to fill in blank (5) in Passage 1:`, ["real-world English", "prehistoric stone", "silent movie", "locked cupboard"], `Ngữ cảnh kết đoạn Passage 1: "...confident in both written exams and (5) real-world English communication."`, passage1],
-        [`[Reading Part 2 - Đọc hiểu Câu 6] What was the main focus of Class ${gradeNum}A's project last week in Passage 2?`, [`${uTitle} focusing on ${topicDesc}`, "Building a new swimming pool", "Organising a cooking contest in France", "Buying new bicycles for teachers"], `Câu đầu tiên của Passage 2: "Last week, Class ${gradeNum}A carried out an exciting project for ${uTitle} focusing on ${topicDesc}."`, passage2],
-        [`[Reading Part 2 - Đọc hiểu Câu 7] Which group created a colourful poster illustrating "${v0}", "${v1}", and "${v2}"?`, ["Group 1", "Group 2", "Group 3", "Group 4"], `Thông tin trong đoạn: "Group 1 created a colourful poster illustrating '${v0}', '${v1}', and '${v2}'..."`, passage2],
-        [`[Reading Part 2 - Đọc hiểu Câu 8] What did Group 2 include in their short play?`, [`${grammarFocus} and everyday expressions for ${commFocus}`, "Only silent mime without words", "Mathematical equations and physics laws", "A list of train departure times"], `Thông tin trong đoạn: "Group 2 wrote a short play that used ${grammarFocus} and everyday expressions for ${commFocus}."`, passage2],
-        [`[Reading Part 2 - Đọc hiểu Câu 9] According to Group 3's survey about "${v5}", "${v6}", and "${v7}", what percentage of students wanted more practical club activities on weekends?`, ["85% of students", "15% of students", "30% of students", "50% of students"], `Thông tin số liệu trong đoạn: "They found that 85% of students wanted more practical club activities on weekends."`, passage2],
-        [`[Reading Part 2 - Đọc hiểu Câu 10] Why did the teacher praise all four groups at the end of the project?`, ["Because the project made learning English both meaningful and enjoyable", "Because they finished the test in two minutes", "Because they painted the school gate yellow", "Because they cancelled all homework for the year"], `Câu cuối Passage 2: "The teacher praised all four groups because the project made learning English both meaningful and enjoyable."`, passage2]
-    ];
-    const test5 = readRaw.map((item, idx) => {
-        const ansIdx = (uNum + idx + 3) % 4;
-        return {
-            q: item[0],
-            options: rotateOpts(item[1], ansIdx),
-            ans: ansIdx,
-            exp: item[2],
-            passage: item[3]
-        };
+    // CẤP ĐỘ 1: TỪ VỰNG & NGỮ ÂM TRONG UNIT (10 câu)
+    const level1 = [];
+    const instP = `I. PRONUNCIATION (${pName}) — Choose the word whose underlined part is pronounced differently or has a different stress pattern.`;
+    pronItems.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx);
+        level1.push({ origNum: idx + 1, instruction: instP, text: qtxt, options: r.opts, answer: r.ans, explanation: exp });
+    });
+    const instV = `II. VOCABULARY IN ${title.toUpperCase()} (${topic}) — Choose the best word or phrase to complete each sentence.`;
+    vocabItems.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx + 1);
+        level1.push({ origNum: idx + 3, instruction: instV, text: qtxt, options: r.opts, answer: r.ans, explanation: exp });
     });
 
-    // CẤP ĐỘ 6: ĐỀ KIỂM TRA CUỐI UNIT (END-OF-UNIT TEST — 25 CÂU TỔNG HỢP 45 PHÚT)
-    const test6 = [];
-    for (let i = 0; i < 4; i++) {
-        const src = test3[i * 2];
-        test6.push({
-            q: `[End-of-Unit Test - Phần I. Listening - Câu ${test6.length + 1}] ${src.q.replace(/^\[.*?\]\s*/, '')}`,
-            options: src.options.slice(),
-            ans: src.ans,
-            exp: src.exp,
-            script: src.script,
-            audioPart: src.audioPart
-        });
-    }
-    for (let i = 0; i < 2; i++) {
-        const src = test1[i];
-        test6.push({
-            q: `[End-of-Unit Test - Phần II. Phonetics - Câu ${test6.length + 1}] ${src.q.replace(/^\[.*?\]\s*/, '')}`,
-            options: src.options.slice(),
-            ans: src.ans,
-            exp: src.exp
-        });
-    }
-    for (let i = 2; i < 7; i++) {
-        const src = test1[i];
-        test6.push({
-            q: `[End-of-Unit Test - Phần III. Vocabulary - Câu ${test6.length + 1}] ${src.q.replace(/^\[.*?\]\s*/, '')}`,
-            options: src.options.slice(),
-            ans: src.ans,
-            exp: src.exp
-        });
-    }
-    for (let i = 0; i < 5; i++) {
-        const src = test2[i * 2];
-        test6.push({
-            q: `[End-of-Unit Test - Phần IV. Grammar - Câu ${test6.length + 1}] ${src.q.replace(/^\[.*?\]\s*/, '')}`,
-            options: src.options.slice(),
-            ans: src.ans,
-            exp: src.exp
-        });
-    }
-    for (let i = 0; i < 2; i++) {
-        const src = test4[i];
-        test6.push({
-            q: `[End-of-Unit Test - Phần V. Everyday English - Câu ${test6.length + 1}] ${src.q.replace(/^\[.*?\]\s*/, '')}`,
-            options: src.options.slice(),
-            ans: src.ans,
-            exp: src.exp,
-            speakText: src.speakText
-        });
-    }
-    for (let i = 0; i < 4; i++) {
-        const src = test5[i < 2 ? i : i + 4];
-        test6.push({
-            q: `[End-of-Unit Test - Phần VI. Reading - Câu ${test6.length + 1}] ${src.q.replace(/^\[.*?\]\s*/, '')}`,
-            options: src.options.slice(),
-            ans: src.ans,
-            exp: src.exp,
-            passage: src.passage
-        });
-    }
-    const writeRaw = [
-        [`[End-of-Unit Test - Phần VII. Writing - Câu 23] Choose the sentence that is closest in meaning or grammatically CORRECT using ${grammarFocus} (${uTitle}):`, [speakSentences[0], "Students is play in the yard yesterday.", "We has went to the library tomorrow.", "He don't liking English lessons at all."], `Câu viết chuẩn ngữ pháp và ngữ nghĩa theo trọng tâm ${uTitle} (${grammarFocus}).`],
-        [`[End-of-Unit Test - Phần VII. Writing - Câu 24] Choose the best sentence built from the prompts related to ${uTitle}:`, [speakSentences[1], "They goes to school by foot every days.", "She are study English in room now.", "There is five book on the table yesterday."], `Câu hoàn chỉnh sử dụng đúng cấu trúc ${grammarFocus} và từ vựng chủ đề ${topicDesc}.`],
-        [`[End-of-Unit Test - Phần VII. Writing - Câu 25] Choose the most meaningful concluding sentence for a paragraph about ${uTitle}:`, [speakSentences[2], "Yesterday I will go to the cinema with my cat.", "Look! The bus arrived every Mondays.", "She can sings very goodly in class."], `Câu kết đoạn văn (Paragraph Writing) chuẩn mực cho chủ đề ${uTitle}.`]
+    // CẤP ĐỘ 2: NGỮ PHÁP TRONG UNIT (10 câu)
+    const level2 = [];
+    const instG = `GRAMMAR IN ${title.toUpperCase()} (${gName}) — Choose the correct option A, B, C, or D to complete each sentence.`;
+    grammarItems.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx + 2);
+        level2.push({ origNum: idx + 1, instruction: instG, text: qtxt, options: r.opts, answer: r.ans, explanation: exp });
+    });
+
+    // CẤP ĐỘ 3: LUYỆN KỸ NĂNG NGHE - LISTENING (10 câu: Part 1 Hội thoại + Part 2 Độc thoại)
+    const s0 = vFilled[0][0], w0 = vFilled[0][1];
+    const s1 = vFilled[1][0], w1 = vFilled[1][1];
+    const s2 = vFilled[2][0];
+    const s3 = vFilled[3][0];
+    const s4 = vFilled[4][0], w4 = vFilled[4][1];
+    const s5 = vFilled[5][0], w5 = vFilled[5][1];
+    const s6 = vFilled[6][0];
+    const s7 = vFilled[7][0];
+
+    const listenDialogue =
+        `Girl: Hi Nam! What are we studying in our Grade ${gradeNum} English class today?\n` +
+        `Boy: Hi Mai! Today we are learning ${title}, which is all about ${topic}.\n` +
+        `Girl: That sounds exciting! Can you share two examples from our lesson?\n` +
+        `Boy: Sure! First, ${s0} And second, ${s1}\n` +
+        `Girl: What else did our teacher explain about this unit?\n` +
+        `Boy: She told us that ${s2} Also, ${sp[1]}`;
+
+    const listenDQs = [
+        [`What unit are Mai and Nam discussing in their Grade ${gradeNum} English class?`,
+         [`${title} (${topic})`, "How to repair motorbikes", "A French cooking competition", "Ancient Egyptian pyramids"], 0,
+         `Trong hội thoại Nam nói rõ: 'Today we are learning ${title}, which is all about ${topic}'.`],
+        [`Listen to Nam's first example and complete: “${vocabItems[0][0]}”`,
+         vocabItems[0][1].slice(), 0,
+         `Nam nói trong bài nghe: '${s0}' → đáp án đúng là '${w0}'.`],
+        [`Listen to Nam's second example and complete: “${vocabItems[1][0]}”`,
+         vocabItems[1][1].slice(), 0,
+         `Nam nói trong bài nghe: '${s1}' → đáp án đúng là '${w1}'.`],
+        [`What did the teacher tell the class according to Nam?`,
+         [s2, "That the school library is closed all month.", "That students don't need textbooks.", "That the trip was cancelled."], 0,
+         `Nam thuật lại lời cô giáo: '${s2}'.`],
+        [`Which additional detail does Nam mention at the end of the dialogue?`,
+         [sp[1], "He never does homework in the evening.", "He dislikes learning English.", "He is moving to another city tomorrow."], 0,
+         `Cuối đoạn hội thoại Nam nói: '${sp[1]}'.`]
     ];
-    writeRaw.forEach((wItem, idx) => {
-        const ansIdx = (uNum + idx + 1) % 4;
-        test6.push({
-            q: wItem[0],
-            options: rotateOpts(wItem[1], ansIdx),
-            ans: ansIdx,
-            exp: wItem[2]
+
+    const listenMono =
+        `Man: Welcome to the Grade ${gradeNum} Global Success Audio Studio for ${title}! ` +
+        `In this unit, we explore ${topic} and practise the grammar focus: ${gName}. ` +
+        `Listen carefully to four key points from the unit. ` +
+        `First, ${s4} Second, ${s5} Third, ${s6} Finally, ${s7} ${sp[2]}`;
+
+    const listenMQs = [
+        [`What is the main topic of this Grade ${gradeNum} audio talk?`,
+         [`${title}: ${topic}`, "Rules for professional basketball referees", "How to build a submarine", "History of nineteenth-century banking"], 0,
+         `Mở đầu bài nghe nêu rõ: '${title}! In this unit, we explore ${topic}'.`],
+        [`Which grammar focus is practised in ${title}?`,
+         [gName, "Third conditional inversion", "Future Perfect Continuous", "Subjunctive in legal documents"], 0,
+         `Bài nghe nêu rõ: 'and practise the grammar focus: ${gName}'.`],
+        [`According to the first key point in the talk, complete: “${vocabItems[4][0]}”`,
+         vocabItems[4][1].slice(), 0,
+         `Bài nghe nêu: '${s4}' → đáp án đúng là '${w4}'.`],
+        [`According to the second key point in the talk, complete: “${vocabItems[5][0]}”`,
+         vocabItems[5][1].slice(), 0,
+         `Bài nghe nêu: '${s5}' → đáp án đúng là '${w5}'.`],
+        [`What conclusion is stated at the very end of the audio talk?`,
+         [sp[2], "Students should stop practising speaking.", "Nobody needs to review vocabulary.", "Outdoor sports are banned at school."], 0,
+         `Câu cuối bài nghe nêu: '${sp[2]}'.`]
+    ];
+
+    const level3 = [];
+    const instL1 = `I. LISTENING PART 1: CONVERSATION (${title}) — Listen to the dialogue between Mai and Nam and choose the best answer A, B, C, or D.`;
+    listenDQs.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx);
+        const qobj = { origNum: idx + 1, instruction: instL1, text: qtxt, options: r.opts, answer: r.ans, explanation: exp };
+        if (idx === 0) qobj.tapescript = listenDialogue;
+        level3.push(qobj);
+    });
+    const instL2 = `II. LISTENING PART 2: MONOLOGUE (${title}) — Listen to the audio guide and choose the best answer A, B, C, or D.`;
+    listenMQs.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx + 2);
+        const qobj = { origNum: idx + 6, instruction: instL2, text: qtxt, options: r.opts, answer: r.ans, explanation: exp };
+        if (idx === 0) qobj.tapescript = listenMono;
+        level3.push(qobj);
+    });
+
+    // CẤP ĐỘ 4: LUYỆN NÓI & GIAO TIẾP - SPEAKING AI (10 câu)
+    const level4 = [];
+    const instSp1 = `I. EVERYDAY ENGLISH (${cName}) — Choose the most suitable response to complete each conversational exchange.`;
+    commItems.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx);
+        level4.push({
+            origNum: idx + 1, instruction: instSp1, text: qtxt, options: r.opts, answer: r.ans, explanation: exp,
+            speakPrompt: opts[ans]
         });
     });
 
-    return {
-        "Test 1": test1,
-        "Test 2": test2,
-        "Test 3": test3,
-        "Test 4": test4,
-        "Test 5": test5,
-        "Test 6": test6
-    };
+    const instSp2 = `II. SPEAKING & DIALOGUE ARRANGEMENT (${title}) — Choose the correct order of utterances or sentences.`;
+    const lowerFirst = s => s.charAt(0).toLowerCase() + s.slice(1);
+    const arrItems = [
+        [
+            `a. Mai: Why do you find ${title} so useful, Nam?\nb. Nam: Because ${lowerFirst(sp[2])}\nc. Nam: Mai, I really enjoyed our English lesson on ${title} today!`,
+            ["c - a - b", "a - c - b", "b - a - c", "c - b - a"], 0,
+            `Trình tự hội thoại 3 lượt: c (Nam mở đầu về ${title}) → a (Mai hỏi lý do) → b (Nam giải thích).`
+        ],
+        [
+            `a. Lan: ${sp[1]}\nb. Phong: Hi Lan! Could you share your speaking ideas for ${title}?\nc. Phong: Thanks a lot, Lan! Let’s practise presenting together.\nd. Lan: Sure, Phong! First, ${lowerFirst(sp[0])}\ne. Phong: That’s a great opening! What do you talk about next?`,
+            ["b - d - e - a - c", "d - b - e - a - c", "b - e - d - a - c", "b - d - a - e - c"], 0,
+            "Trình tự hội thoại 5 lượt: b (Phong hỏi ý tưởng bài nói) → d (Lan nêu câu mở đầu) → e (Phong hỏi ý tiếp theo) → a (Lan nêu ý thứ hai) → c (Phong cảm ơn)."
+        ],
+        [
+            `Arrange the following sentences to make a complete topic presentation for <b>${title}</b>:\na. ${sp[1]}\nb. ${sp[2]}\nc. ${sp[0]}`,
+            ["c - a - b", "a - c - b", "b - c - a", "c - b - a"], 0,
+            "Trình tự bài nói 3 câu chuẩn: c (Mở bài giới thiệu chủ đề) → a (Thân bài phát triển ý) → b (Kết bài nêu ý nghĩa)."
+        ],
+        [
+            `a. Minh: Definitely! Practising aloud will help us speak more fluently.\nb. Hoa: Minh, shall we rehearse our role-play on ${topic} before class?\nc. Minh: Good idea! Let’s also use the expressions for ${cName.toLowerCase()}.`,
+            ["b - c - a", "c - b - a", "a - b - c", "b - a - c"], 0,
+            "Trình tự: b (Hoa rủ tập đóng vai) → c (Minh đồng tình và gợi ý dùng mẫu câu giao tiếp của bài) → a (khẳng định lợi ích)."
+        ]
+    ];
+    arrItems.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx + 1);
+        level4.push({ origNum: idx + 4, instruction: instSp2, text: qtxt, options: r.opts, answer: r.ans, explanation: exp });
+    });
+
+    const instSp3 = `III. AI SPEAKING PRACTICE (${title}) — Choose the best sentence for your topic talk, then use the AI Speaking Studio below to record and score your pronunciation!`;
+    for (let idx = 0; idx < 3; idx++) {
+        const targetSent = sp[idx];
+        const distractors = [
+            targetSent,
+            `Yesterday we didn't study ${title} because the stadium was closed.`,
+            `Although ${topic} is a chemistry formula, nobody practises speaking it.`,
+            `Unless you break the rules, you mustn't talk about ${title} in class.`
+        ];
+        const r = rotateOpts(distractors, 0, u + idx + 2);
+        level4.push({
+            origNum: idx + 8,
+            instruction: instSp3,
+            text: `<b>Topic Speaking Sentence ${idx + 1} (${title}):</b> Choose the most accurate and natural sentence to present on <i>${topic}</i>:`,
+            options: r.opts,
+            answer: r.ans,
+            explanation: `Câu chuẩn xác cho bài nói chủ đề ${title}: “${targetSent}”`,
+            speakPrompt: targetSent
+        });
+    }
+
+    // CẤP ĐỘ 5: LUYỆN ĐỌC HIỂU - READING (10 câu: Cloze 1..5 + Comprehension 6..10)
+    const chosenCloze = [vocabItems[0], vocabItems[2], grammarItems[0], vocabItems[5], grammarItems[2]];
+    const clozeSents = [];
+    const level5 = [];
+    const instR1 = `I. READING PART 1: CLOZE PASSAGE (${title}) — Read the passage and choose the correct option A, B, C, or D that best fits each numbered blank from 1 to 5.`;
+    chosenCloze.forEach(([qtxt, opts, ans, exp], idx) => {
+        const bnum = idx + 1;
+        clozeSents.push(qtxt.replace("______", `<b>(${bnum})</b>______`));
+        const r = rotateOpts(opts, ans, u + idx + 1);
+        level5.push({ origNum: bnum, instruction: instR1, text: "", options: r.opts, answer: r.ans, explanation: exp });
+    });
+    level5[0].passage =
+        `<b>FOCUS ON ${title.toUpperCase()}</b>\n` +
+        `In Grade ${gradeNum} Global Success, ${title} helps students explore ${topic}. ` +
+        clozeSents.slice(0, 3).join(" ") + "\n" +
+        clozeSents.slice(3).join(" ") +
+        ` Mastering these vocabulary and grammar points (${gName}) enables students to use English confidently.`;
+
+    const readPassage =
+        `<b>DISCOVERING ${title.toUpperCase()}</b>\n` +
+        `${sp[0]} In our Grade ${gradeNum} English lessons this month, students are learning all about ${topic} through lively discussions and real-world examples. ` +
+        `For instance, ${s1}\n` +
+        `In addition, teachers encourage students to observe how this topic connects to daily life. ${s3} ` +
+        `At the same time, ${s6} When students practise these expressions regularly with their classmates, <u><b>they</b></u> build strong communication skills and confidence.\n` +
+        `At the end of the unit, every group prepares a short project applying ${gName}. ${s7} ${sp[2]}`;
+
+    const readQs = [
+        [`What is the passage mainly about?`,
+         [`Learning and applying the key themes of ${title} (${topic})`, "How to repair broken household machines", "A biography of an ancient emperor", "Rules for an international chess tournament"], 0,
+         `Bài đọc xoay quanh việc học tập và vận dụng thực tế chủ đề ${title} (${topic}).`],
+        [`Which specific example is mentioned in paragraph 1?`,
+         [s1, "Students never work in groups during English lessons.", "The school cancelled all projects this month.", "Nobody in the class enjoys learning vocabulary."], 0,
+         `Đoạn 1 nêu rõ: 'For instance, ${s1}'.`],
+        [`According to paragraph 2, what happens when students practise regularly with their classmates?`,
+         ["They build strong communication skills and confidence", "They forget their grammar rules quickly", "They have to stay after school on Sundays", "They stop reading textbooks"], 0,
+         "Đoạn 2 nêu: 'When students practise these expressions regularly with their classmates, they build strong communication skills and confidence'."],
+        [`The word <b><u>they</u></b> in paragraph 2 refers to ______.`,
+         ["students", "teachers", "expressions", "lessons"], 0,
+         "Đại từ 'they' quy chiếu cho danh từ 'students' ở mệnh đề đứng trước."],
+        [`What does every group prepare at the end of the unit?`,
+         [`A short project applying ${gName}`, "A fifty-page history dictionary", "A ticket for an overseas flight", "A meal for five hundred guests"], 0,
+         `Đoạn 3 nêu rõ: 'every group prepares a short project applying ${gName}'.`]
+    ];
+    const instR2 = `II. READING PART 2: READING COMPREHENSION (${title}) — Read the passage carefully and choose the correct answer A, B, C, or D for questions 6 to 10.`;
+    readQs.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx + 2);
+        const qobj = { origNum: idx + 6, instruction: instR2, text: qtxt, options: r.opts, answer: r.ans, explanation: exp };
+        if (idx === 0) qobj.passage = readPassage;
+        level5.push(qobj);
+    });
+
+    // CẤP ĐỘ 6: BÀI KIỂM TRA CUỐI UNIT - END-OF-UNIT TEST (25 câu chuẩn 45 phút)
+    const level6 = [];
+    const instUtL = `SECTION A. LISTENING (${title} — Questions 1 to 5): Listen and choose the correct answer A, B, C, or D.`;
+    listenDQs.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx + 3);
+        const qobj = { origNum: idx + 1, instruction: instUtL, text: qtxt, options: r.opts, answer: r.ans, explanation: exp };
+        if (idx === 0) qobj.tapescript = listenDialogue;
+        level6.push(qobj);
+    });
+    const instUtP = `SECTION B. PRONUNCIATION (${pName} — Questions 6 to 7): Choose the correct option A, B, C, or D.`;
+    pronItems.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx + 2);
+        level6.push({ origNum: 6 + idx, instruction: instUtP, text: qtxt, options: r.opts, answer: r.ans, explanation: exp });
+    });
+    const instUtVG = `SECTION C. VOCABULARY & GRAMMAR (${title}: ${gName} — Questions 8 to 15): Choose the best answer A, B, C, or D.`;
+    const vgPool = vocabItems.slice(4, 8).concat(grammarItems.slice(4, 8));
+    vgPool.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx + 1);
+        level6.push({ origNum: 8 + idx, instruction: instUtVG, text: qtxt, options: r.opts, answer: r.ans, explanation: exp });
+    });
+    const instUtSp = `SECTION D. EVERYDAY ENGLISH & SPEAKING (${cName} — Questions 16 to 18): Choose the most suitable response or arrangement.`;
+    for (let idx = 0; idx < 2; idx++) {
+        const [qtxt, opts, ans, exp] = commItems[(idx + 1) % commItems.length];
+        const r = rotateOpts(opts, ans, u + idx + 2);
+        level6.push({ origNum: 16 + idx, instruction: instUtSp, text: qtxt, options: r.opts, answer: r.ans, explanation: exp, speakPrompt: opts[ans] });
+    }
+    const [arrQtxt, arrOpts, arrAns, arrExp] = arrItems[2];
+    const rArr = rotateOpts(arrOpts, arrAns, u + 3);
+    level6.push({ origNum: 18, instruction: instUtSp, text: arrQtxt, options: rArr.opts, answer: rArr.ans, explanation: arrExp });
+
+    const instUtR = `SECTION E. READING COMPREHENSION (${title} — Questions 19 to 23): Read the passage and choose the correct answer A, B, C, or D.`;
+    readQs.forEach(([qtxt, opts, ans, exp], idx) => {
+        const r = rotateOpts(opts, ans, u + idx + 1);
+        const qobj = { origNum: 19 + idx, instruction: instUtR, text: qtxt, options: r.opts, answer: r.ans, explanation: exp };
+        if (idx === 0) qobj.passage = readPassage;
+        level6.push(qobj);
+    });
+    const instUtW = `SECTION F. WRITING IN UNIT (${title} — Questions 24 to 25): Choose the sentence that is grammatically correct and meaningful.`;
+    for (let idx = 0; idx < 2; idx++) {
+        const gItem = grammarItems[8 + idx];
+        const r = rotateOpts(gItem[1], gItem[2], u + idx + 2);
+        level6.push({
+            origNum: 24 + idx,
+            instruction: instUtW,
+            text: `Complete the sentence using the target structure of <b>${title} (${gName})</b>:\n${gItem[0]}`,
+            options: r.opts,
+            answer: r.ans,
+            explanation: gItem[3]
+        });
+    }
+
+    return { "1": level1, "2": level2, "3": level3, "4": level4, "5": level5, "6": level6 };
 }
 
-function initThcsGlobalSuccessPortal() {
-    const gradeConfigs = [
-        {
-            key: "gs6",
-            gradeNum: 6,
-            title: "📗 TIẾNG ANH LỚP 6 GLOBAL SUCCESS (12 UNITS × 6 CẤP ĐỘ)",
-            subtitle: "Trọn bộ 12 Unit SGK Tiếng Anh 6 Global Success — 6 Cấp độ/Unit: Từ vựng, Ngữ pháp, Nghe AI, Nói AI, Đọc hiểu & Kiểm tra cuối Unit",
-            badge: "LỚP 6 GLOBAL SUCCESS (12 UNITS)",
-            specs: G6_SPECS
-        },
-        {
-            key: "gs7",
-            gradeNum: 7,
-            title: "📘 TIẾNG ANH LỚP 7 GLOBAL SUCCESS (12 UNITS × 6 CẤP ĐỘ)",
-            subtitle: "Trọn bộ 12 Unit SGK Tiếng Anh 7 Global Success — 6 Cấp độ/Unit: Từ vựng, Ngữ pháp, Nghe AI, Nói AI, Đọc hiểu & Kiểm tra cuối Unit",
-            badge: "LỚP 7 GLOBAL SUCCESS (12 UNITS)",
-            specs: G7_SPECS
-        },
-        {
-            key: "gs8",
-            gradeNum: 8,
-            title: "📙 TIẾNG ANH LỚP 8 GLOBAL SUCCESS (12 UNITS × 6 CẤP ĐỘ)",
-            subtitle: "Trọn bộ 12 Unit SGK Tiếng Anh 8 Global Success — 6 Cấp độ/Unit: Từ vựng, Ngữ pháp, Nghe AI, Nói AI, Đọc hiểu & Kiểm tra cuối Unit",
-            badge: "LỚP 8 GLOBAL SUCCESS (12 UNITS)",
-            specs: G8_SPECS
-        },
-        {
-            key: "gs9",
-            gradeNum: 9,
-            title: "📕 TIẾNG ANH LỚP 9 GLOBAL SUCCESS & ÔN THI VÀO 10 (12 UNITS × 6 CẤP ĐỘ)",
-            subtitle: "Trọn bộ 12 Unit SGK Tiếng Anh 9 Global Success — 6 Cấp độ/Unit: Từ vựng, Ngữ pháp, Nghe AI, Nói AI, Đọc hiểu & Kiểm tra cuối Unit",
-            badge: "LỚP 9 GLOBAL SUCCESS (12 UNITS)",
-            specs: G9_SPECS
-        }
+(function initThcsGlobalSuccessPortal() {
+    const gradeMap = [
+        ["gs6", 6, "Lớp 6 Global Success", "📗", G6_SPECS],
+        ["gs7", 7, "Lớp 7 Global Success", "📘", G7_SPECS],
+        ["gs8", 8, "Lớp 8 Global Success", "📙", G8_SPECS],
+        ["gs9", 9, "Lớp 9 Global Success", "📕", G9_SPECS]
     ];
 
-    window.categoryConfig = {};
-    window.examDatabase = {};
+    const catCfg = {};
+    const examDb = {};
+    const flashcards = [];
+    let fcIdx = 1;
 
-    gradeConfigs.forEach(gc => {
-        const unitsMeta = {};
-        const dbGrade = {};
-        gc.specs.forEach(uTuple => {
-            const uNum = uTuple[0];
-            const uKey = "u" + uNum;
-            const uTitle = uTuple[1];
-            const topicDesc = uTuple[2];
-            const grammarFocus = uTuple[3];
-            const pronFocus = uTuple[4];
-            unitsMeta[uKey] = {
-                name: `📚 ${uTitle}`,
-                focus: `Chủ đề: ${topicDesc} | Ngữ pháp: ${grammarFocus} | Ngữ âm: ${pronFocus}`
-            };
-            dbGrade[uKey] = buildSixLevelsFromTuple(gc.gradeNum, uTuple);
+    gradeMap.forEach(([catKey, gNum, gName, icon, specs]) => {
+        const unitsMeta = [];
+        examDb[catKey] = {};
+        specs.forEach((tup, idx) => {
+            const [u, title, topic, gFocus, pFocus, cFocus, pronRaw, vocabRaw] = tup;
+            unitsMeta.push({
+                id: u,
+                title: title,
+                desc: `Chủ đề: ${topic} • Ngữ âm: ${pFocus} • Ngữ pháp: ${gFocus} • Giao tiếp: ${cFocus} (Đủ 6 Cấp độ)`
+            });
+            examDb[catKey][String(u)] = buildSixLevelsFromTuple(tup, gNum);
+            if (idx < 6) {
+                const [sent, opts, note] = vocabRaw[0];
+                const ansWord = opts[0];
+                flashcards.push({
+                    id: "v" + fcIdx++,
+                    word: ansWord,
+                    ipa: `Lớp ${gNum} • ${title}`,
+                    pos: `Vocabulary (${topic})`,
+                    meaning: note,
+                    example: sent.replace("______", ansWord),
+                    topic: `Global Success ${gNum} — ${title}`
+                });
+            }
         });
-        window.categoryConfig[gc.key] = {
-            title: gc.title,
-            subtitle: gc.subtitle,
-            badge: gc.badge,
+
+        catCfg[catKey] = {
+            name: `${gName} (12 Unit)`,
+            icon: icon,
+            subtitle: `Trọn bộ 12 Unit Tiếng Anh ${gName} — Mỗi Unit gồm 6 Cấp độ: (1) Từ vựng & Ngữ âm, (2) Ngữ pháp, (3) Nghe Listening, (4) Nói Speaking AI, (5) Đọc Reading, (6) Kiểm tra cuối Unit (25 câu)`,
+            defaultMinutes: 20,
             units: unitsMeta
         };
-        window.examDatabase[gc.key] = dbGrade;
-    });
-
-    const flashcards = [];
-    gradeConfigs.forEach(gc => {
-        gc.specs.slice(0, 6).forEach(uTuple => {
-            const [uNum, uTitle, topicDesc, grammarFocus, pronFocus, commFocus, pronQs, vocabQs, gramQs, commQs, speakSentences] = uTuple;
-            const vItem = vocabQs[0];
-            flashcards.push({
-                word: vItem[1][0],
-                ipa: `Lớp ${gc.gradeNum} - ${uTitle}`,
-                pos: `Key Vocabulary (${pronFocus})`,
-                meaning: vItem[2],
-                example: speakSentences[0]
-            });
-        });
     });
 
     const grammarNotes = [
         {
-            title: "📗 Lớp 6 (Units 1–6): Hiện tại đơn, Hiện tại tiếp diễn, Sở hữu cách & So sánh hơn",
+            id: "gr6_1",
+            title: "Lớp 6 (Unit 1–6): Hiện tại đơn, Hiện tại tiếp diễn, Sở hữu cách & So sánh hơn",
             level: "Global Success 6",
-            summary: "Tổng hợp cấu trúc trọng tâm Học kỳ I Tiếng Anh 6 Global Success.",
+            summary: "Nắm vững cách diễn đạt thói quen hằng ngày, hành động đang diễn ra, miêu tả nhà cửa và so sánh địa danh thiên nhiên.",
             formulas: [
-                "Present Simple: S + V(s/es) | Adv: always, usually, often, sometimes, never",
-                "Present Continuous: S + am/is/are + V-ing (now, at the moment, future plans)",
-                "Possessive Case & Prepositions: N's + N | in, on, under, next to, behind, between, in front of",
-                "Comparatives & Modal verbs: Adj-er / more + Adj + than | must / mustn't / should / shouldn't"
+                "Present Simple: S + V(s/es) | S + don't/doesn't + V (always, usually, every day)",
+                "Present Continuous: S + am/is/are + V-ing (now, right now, at the moment, Look!)",
+                "Comparative: short adj-er + than | more + long adj + than",
+                "Modals: should / shouldn't + V0 (lời khuyên Tết); must / mustn't + V0 (quy tắc)"
             ],
-            tips: "Trạng từ tần suất luôn đứng TRƯỚC động từ thường nhưng đứng SAU động từ to be."
+            tips: "Trạng từ tần suất (always, usually, often) đứng trước động từ thường nhưng đứng sau động từ to be."
         },
         {
-            title: "📗 Lớp 6 (Units 7–12): Từ để hỏi, Quá khứ đơn, Đại từ sở hữu, Will/Might & So sánh nhất",
+            id: "gr6_2",
+            title: "Lớp 6 (Unit 7–12): Quá khứ đơn, Đại từ sở hữu, Will/Might, ĐK loại 1 & So sánh nhất",
             level: "Global Success 6",
-            summary: "Tổng hợp cấu trúc trọng tâm Học kỳ II Tiếng Anh 6 Global Success.",
+            summary: "Kể lại sự kiện thể thao đã qua, nói về thành phố thế giới, nhà tương lai, bảo vệ môi trường 3Rs và người máy.",
             formulas: [
-                "Conjunctions & Past Simple: and, but, so, because, although | S + V2/ed (yesterday, last, ago)",
-                "Possessive Pronouns: mine, yours, his, hers, ours, theirs (đứng độc lập không kèm danh từ)",
-                "Future & First Conditional: S + will/might + V | If + S + V(s/es), S + will + V",
-                "Superlative Adjectives: the + short-adj-est / the most + long-adj"
+                "Past Simple: S + V2/ed | S + didn't + V0 (yesterday, last Sunday, in 1896)",
+                "Possessive Pronouns: mine, yours, his, hers, ours, theirs (thay cho Possessive Adj + N)",
+                "First Conditional: If + S + V(s/es), S + will + V0",
+                "Superlative (short adj): the + adj-est (the tallest, the smartest, the best, the worst)"
             ],
-            tips: "Trong câu điều kiện loại 1 (Unit 11), mệnh đề If luôn chia Hiện tại đơn, mệnh đề chính chia Will + V."
+            tips: "Sau mệnh đề If của câu điều kiện loại 1 luôn chia thì Hiện tại đơn, không dùng will trong mệnh đề If."
         },
         {
-            title: "📘 Lớp 7 (Units 1–6): Verbs of liking, Câu đơn, Quá khứ đơn, So sánh bằng & Lượng từ",
+            id: "gr7_1",
+            title: "Lớp 7 (Unit 1–6): Động từ chỉ sở thích, Câu đơn, So sánh bằng & Lượng từ",
             level: "Global Success 7",
-            summary: "Tổng hợp cấu trúc trọng tâm Học kỳ I Tiếng Anh 7 Global Success.",
+            summary: "Diễn tả sở thích cá nhân, lối sống lành mạnh, hoạt động tình nguyện, nghệ thuật, ẩm thực và thăm trường học.",
             formulas: [
-                "Verbs of liking: love, like, enjoy, fancy, hate, detest + V-ing",
-                "Comparisons: as + adj + as | different from | like",
-                "Quantifiers: some, any, much, many, a lot of, lots of (Food & Drink)",
-                "Prepositions of Time & Place: at (giờ/địa điểm cụ thể), on (ngày/bề mặt), in (tháng/năm/phòng)"
+                "Verbs of liking: love / enjoy / like / hate / fancy + V-ing",
+                "Comparisons: (not) as + adj + as | like + N | different from + N",
+                "Quantifiers: some, any, a lot of, lots of, How much (+ N không đếm được), How many (+ N số nhiều)",
+                "Prepositions of time & place: at (giờ/địa điểm), on (ngày/tầng), in (tháng/năm/phòng)"
             ],
-            tips: "Sau các động từ chỉ sở thích (enjoy, fancy, detest, adore) luôn dùng danh động từ V-ing."
+            tips: "Ghi nhớ cấu trúc 'different from' và '(not) as + adj + as' trong Unit 4 Lớp 7."
         },
         {
-            title: "📘 Lớp 7 (Units 7–12): It chỉ khoảng cách, Although/However, Câu hỏi Yes/No & Mạo từ",
+            id: "gr7_2",
+            title: "Lớp 7 (Unit 7–12): It chỉ khoảng cách, Although/However, Hiện tại tiếp diễn & Mạo từ",
             level: "Global Success 7",
-            summary: "Tổng hợp cấu trúc trọng tâm Học kỳ II Tiếng Anh 7 Global Success.",
+            summary: "Giao thông, phim ảnh, lễ hội thế giới, nguồn năng lượng tái tạo, phương tiện tương lai và các nước nói tiếng Anh.",
             formulas: [
-                "Distance & Modals: It is (about) + distance + from A to B | should / shouldn't",
-                "Contrast Connectors: Although / Though + S + V, S + V | However, + S + V",
-                "Present Continuous & Future Simple: S + am/is/are + V-ing | S + will + V",
-                "Articles: a / an (chưa xác định), the (đã xác định / duy nhất / tên đại dương, quần đảo)"
+                "Distance: It is (about) + khoảng cách + from A to B",
+                "Contrast: Although / Though + S + V, S + V  ≠  S + V; however, + S + V",
+                "Future Simple: S + will / won't + V0 (dự đoán phương tiện giao thông tương lai)",
+                "Articles with countries: The UK, The USA, The Philippines vs. Ø Australia, Ø Canada, Ø New Zealand"
             ],
-            tips: "'However' luôn đứng trước dấu phẩy và nối câu độc lập, còn 'Although/Though' đi trực tiếp với mệnh đề S + V."
+            tips: "Although đi liền với một mệnh đề (S + V), còn However đứng sau dấu chấm hoặc chấm phẩy và có dấu phẩy theo sau."
         },
         {
-            title: "📙 Lớp 8 (Units 1–6): So sánh trạng từ, Câu ghép, Mệnh đề thời gian & Điều kiện loại 1",
+            id: "gr8_1",
+            title: "Lớp 8 (Unit 1–6): So sánh hơn trạng từ, Câu ghép, Mạo từ Zero & Unless",
             level: "Global Success 8",
-            summary: "Tổng hợp cấu trúc trọng tâm Học kỳ I Tiếng Anh 8 Global Success.",
+            summary: "Hoạt động giải trí, cuộc sống miền quê, thanh thiếu niên, các dân tộc Việt Nam, phong tục lễ hội và lối sống.",
             formulas: [
-                "Comparative Adverbs: more + adv-ly + than | fast → faster, hard → harder, early → earlier",
-                "Compound Sentences: S + V, and/but/or/so + S + V | S + V; however/therefore, S + V",
-                "Past Continuous: S + was/were + V-ing (at 8 p.m. yesterday, while, when)",
-                "Complex Sentences with Time Clauses: before, after, when, while, as soon as, until + Present Simple"
+                "Comparative of adverbs: faster, earlier, harder | more + adv-ly + than (more skillfully, more soundly)",
+                "Compound sentences: S + V, + and/but/or/so/for + S + V | S + V; + however/therefore/otherwise, + S + V",
+                "Articles: a, an, the, Zero article (Ø trước danh từ số nhiều/không đếm được nói chung)",
+                "First Conditional with Unless: Unless + S + V(s/es), S + will + V0"
             ],
-            tips: "Trong mệnh đề trạng ngữ chỉ thời gian ở tương lai (when, as soon as, before, after, until), tuyệt đối không dùng 'will' mà chia Hiện tại đơn."
+            tips: "Trạng từ dài kết thúc bằng -ly (skillfully, hospitably, easily) luôn dùng 'more + adv + than'."
         },
         {
-            title: "📙 Lớp 8 (Units 7–12): Giới từ thời gian/nơi chốn, Câu tường thuật (Statements & Questions)",
+            id: "gr8_2",
+            title: "Lớp 8 (Unit 7–12): Mệnh đề thời gian, Quá khứ tiếp diễn, Giới từ & Câu tường thuật",
             level: "Global Success 8",
-            summary: "Tổng hợp cấu trúc trọng tâm Học kỳ II Tiếng Anh 8 Global Success.",
+            summary: "Bảo vệ môi trường, mua sắm, thảm họa thiên nhiên, giao tiếp tương lai, khoa học công nghệ và sự sống ngoài hành tinh.",
             formulas: [
-                "Prepositions of Time: in + khoảng thời gian tương lai (in ten years), by + mốc thời gian",
-                "Possessive Pronouns: a friend of mine / ours / theirs",
-                "Reported Speech (Statements): S + said (that) + S + V(lùi thì)",
-                "Reported Speech (Questions): S + asked (+ O) + if/whether / Wh-word + S + V(lùi thì, trật tự khẳng định)"
+                "Time clauses: before, after, when, while, until, as soon as + Present Simple (chỉ tương lai)",
+                "Past Continuous: S + was/were + V-ing (while + Past Continuous; when + Past Simple)",
+                "Prepositions of time: in + khoảng thời gian (= sau ... nữa), for + khoảng thời gian, by + mốc thời gian",
+                "Reported Speech: S + said (that) + S + V(lùi thì) | S + asked + (O) + if/whether/wh- + S + V(lùi thì)"
             ],
-            tips: "Khi tường thuật câu hỏi (Reported Questions), bắt buộc đổi về trật tự S + V (không đảo trợ động từ lên trước chủ ngữ)."
+            tips: "Trong câu tường thuật câu hỏi (Unit 12 Lớp 8), mệnh đề sau Wh- hoặc if/whether luôn ở trật tự khẳng định (S + V)."
         },
         {
-            title: "📕 Lớp 9 (Units 1–6): Từ để hỏi + to-V, So sánh kép, Wish ở hiện tại, Hiện tại hoàn thành & V-ing/to-V",
+            id: "gr9_1",
+            title: "Lớp 9 (Unit 1–6): Wh- + to-V, So sánh kép, ĐK loại 1 với Modal, Wish & Hiện tại hoàn thành",
             level: "Global Success 9",
-            summary: "Tổng hợp cấu trúc trọng tâm Học kỳ I Tiếng Anh 9 Global Success & Ôn thi vào 10.",
+            summary: "Cộng đồng địa phương, cuộc sống đô thị, sức khỏe tuổi teen, di sản quá khứ, trải nghiệm và lối sống Việt Nam xưa - nay.",
             formulas: [
-                "Question words + to-infinitive & Phrasal verbs: know/wonder + who/what/where/how + to-V",
+                "Question words + to-V: what / where / how / who + to V0 & Phrasal verbs (pass down, look around, cut down on)",
                 "Double Comparatives: The + comparative + S + V, the + comparative + S + V",
-                "First Conditional with Modals: If + S + V(s/es), S + can/must/should/may/might + V",
-                "Wish & Present Perfect: S + wish(es) + S + V2/ed (were) | S + have/has + V3/ed (since/for)"
+                "Wish + Past Simple / Past Continuous & Present Perfect (have/has + V3/ed)",
+                "Verbs + to-V (decide, promise, plan, agree, hope) vs. Verbs + V-ing (enjoy, mind, suggest, avoid, finish)"
             ],
-            tips: "Ghi nhớ nhóm động từ đi với V-ing (enjoy, fancy, mind, avoid, suggest) và nhóm đi với to-V (promise, decide, agree, plan, learn)."
+            tips: "Trong cấu trúc so sánh kép (Unit 2 Lớp 9): 'The more crowded the city gets, the worse the traffic congestion becomes'."
         },
         {
-            title: "📕 Lớp 9 (Units 7–12): Mệnh đề quan hệ (Hạn định & Không hạn định), Suggest/Recommend & So/Such...that",
+            id: "gr9_2",
+            title: "Lớp 9 (Unit 7–12): Tường thuật Yes/No, Mệnh đề quan hệ, Suggest/Advise & Mệnh đề trạng ngữ",
             level: "Global Success 9",
-            summary: "Tổng hợp cấu trúc trọng tâm Học kỳ II Tiếng Anh 9 Global Success & Ôn thi vào 10.",
+            summary: "Kỳ quan thiên nhiên, du lịch, tiếng Anh thế giới, hành tinh Trái Đất, thiết bị điện tử và định hướng nghề nghiệp.",
             formulas: [
-                "Reported Yes/No Questions: S + asked/wanted to know + if/whether + S + V(lùi thì)",
-                "Relative Clauses: who, whom, which, whose, that (Defining vs Non-defining có dấu phẩy)",
-                "Suggest / Recommend / Advise: S + suggest/recommend + V-ing / that + S + (should) + V(nguyên thể)",
-                "Adverbial Clauses of Result, Concession & Reason: so + adj/adv + that | such + (a/an) + adj + N + that | although / because / since"
+                "Reported Yes/No questions: S + asked / wanted to know + if / whether + S + V(lùi thì)",
+                "Relative Clauses: Defining & Non-defining (, who / which / whose ..., — không dùng that sau dấu phẩy)",
+                "Reporting advice: suggest / advise / recommend + V-ing HOẶC + (that) + S + (should) + V0",
+                "Adverbial clauses: so + adj/adv + that | such + (a/an) + adj + N + that | although / though | because / since / as"
             ],
-            tips: "Trong mệnh đề quan hệ không hạn định (có dấu phẩy), TUYỆT ĐỐI KHÔNG được dùng đại từ 'that'."
+            tips: "Mệnh đề quan hệ không xác định (Unit 10 Lớp 9) có dấu phẩy ngăn cách, tuyệt đối KHÔNG dùng đại từ 'that'."
         }
     ];
 
+    window.categoryConfig = catCfg;
+    window.examDatabase = examDb;
     window.portalData = {
-        version: "4.0-THCS-GS-6789",
-        settings: {
+        siteSettings: {
+            schemaVersion: "2026.10.15.thcs.v1",
             adminPassword: "tienhuongsonkiet28011981@",
-            contactText: "LH Thầy Tiến qua ĐT: 0943930787",
-            lockAfterTest1: false,
-            ghRepo: "",
-            ghBranch: "main"
+            contactBanner: "LH Thầy Tiến qua ĐT: 0943930787",
+            lockAfterTest1: false
         },
-        flashcards: flashcards,
         grammarNotes: grammarNotes,
-        categoryConfig: window.categoryConfig,
-        examDatabase: window.examDatabase
+        flashcards: flashcards,
+        extraCategories: catCfg,
+        extraDatabase: examDb
     };
-}
+    window.__authoritativePortalData = JSON.parse(JSON.stringify(window.portalData));
+})();
 
-initThcsGlobalSuccessPortal();
-    }
-
-    // ==================== CORE RUNTIME & UI CONTROLLER ====================
-    const LEVEL_SHORT_LABELS = {
-        "Test 1": "1. Từ vựng & Ngữ âm (10c)",
-        "Test 2": "2. Ngữ pháp bài học (10c)",
-        "Test 3": "3. Kỹ năng Nghe AI (10c)",
-        "Test 4": "4. Kỹ năng Nói AI (10c)",
-        "Test 5": "5. Kỹ năng Đọc hiểu (10c)",
-        "Test 6": "6. Đề Kiểm tra Unit (25c)"
-    };
-    const LEVEL_FULL_TITLES = {
-        "Test 1": "Cấp độ 1: Luyện Từ vựng & Ngữ âm trong đơn vị bài học (10 câu)",
-        "Test 2": "Cấp độ 2: Luyện Ngữ pháp trọng tâm trong đơn vị bài học (10 câu)",
-        "Test 3": "Cấp độ 3: Luyện Kỹ năng Nghe — Listening AI (10 câu)",
-        "Test 4": "Cấp độ 4: Luyện Kỹ năng Nói & Giao tiếp — Speaking AI (10 câu)",
-        "Test 5": "Cấp độ 5: Luyện Kỹ năng Đọc hiểu — Reading (10 câu)",
-        "Test 6": "Cấp độ 6: Bài Kiểm tra Tổng hợp Cuối Unit — End-of-Unit Test (25 câu)"
+    // ============================================================================
+    // BỘ ĐIỀU KHIỂN GIAO DIỆN & TƯƠNG TÁC CHÍNH (ĐỒNG BỘ 100% VỚI PORTAL_DATA.JS)
+    // ============================================================================
+    const LEVEL_SHORT_NAMES = {
+        "1": "Cấp độ 1: Từ vựng & Ngữ âm (10 câu)",
+        "2": "Cấp độ 2: Ngữ pháp trọng tâm (10 câu)",
+        "3": "Cấp độ 3: Kỹ năng Nghe - Listening AI (10 câu)",
+        "4": "Cấp độ 4: Kỹ năng Nói - Speaking AI (10 câu)",
+        "5": "Cấp độ 5: Kỹ năng Đọc - Reading (10 câu)",
+        "6": "Cấp độ 6: Kiểm tra cuối Unit (25 câu)"
     };
 
+    const LEVEL_BADGE_COLORS = {
+        "1": "border-blue-200 bg-blue-50/70 hover:bg-blue-100 text-blue-900",
+        "2": "border-indigo-200 bg-indigo-50/70 hover:bg-indigo-100 text-indigo-900",
+        "3": "border-amber-200 bg-amber-50/80 hover:bg-amber-100 text-amber-900",
+        "4": "border-purple-200 bg-purple-50/80 hover:bg-purple-100 text-purple-900",
+        "5": "border-emerald-200 bg-emerald-50/80 hover:bg-emerald-100 text-emerald-900",
+        "6": "border-rose-200 bg-rose-50/80 hover:bg-rose-100 text-rose-900"
+    };
+
+    const STORAGE_KEY_CUSTOM_DB = "thaytien_thcs_gs6789_custom_db_v5";
+    const STORAGE_KEY_PROGRESS  = "thaytien_thcs_gs6789_progress_v5";
+    const STORAGE_KEY_SCORES    = "thaytien_thcs_gs6789_scores_v5";
+    const STORAGE_KEY_ADMIN     = "thaytien_thcs_gs6789_admin_unlocked_v5";
+
+    const __memStore = {};
     function safeGetItem(k, fallback = null) {
-        try { const v = localStorage.getItem(k); return v !== null ? v : fallback; } catch (e) { return fallback; }
+        try {
+            const v = localStorage.getItem(k);
+            return v !== null ? v : (__memStore[k] !== undefined ? __memStore[k] : fallback);
+        } catch (e) {
+            return __memStore[k] !== undefined ? __memStore[k] : fallback;
+        }
     }
     function safeSetItem(k, v) {
-        try { localStorage.setItem(k, v); } catch (e) {}
+        __memStore[k] = String(v);
+        try { localStorage.setItem(k, String(v)); } catch (e) {}
     }
     function safeRemoveItem(k) {
+        delete __memStore[k];
         try { localStorage.removeItem(k); } catch (e) {}
     }
 
-    const STORAGE_KEY_CUSTOM_DB = 'thay_tien_thcs_gs6789_custom_db_v4';
-    const STORAGE_KEY_SCORES = 'thay_tien_thcs_gs6789_scores_v4';
-    const STORAGE_KEY_ADMIN_AUTH = 'thay_tien_thcs_gs6789_admin_unlocked_v4';
-
-    let currentCategory = 'gs6';
-    let currentUnit = 'u1';
-    let currentTest = null;
+    let currentCategory = "gs6";
+    let currentUnit = 1;
+    let currentTest = 1;
+    let openUnitsMap = { "1": true };
     let userAnswers = {};
     let isSubmitted = false;
-    let isAdminUnlocked = safeGetItem(STORAGE_KEY_ADMIN_AUTH) === 'true';
-    let pendingAuthMode = null;
+    let isAdminUnlocked = safeGetItem(STORAGE_KEY_ADMIN) === "true";
+    let timerInterval = null;
+    let timeLeftSeconds = 20 * 60;
+    let currentFcIndex = 0;
+    let pendingActionModalCallback = null;
+
+    // -------------------- TOAST & IN-PAGE MODAL HELPERS --------------------
+    function showToast(message, type = "info") {
+        const container = document.getElementById("toast-container");
+        if (!container) return;
+        const colors = {
+            info: "bg-blue-900 text-white border-blue-400",
+            success: "bg-emerald-700 text-white border-emerald-300",
+            warning: "bg-amber-600 text-white border-amber-300",
+            error: "bg-rose-700 text-white border-rose-300"
+        };
+        const toast = document.createElement("div");
+        toast.className = `pointer-events-auto px-4 py-3 rounded-xl shadow-xl border-l-4 text-xs md:text-sm font-bold transition-all duration-300 max-w-sm ${colors[type] || colors.info}`;
+        toast.innerText = message;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = "0";
+            setTimeout(() => toast.remove(), 300);
+        }, 3200);
+    }
+
+    function openActionModal(opts) {
+        const modal = document.getElementById("action-modal");
+        const titleEl = document.getElementById("action-modal-title");
+        const msgEl = document.getElementById("action-modal-message");
+        const inpWrap = document.getElementById("action-modal-input-wrap");
+        const inpEl = document.getElementById("action-modal-input");
+        if (!modal) return;
+
+        titleEl.innerText = opts.title || "Xác nhận";
+        msgEl.innerText = opts.message || "";
+        if (opts.showInput) {
+            inpWrap.classList.remove("hidden-element");
+            inpEl.value = opts.inputDefault || "";
+            inpEl.placeholder = opts.inputPlaceholder || "";
+        } else {
+            inpWrap.classList.add("hidden-element");
+        }
+        pendingActionModalCallback = opts.onConfirm || null;
+        modal.classList.remove("hidden-element");
+        if (opts.showInput) setTimeout(() => inpEl.focus(), 50);
+    }
+
+    function closeActionModal() {
+        const modal = document.getElementById("action-modal");
+        if (modal) modal.classList.add("hidden-element");
+        pendingActionModalCallback = null;
+    }
+
+    function confirmActionModal() {
+        const inpEl = document.getElementById("action-modal-input");
+        const val = inpEl ? inpEl.value : "";
+        const cb = pendingActionModalCallback;
+        closeActionModal();
+        if (typeof cb === "function") cb(val);
+    }
+
+    // -------------------- SETTINGS & STORAGE HELPERS --------------------
+    function getSiteSettings() {
+        if (!window.portalData) window.portalData = {};
+        if (!window.portalData.siteSettings) {
+            window.portalData.siteSettings = {
+                adminPassword: "tienhuongsonkiet28011981@",
+                contactBanner: "LH Thầy Tiến qua ĐT: 0943930787",
+                lockAfterTest1: false
+            };
+        }
+        return window.portalData.siteSettings;
+    }
 
     function getAdminPassword() {
-        return (window.portalData && window.portalData.settings && window.portalData.settings.adminPassword) || "tienhuongsonkiet28011981@";
-    }
-    function getContactText() {
-        return (window.portalData && window.portalData.settings && window.portalData.settings.contactText) || "LH Thầy Tiến qua ĐT: 0943930787";
-    }
-    function isLockEnabled() {
-        // HỌC SINH LUYỆN TẬP TỰ DO 100%, CHỈ DÙNG MẬT KHẨU CHO QUẢN TRỊ VIÊN (ADMIN CMS)
-        return false;
+        return getSiteSettings().adminPassword || "tienhuongsonkiet28011981@";
     }
 
-    function applySavedPortalCustomizations() {
-        try {
-            const raw = safeGetItem(STORAGE_KEY_CUSTOM_DB);
-            if (!raw) return;
-            const saved = JSON.parse(raw);
-            if (saved.settings && window.portalData) {
-                window.portalData.settings = Object.assign({}, window.portalData.settings, saved.settings);
-                window.portalData.settings.lockAfterTest1 = false;
-            }
-            if (saved.flashcards && Array.isArray(saved.flashcards) && window.portalData) {
-                window.portalData.flashcards = saved.flashcards;
-            }
-            if (saved.grammarNotes && Array.isArray(saved.grammarNotes) && window.portalData) {
-                window.portalData.grammarNotes = saved.grammarNotes;
-            }
-            if (saved.examOverrides) {
-                Object.keys(saved.examOverrides).forEach(cat => {
-                    if (!window.examDatabase[cat]) return;
-                    Object.keys(saved.examOverrides[cat]).forEach(uKey => {
-                        if (!window.examDatabase[cat][uKey]) window.examDatabase[cat][uKey] = {};
-                        Object.keys(saved.examOverrides[cat][uKey]).forEach(tKey => {
-                            window.examDatabase[cat][uKey][tKey] = saved.examOverrides[cat][uKey][tKey];
-                        });
-                    });
-                });
-            }
-        } catch (err) {
-            console.warn("Could not load custom portal overrides:", err);
-        }
-        updateContactBanners();
+    function getContactBanner() {
+        return getSiteSettings().contactBanner || "LH Thầy Tiến qua ĐT: 0943930787";
     }
 
-    function savePortalCustomizations(overrideCat, overrideUnit, overrideTest, newQuestions) {
-        try {
-            let saved = {};
-            const raw = safeGetItem(STORAGE_KEY_CUSTOM_DB);
-            if (raw) saved = JSON.parse(raw);
-            if (!saved.examOverrides) saved.examOverrides = {};
-            if (overrideCat && overrideUnit && overrideTest && newQuestions) {
-                if (!saved.examOverrides[overrideCat]) saved.examOverrides[overrideCat] = {};
-                if (!saved.examOverrides[overrideCat][overrideUnit]) saved.examOverrides[overrideCat][overrideUnit] = {};
-                saved.examOverrides[overrideCat][overrideUnit][overrideTest] = newQuestions;
-            }
-            if (window.portalData) {
-                saved.settings = window.portalData.settings;
-                saved.flashcards = window.portalData.flashcards;
-                saved.grammarNotes = window.portalData.grammarNotes;
-            }
-            safeSetItem(STORAGE_KEY_CUSTOM_DB, JSON.stringify(saved));
-        } catch (e) {
-            console.warn("Storage quota or save error:", e);
-        }
-    }
-
-    function updateContactBanners() {
-        const txt = getContactText();
-        ['header-contact-banner', 'result-contact-banner', 'modal-contact-banner'].forEach(id => {
+    function applySiteSettingsToUI() {
+        const txt = getContactBanner();
+        ["header-contact-text", "welcome-contact-banner", "result-contact-banner", "modal-contact-banner"].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.innerText = txt;
         });
     }
 
-    function getUnitData(cat, uKey) {
-        if (!window.examDatabase || !window.examDatabase[cat]) return {};
-        return window.examDatabase[cat][uKey] || {};
-    }
-    function getTestQuestions(cat, uKey, tKey) {
-        const uData = getUnitData(cat, uKey);
-        return uData[tKey] || [];
+    function loadCustomPortalStorage() {
+        try {
+            const raw = safeGetItem(STORAGE_KEY_CUSTOM_DB);
+            if (raw) {
+                const saved = JSON.parse(raw);
+                if (saved.siteSettings && window.portalData) {
+                    window.portalData.siteSettings = Object.assign({}, window.portalData.siteSettings, saved.siteSettings);
+                    window.portalData.siteSettings.lockAfterTest1 = false;
+                }
+                if (Array.isArray(saved.flashcards) && window.portalData) {
+                    window.portalData.flashcards = saved.flashcards;
+                }
+                if (Array.isArray(saved.grammarNotes) && window.portalData) {
+                    window.portalData.grammarNotes = saved.grammarNotes;
+                }
+                if (saved.examOverrides && window.examDatabase) {
+                    Object.keys(saved.examOverrides).forEach(cat => {
+                        if (!window.examDatabase[cat]) window.examDatabase[cat] = {};
+                        Object.keys(saved.examOverrides[cat]).forEach(u => {
+                            if (!window.examDatabase[cat][u]) window.examDatabase[cat][u] = {};
+                            Object.keys(saved.examOverrides[cat][u]).forEach(t => {
+                                window.examDatabase[cat][u][t] = saved.examOverrides[cat][u][t];
+                            });
+                        });
+                    });
+                }
+            }
+        } catch (e) {
+            console.warn("Could not load custom storage:", e);
+        }
+        applySiteSettingsToUI();
     }
 
+    function persistAdminDatabase(cat, unit, test, list) {
+        try {
+            let saved = {};
+            const raw = safeGetItem(STORAGE_KEY_CUSTOM_DB);
+            if (raw) saved = JSON.parse(raw);
+            if (!saved.examOverrides) saved.examOverrides = {};
+            if (cat && unit && test && Array.isArray(list)) {
+                if (!saved.examOverrides[cat]) saved.examOverrides[cat] = {};
+                if (!saved.examOverrides[cat][String(unit)]) saved.examOverrides[cat][String(unit)] = {};
+                saved.examOverrides[cat][String(unit)][String(test)] = list;
+            }
+            if (window.portalData) {
+                saved.siteSettings = window.portalData.siteSettings;
+                saved.flashcards = window.portalData.flashcards;
+                saved.grammarNotes = window.portalData.grammarNotes;
+            }
+            safeSetItem(STORAGE_KEY_CUSTOM_DB, JSON.stringify(saved));
+        } catch (e) {
+            console.warn("Persist error:", e);
+        }
+    }
+
+    function normalizeUnitId(u) {
+        if (typeof u === "number") return String(u);
+        const s = String(u || "1").trim();
+        const m = s.match(/(\d+)/);
+        return m ? m[1] : "1";
+    }
+
+    function normalizeTestId(t) {
+        if (typeof t === "number") return String(t);
+        const s = String(t || "1").trim();
+        const m = s.match(/(\d+)/);
+        return m ? m[1] : "1";
+    }
+
+    function getUnitMeta(cat, unitId) {
+        const cfg = window.categoryConfig && window.categoryConfig[cat];
+        if (!cfg || !Array.isArray(cfg.units)) return { id: Number(unitId), title: `Unit ${unitId}`, desc: "" };
+        const numId = Number(normalizeUnitId(unitId));
+        return cfg.units.find(u => Number(u.id) === numId) || cfg.units[0] || { id: numId, title: `Unit ${numId}`, desc: "" };
+    }
+
+    function getQuestionsList(cat, unitId, testId) {
+        const uKey = normalizeUnitId(unitId);
+        const tKey = normalizeTestId(testId);
+        try {
+            return (window.examDatabase[cat][uKey][tKey]) || [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveProgress(cat, unitId, testId, correct, total, percent) {
+        try {
+            const raw = safeGetItem(STORAGE_KEY_PROGRESS, "{}");
+            const data = JSON.parse(raw) || {};
+            const key = `${cat}-${normalizeUnitId(unitId)}-${normalizeTestId(testId)}`;
+            data[key] = { correct, total, percent, date: new Date().toLocaleString("vi-VN") };
+            safeSetItem(STORAGE_KEY_PROGRESS, JSON.stringify(data));
+        } catch (e) {}
+    }
+
+    function getProgress(cat, unitId, testId) {
+        try {
+            const raw = safeGetItem(STORAGE_KEY_PROGRESS, "{}");
+            const data = JSON.parse(raw) || {};
+            return data[`${cat}-${normalizeUnitId(unitId)}-${normalizeTestId(testId)}`] || null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // -------------------- TIMER --------------------
+    function resetTimer(minutes) {
+        if (timerInterval) clearInterval(timerInterval);
+        timeLeftSeconds = (minutes || 20) * 60;
+        updateTimerDisplay();
+    }
+
+    function startTimer(minutes) {
+        resetTimer(minutes);
+        timerInterval = setInterval(() => {
+            if (isSubmitted) {
+                clearInterval(timerInterval);
+                return;
+            }
+            if (timeLeftSeconds > 0) {
+                timeLeftSeconds--;
+                updateTimerDisplay();
+            } else {
+                clearInterval(timerInterval);
+                showToast("⏰ Đã hết thời gian làm bài! Hệ thống tự động chấm điểm.", "warning");
+                submitTest();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const el = document.getElementById("timer-display");
+        if (!el) return;
+        const m = Math.floor(timeLeftSeconds / 60);
+        const s = timeLeftSeconds % 60;
+        el.innerText = `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+    }
+
+    // -------------------- NAVIGATION & SIDEBAR --------------------
     function hideAllMainScreens() {
-        ['welcome-screen', 'test-screen', 'result-screen', 'flashcard-screen', 'admin-screen'].forEach(id => {
+        ["welcome-screen", "study-hub-screen", "admin-screen", "test-screen", "result-screen"].forEach(id => {
             const el = document.getElementById(id);
-            if (el) el.classList.add('hidden-element');
+            if (el) el.classList.add("hidden-element");
         });
     }
 
-    function updateTopNavActive(activeKey) {
-        ['gs6', 'gs7', 'gs8', 'gs9', 'flashcards', 'admin'].forEach(k => {
-            const btn = document.getElementById('cat-btn-' + k);
-            if (!btn) return;
-            if (k === activeKey) btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
+    function showWelcomeHome() {
+        stopListeningAudio();
+        if (timerInterval) clearInterval(timerInterval);
+        hideAllMainScreens();
+        const w = document.getElementById("welcome-screen");
+        if (w) w.classList.remove("hidden-element");
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function selectCategory(cat) {
         stopListeningAudio();
+        if (!window.categoryConfig || !window.categoryConfig[cat]) cat = "gs6";
         currentCategory = cat;
-        const unitsObj = window.categoryConfig[cat].units;
-        currentUnit = Object.keys(unitsObj)[0] || 'u1';
-        currentTest = null;
+        currentUnit = 1;
+        currentTest = 1;
+        openUnitsMap = { "1": true };
 
-        updateTopNavActive(cat);
-        const sidebarEl = document.getElementById('sidebar-panel');
-        if (sidebarEl) sidebarEl.classList.remove('hidden-element');
+        ["gs6", "gs7", "gs8", "gs9"].forEach(c => {
+            const btn = document.getElementById(`tab-cat-${c}`);
+            if (!btn) return;
+            if (c === cat) {
+                btn.className = "nav-cat-btn px-3 py-1 bg-gray-50 text-blue-800 font-extrabold rounded text-xs transition-colors shadow-sm ring-2 ring-white";
+            } else if (c === "gs9") {
+                btn.className = "nav-cat-btn px-3 py-1 bg-amber-400 hover:bg-amber-300 text-blue-950 font-extrabold rounded text-xs transition-colors shadow-sm";
+            } else {
+                btn.className = "nav-cat-btn px-3 py-1 bg-white/15 hover:bg-white hover:text-blue-900 text-white font-semibold rounded text-xs transition-colors";
+            }
+        });
 
         const cfg = window.categoryConfig[cat];
-        document.getElementById('sidebar-cat-title').innerText = cfg.title;
-        document.getElementById('welcome-cat-title').innerText = cfg.title;
-        document.getElementById('welcome-cat-subtitle').innerText = cfg.subtitle;
-        document.getElementById('current-cat-badge').innerText = cfg.badge;
+        if (cfg) {
+            const sideTitle = document.getElementById("sidebar-cat-title");
+            if (sideTitle) sideTitle.innerText = `${cfg.icon || "📚"} ${cfg.name}`;
+            const mainHeading = document.getElementById("welcome-main-heading");
+            if (mainHeading) mainHeading.innerText = `HỆ THỐNG LUYỆN TẬP ${cfg.name.toUpperCase()} — THẦY TIẾN`;
+            const descEl = document.getElementById("welcome-cat-desc");
+            if (descEl) descEl.innerText = cfg.subtitle || "";
+            resetTimer(cfg.defaultMinutes || 20);
+        }
 
-        hideAllMainScreens();
-        document.getElementById('welcome-screen').classList.remove('hidden-element');
+        renderSidebar();
+        showWelcomeHome();
+    }
+
+    function toggleUnitAccordion(unitId) {
+        const uKey = normalizeUnitId(unitId);
+        openUnitsMap[uKey] = !openUnitsMap[uKey];
+        currentUnit = Number(uKey);
         renderSidebar();
     }
 
     function renderSidebar() {
-        const container = document.getElementById('unit-list');
+        const container = document.getElementById("units-container");
         if (!container) return;
-        container.innerHTML = '';
-        const unitsObj = window.categoryConfig[currentCategory].units;
-        const levelKeys = ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5", "Test 6"];
+        container.innerHTML = "";
+        const cfg = window.categoryConfig && window.categoryConfig[currentCategory];
+        if (!cfg || !Array.isArray(cfg.units)) return;
 
-        Object.keys(unitsObj).forEach(uKey => {
-            const uMeta = unitsObj[uKey];
-            const isOpen = (uKey === currentUnit);
-            const uDiv = document.createElement('div');
-            uDiv.className = 'border border-gray-200 rounded-xl overflow-hidden bg-white shadow-sm';
+        cfg.units.forEach(uObj => {
+            const uKey = String(uObj.id);
+            const isOpen = !!openUnitsMap[uKey];
+            const wrap = document.createElement("div");
+            wrap.className = "border-b border-gray-200 bg-white";
 
-            const headerBtn = document.createElement('button');
-            headerBtn.className = `w-full text-left px-3.5 py-2.5 font-extrabold text-xs md:text-sm flex justify-between items-center transition-colors ${isOpen ? 'bg-blue-700 text-white' : 'bg-gray-50 text-gray-800 hover:bg-blue-50'}`;
-            headerBtn.innerHTML = `<span class="truncate pr-2">${uMeta.name}</span><span class="text-xs flex-shrink-0">${isOpen ? '▼' : '▶'}</span>`;
-            headerBtn.onclick = () => {
-                currentUnit = (currentUnit === uKey && isOpen) ? null : uKey;
-                renderSidebar();
-            };
-            uDiv.appendChild(headerBtn);
+            const headerBtn = document.createElement("button");
+            headerBtn.type = "button";
+            headerBtn.className = `w-full text-left px-3.5 py-2.5 font-extrabold text-xs md:text-sm flex justify-between items-center transition-colors cursor-pointer ${isOpen ? "bg-blue-700 text-white" : "bg-white text-gray-800 hover:bg-blue-50"}`;
+            headerBtn.innerHTML = `
+                <span class="truncate pr-2">${uObj.title}</span>
+                <span class="text-xs flex-shrink-0">${isOpen ? "▼" : "▶"}</span>
+            `;
+            headerBtn.onclick = () => toggleUnitAccordion(uKey);
+            wrap.appendChild(headerBtn);
 
             if (isOpen) {
-                const bodyDiv = document.createElement('div');
-                bodyDiv.className = 'p-2.5 bg-white border-t border-gray-100 space-y-2';
+                const body = document.createElement("div");
+                body.className = "p-2.5 bg-slate-50/70 border-t border-gray-100 space-y-2";
 
-                const focusP = document.createElement('p');
-                focusP.className = 'text-[11px] text-gray-600 bg-blue-50/70 px-2.5 py-1.5 rounded-lg border border-blue-100 font-medium leading-snug';
-                focusP.innerText = uMeta.focus;
-                bodyDiv.appendChild(focusP);
+                if (uObj.desc) {
+                    const descP = document.createElement("p");
+                    descP.className = "text-[11px] text-gray-600 bg-white px-2.5 py-1.5 rounded-lg border border-blue-100 leading-snug";
+                    descP.innerText = uObj.desc;
+                    body.appendChild(descP);
+                }
 
-                const gridDiv = document.createElement('div');
-                gridDiv.className = 'grid grid-cols-1 gap-1.5 pt-1';
+                const levelsGrid = document.createElement("div");
+                levelsGrid.className = "grid grid-cols-1 gap-1.5";
 
-                levelKeys.forEach(tKey => {
-                    const qList = getTestQuestions(currentCategory, uKey, tKey);
-                    const isSelected = (currentUnit === uKey && currentTest === tKey);
-                    const btn = document.createElement('button');
-                    let colorCls = 'bg-gray-50 hover:bg-blue-50 text-gray-800 border-gray-200';
-                    if (tKey === 'Test 3') colorCls = 'bg-amber-50/70 hover:bg-amber-100 text-amber-900 border-amber-200';
-                    if (tKey === 'Test 4') colorCls = 'bg-purple-50/70 hover:bg-purple-100 text-purple-900 border-purple-200';
-                    if (tKey === 'Test 5') colorCls = 'bg-emerald-50/70 hover:bg-emerald-100 text-emerald-900 border-emerald-200';
-                    if (tKey === 'Test 6') colorCls = 'bg-rose-50/80 hover:bg-rose-100 text-rose-900 border-rose-200';
-                    if (isSelected) colorCls = 'bg-blue-600 text-white border-blue-700 shadow-sm';
+                ["1", "2", "3", "4", "5", "6"].forEach(tKey => {
+                    const qList = getQuestionsList(currentCategory, uKey, tKey);
+                    const prog = getProgress(currentCategory, uKey, tKey);
+                    const isSelected = (String(currentUnit) === uKey && String(currentTest) === tKey && !document.getElementById("test-screen").classList.contains("hidden-element"));
 
-                    btn.className = `w-full text-left px-3 py-2 rounded-lg border text-xs font-bold flex justify-between items-center transition-all ${colorCls}`;
-                    const labelText = LEVEL_SHORT_LABELS[tKey] || tKey;
-                    btn.innerHTML = `<span>${labelText}</span><span class="text-[10px] px-1.5 py-0.5 rounded ${isSelected ? 'bg-blue-800 text-white' : 'bg-white/80 text-gray-600 border border-gray-200'}">🔓 Mở (${qList.length}c)</span>`;
-                    btn.onclick = () => selectTest(uKey, tKey);
-                    gridDiv.appendChild(btn);
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    let cls = LEVEL_BADGE_COLORS[tKey] || LEVEL_BADGE_COLORS["1"];
+                    if (isSelected) {
+                        cls = "bg-blue-600 text-white border-blue-700 shadow-sm";
+                    }
+                    btn.className = `w-full text-left px-2.5 py-2 rounded-lg border text-xs font-bold flex justify-between items-center transition-all cursor-pointer ${cls}`;
+
+                    const badgeHtml = prog
+                        ? `<span class="text-[10px] px-1.5 py-0.5 rounded font-extrabold ${isSelected ? "bg-amber-300 text-blue-950" : "bg-emerald-600 text-white"}">✓ ${prog.percent}%</span>`
+                        : `<span class="text-[10px] px-1.5 py-0.5 rounded ${isSelected ? "bg-blue-800 text-white" : "bg-white/90 text-gray-600 border border-gray-200"}">${qList.length} câu</span>`;
+
+                    btn.innerHTML = `<span class="truncate pr-1.5">${LEVEL_SHORT_NAMES[tKey]}</span>${badgeHtml}`;
+                    btn.onclick = () => selectTest(Number(uKey), Number(tKey));
+                    levelsGrid.appendChild(btn);
                 });
 
-                bodyDiv.appendChild(gridDiv);
-                uDiv.appendChild(bodyDiv);
+                body.appendChild(levelsGrid);
+                wrap.appendChild(body);
             }
-            container.appendChild(uDiv);
+
+            container.appendChild(wrap);
         });
     }
 
-    function selectTest(uKey, tKey) {
+    function selectTest(unitId, testId) {
         stopListeningAudio();
-        currentUnit = uKey;
-        currentTest = tKey;
+        const uKey = normalizeUnitId(unitId);
+        const tKey = normalizeTestId(testId);
+        currentUnit = Number(uKey);
+        currentTest = Number(tKey);
+        openUnitsMap[uKey] = true;
         userAnswers = {};
         isSubmitted = false;
 
-        hideAllMainScreens();
-        document.getElementById('test-screen').classList.remove('hidden-element');
-
         const cfg = window.categoryConfig[currentCategory];
-        const uMeta = cfg.units[uKey];
-        document.getElementById('current-cat-badge').innerText = cfg.badge;
-        document.getElementById('current-test-title').innerText = `${uMeta.name} — ${LEVEL_FULL_TITLES[tKey] || tKey}`;
-        document.getElementById('current-test-subtitle').innerText = uMeta.focus;
+        const uMeta = getUnitMeta(currentCategory, uKey);
 
-        const submitBtn = document.getElementById('submit-btn');
-        if (submitBtn) submitBtn.classList.remove('hidden-element');
+        hideAllMainScreens();
+        document.getElementById("test-screen").classList.remove("hidden-element");
 
+        const badgeEl = document.getElementById("current-cat-badge");
+        if (badgeEl) badgeEl.innerText = `${cfg.icon || "📘"} ${cfg.name.toUpperCase()}`;
+
+        const titleEl = document.getElementById("current-test-title");
+        if (titleEl) titleEl.innerText = `${uMeta.title} — ${LEVEL_SHORT_NAMES[tKey] || ("Cấp độ " + tKey)}`;
+
+        const subEl = document.getElementById("current-test-subtitle");
+        if (subEl) subEl.innerText = uMeta.desc || cfg.subtitle || "";
+
+        const submitBtn = document.getElementById("submit-btn");
+        if (submitBtn) submitBtn.classList.remove("hidden-element");
+
+        startTimer(tKey === "6" ? 45 : 20);
         renderSidebar();
         renderTestContent();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // ==================== AUDIO LISTENING STUDIO (TTS NAM/NỮ) ====================
-    let activeUtterance = null;
+    // -------------------- AUDIO LISTENING AI & SPEAKING AI STUDIO --------------------
     function stopListeningAudio() {
         try {
-            if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            if ("speechSynthesis" in window) window.speechSynthesis.cancel();
         } catch (e) {}
     }
 
     function playListeningScript(scriptText, statusElId) {
         stopListeningAudio();
-        if (!('speechSynthesis' in window)) {
-            alert("Trình duyệt của bạn không hỗ trợ bộ phát giọng đọc AI (Web Speech API).");
+        if (!("speechSynthesis" in window)) {
+            showToast("Trình duyệt không hỗ trợ bộ phát giọng nói AI (Web Speech API).", "warning");
             return;
         }
         const statusEl = document.getElementById(statusElId);
-        const lines = scriptText.split('\n').map(l => l.trim()).filter(Boolean);
+        const lines = String(scriptText || "").split("\n").map(l => l.trim()).filter(Boolean);
         let idx = 0;
 
-        function speakNextLine() {
+        function nextLine() {
             if (idx >= lines.length) {
-                if (statusEl) statusEl.innerText = "✅ Đã phát xong bài nghe. Em có thể bấm Nghe lại bất cứ lúc nào!";
+                if (statusEl) statusEl.innerText = "✅ Đã phát xong bài nghe. Em có thể bấm Phát lại bất cứ lúc nào!";
                 return;
             }
-            const rawLine = lines[idx++];
+            const raw = lines[idx++];
             let speaker = "Narrator";
-            let cleanText = rawLine;
-            const colonPos = rawLine.indexOf(':');
-            if (colonPos > 0 && colonPos < 18) {
-                speaker = rawLine.slice(0, colonPos).trim();
-                cleanText = rawLine.slice(colonPos + 1).trim();
+            let textToSpeak = raw;
+            const cPos = raw.indexOf(":");
+            if (cPos > 0 && cPos < 18) {
+                speaker = raw.slice(0, cPos).trim();
+                textToSpeak = raw.slice(cPos + 1).trim();
             }
-            const utter = new SpeechSynthesisUtterance(cleanText);
-            utter.lang = 'en-US';
+            const utter = new SpeechSynthesisUtterance(textToSpeak);
+            utter.lang = "en-US";
             utter.rate = 0.92;
-            const lowerSpeaker = speaker.toLowerCase();
-            if (lowerSpeaker.includes('nam') || lowerSpeaker.includes('minh') || lowerSpeaker.includes('phong') || lowerSpeaker.includes('nick') || lowerSpeaker.includes('tom')) {
+            const low = speaker.toLowerCase();
+            if (low.includes("boy") || low.includes("man") || low.includes("nam") || low.includes("minh") || low.includes("phong")) {
                 utter.pitch = 0.88;
-            } else if (lowerSpeaker.includes('mai') || lowerSpeaker.includes('lan') || lowerSpeaker.includes('vy') || lowerSpeaker.includes('mi') || lowerSpeaker.includes('ann')) {
-                utter.pitch = 1.18;
+            } else if (low.includes("girl") || low.includes("woman") || low.includes("mai") || low.includes("lan")) {
+                utter.pitch = 1.16;
             } else {
                 utter.pitch = 1.0;
             }
-            if (statusEl) statusEl.innerText = `🔊 Đang phát giọng đọc AI (${speaker}): "${cleanText.slice(0, 65)}..."`;
-            utter.onend = () => speakNextLine();
-            utter.onerror = () => speakNextLine();
-            activeUtterance = utter;
+            if (statusEl) statusEl.innerText = `🔊 Đang phát giọng AI (${speaker}): "${textToSpeak.slice(0, 68)}..."`;
+            utter.onend = () => nextLine();
+            utter.onerror = () => nextLine();
             window.speechSynthesis.speak(utter);
         }
-        speakNextLine();
+        nextLine();
     }
 
-    function speakModelSentence(sentence) {
+    function speakModelSentence(sentence, lang = "en-US") {
         stopListeningAudio();
-        if (!('speechSynthesis' in window)) return;
-        const u = new SpeechSynthesisUtterance(sentence);
-        u.lang = 'en-US';
-        u.rate = 0.92;
-        u.pitch = 1.05;
-        window.speechSynthesis.speak(u);
+        if (!("speechSynthesis" in window)) {
+            showToast("Trình duyệt không hỗ trợ phát âm thanh Web Speech API.", "warning");
+            return;
+        }
+        const utter = new SpeechSynthesisUtterance(String(sentence || "").replace(/<[^>]+>/g, ""));
+        utter.lang = lang;
+        utter.rate = 0.92;
+        utter.pitch = 1.02;
+        window.speechSynthesis.speak(utter);
     }
 
     function normalizeWords(str) {
-        return (str || '').toLowerCase().replace(/[^a-z0-9\s']/g, ' ').split(/\s+/).filter(Boolean);
+        return String(str || "").replace(/<[^>]+>/g, " ").toLowerCase().replace(/[^a-z0-9\s']/g, " ").split(/\s+/).filter(Boolean);
     }
 
     function evaluateSpokenSentence(targetSentence, spokenTranscript, resultBoxId) {
@@ -3239,205 +3523,242 @@ initThcsGlobalSuccessPortal();
         if (!box) return;
         const targetWords = normalizeWords(targetSentence);
         const spokenWords = normalizeWords(spokenTranscript);
-        if (spokenWords.length === 0) {
-            box.innerHTML = `<div class="text-xs text-red-600 font-bold mt-2">⚠️ Hệ thống chưa nghe rõ câu nói của em. Hãy bấm "🎤 Bấm để nói" và đọc to, rõ ràng hơn nhé!</div>`;
+        if (!spokenWords.length) {
+            box.innerHTML = `<div class="text-xs text-rose-600 font-bold mt-2">⚠️ Hệ thống chưa nhận được giọng đọc. Em hãy thử lại nhé!</div>`;
             return;
         }
         let matched = 0;
-        const wordBadges = targetWords.map(w => {
+        const badges = targetWords.map(w => {
             if (spokenWords.includes(w)) {
                 matched++;
                 return `<span class="px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs border border-emerald-300">${w} ✓</span>`;
-            } else {
-                return `<span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs border border-rose-300" title="Từ này cần phát âm rõ hơn">${w} ✗</span>`;
             }
+            return `<span class="px-1.5 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs border border-rose-300">${w} ✗</span>`;
         });
-        const accuracy = Math.min(100, Math.round((matched / Math.max(1, targetWords.length)) * 100));
-        let badgeColor = accuracy >= 80 ? 'text-emerald-700 bg-emerald-50 border-emerald-300' : (accuracy >= 50 ? 'text-amber-700 bg-amber-50 border-amber-300' : 'text-rose-700 bg-rose-50 border-rose-300');
-        let comment = accuracy >= 85 ? '🌟 Xuất sắc! Phát âm chuẩn xác và rõ ràng!' : (accuracy >= 60 ? '👍 Khá tốt! Hãy chú ý phát âm rõ các từ màu đỏ nhé!' : '💪 Cố gắng lên! Hãy bấm "Nghe mẫu AI" rồi đọc chậm từng cụm từ nhé!');
+        const acc = Math.min(100, Math.round((matched / Math.max(1, targetWords.length)) * 100));
+        const colorCls = acc >= 80 ? "bg-emerald-50 border-emerald-300 text-emerald-900" : (acc >= 50 ? "bg-amber-50 border-amber-300 text-amber-900" : "bg-rose-50 border-rose-300 text-rose-900");
+        const comment = acc >= 85 ? "🌟 Phát âm rất chuẩn xác!" : (acc >= 60 ? "👍 Khá tốt! Hãy luyện thêm các từ màu đỏ nhé!" : "💪 Hãy nghe mẫu AI và đọc rõ từng từ hơn nhé!");
 
         box.innerHTML = `
-            <div class="mt-2.5 p-3 rounded-xl border ${badgeColor} space-y-2">
+            <div class="mt-2.5 p-3 rounded-xl border ${colorCls} space-y-1.5">
                 <div class="flex flex-wrap justify-between items-center gap-2">
-                    <span class="text-xs font-extrabold">🤖 Điểm Phát Âm AI: <span class="text-base">${accuracy}/100</span> (${matched}/${targetWords.length} từ chuẩn)</span>
+                    <span class="text-xs font-extrabold">🤖 Điểm Phát Âm AI: <span class="text-base">${acc}%</span> (${matched}/${targetWords.length} từ khớp)</span>
                     <span class="text-xs font-bold">${comment}</span>
                 </div>
-                <div class="text-xs text-gray-700"><b>Giọng em vừa đọc:</b> "${spokenTranscript}"</div>
-                <div class="flex flex-wrap gap-1 pt-1">${wordBadges.join(' ')}</div>
+                <div class="text-xs"><b>Câu em vừa đọc:</b> "${spokenTranscript}"</div>
+                <div class="flex flex-wrap gap-1 pt-1">${badges.join(" ")}</div>
             </div>
         `;
     }
 
     function startSpeakingPractice(targetSentence, resultBoxId, btnEl) {
+        const cleanTarget = String(targetSentence || "").replace(/<[^>]+>/g, "");
         const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
         const box = document.getElementById(resultBoxId);
         if (!SpeechRec) {
-            const manual = prompt("Trình duyệt hiện tại không bật trực tiếp Micro Web Speech. Em có thể nhập/đọc câu vừa luyện vào đây để AI chấm độ khớp từ vựng:", targetSentence);
-            if (manual !== null) evaluateSpokenSentence(targetSentence, manual, resultBoxId);
+            openActionModal({
+                title: "🎙️ Luyện Phát Âm & Kiểm Tra Từ Vựng AI",
+                message: `Câu mẫu tiếng Anh: "${cleanTarget}". Hãy đọc/nhập lại câu tiếng Anh bên dưới để hệ thống chấm độ chính xác:`,
+                showInput: true,
+                inputDefault: cleanTarget,
+                inputPlaceholder: "Nhập hoặc đọc câu tiếng Anh...",
+                onConfirm: (val) => evaluateSpokenSentence(cleanTarget, val, resultBoxId)
+            });
             return;
         }
         try {
             const rec = new SpeechRec();
-            rec.lang = 'en-US';
+            rec.lang = "en-US";
             rec.interimResults = false;
             rec.maxAlternatives = 1;
-            const origText = btnEl.innerHTML;
-            btnEl.innerHTML = '🎙️ Đang nghe em đọc... (Hãy nói bằng tiếng Anh)';
-            btnEl.classList.add('animate-pulse', 'bg-rose-600');
-            if (box) box.innerHTML = `<div class="text-xs text-blue-700 font-bold mt-2">🎧 Micro đang thu âm... Em hãy đọc to câu mẫu tiếng Anh nhé!</div>`;
+            const origHtml = btnEl.innerHTML;
+            btnEl.innerHTML = "🎙️ Đang thu âm... (Hãy đọc to)";
+            if (box) box.innerHTML = `<div class="text-xs text-blue-700 font-bold mt-2">🎧 Micro đang lắng nghe... Em hãy đọc to câu mẫu tiếng Anh nhé!</div>`;
 
-            rec.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                evaluateSpokenSentence(targetSentence, transcript, resultBoxId);
+            rec.onresult = (ev) => {
+                const transcript = ev.results[0][0].transcript;
+                evaluateSpokenSentence(cleanTarget, transcript, resultBoxId);
             };
             rec.onerror = () => {
-                if (box) box.innerHTML = `<div class="text-xs text-amber-700 font-bold mt-2">⚠️ Không nhận được tín hiệu Micro. Em hãy cấp quyền Micro cho trình duyệt hoặc bấm thử lại nhé!</div>`;
+                openActionModal({
+                    title: "🎙️ Chấm Điểm Phát Âm AI (Chế độ Nhập nhanh)",
+                    message: `Không truy cập được Micro trực tiếp trên khung trình duyệt này. Em có thể đọc/nhập câu vừa luyện cho câu mẫu: "${cleanTarget}"`,
+                    showInput: true,
+                    inputDefault: cleanTarget,
+                    onConfirm: (val) => evaluateSpokenSentence(cleanTarget, val, resultBoxId)
+                });
             };
             rec.onend = () => {
-                btnEl.innerHTML = origText;
-                btnEl.classList.remove('animate-pulse', 'bg-rose-600');
+                btnEl.innerHTML = origHtml;
             };
             rec.start();
-        } catch (err) {
-            console.warn(err);
+        } catch (e) {
+            openActionModal({
+                title: "🎙️ Chấm Điểm Phát Âm AI",
+                message: `Câu mẫu: "${cleanTarget}"`,
+                showInput: true,
+                inputDefault: cleanTarget,
+                onConfirm: (val) => evaluateSpokenSentence(cleanTarget, val, resultBoxId)
+            });
         }
     }
 
+    // -------------------- RENDER TEST QUESTIONS & PALETTE --------------------
     function renderQuestionPalette(questions) {
-        const grid = document.getElementById('question-palette-grid');
-        const prog = document.getElementById('palette-progress-text');
-        if (!grid || !prog) return;
-        grid.innerHTML = '';
-        const answeredCount = Object.keys(userAnswers).length;
-        prog.innerText = `Đã làm: ${answeredCount}/${questions.length} câu`;
+        const wrap = document.getElementById("question-palette-wrap");
+        const grid = document.getElementById("question-palette-grid");
+        const progTxt = document.getElementById("palette-progress-text");
+        if (!wrap || !grid || !progTxt) return;
 
-        questions.forEach((qItem, idx) => {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            let cls = 'bg-white text-gray-700 border border-gray-300 hover:border-blue-500';
+        const total = questions.length;
+        const answeredCount = Object.keys(userAnswers).length;
+        progTxt.innerText = `Đã làm: ${answeredCount}/${total} câu`;
+        grid.innerHTML = "";
+
+        questions.forEach((q, idx) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            const ansVal = (q.answer !== undefined) ? q.answer : q.ans;
+            let cls = "bg-white text-slate-700 border-slate-300 hover:border-blue-500";
             if (isSubmitted) {
-                if (userAnswers[idx] === qItem.ans) cls = 'correct-pal';
-                else cls = 'wrong-pal';
+                if (userAnswers[idx] === ansVal) {
+                    cls = "bg-emerald-600 text-white border-emerald-700";
+                } else {
+                    cls = "bg-rose-600 text-white border-rose-700";
+                }
             } else if (userAnswers[idx] !== undefined) {
-                cls = 'answered';
+                cls = "bg-blue-600 text-white border-blue-700 shadow-sm";
             }
-            btn.className = `palette-btn w-8 h-8 rounded-lg text-xs font-extrabold flex items-center justify-center shadow-sm ${cls}`;
+            btn.className = `w-7 h-7 rounded-lg text-xs font-extrabold border transition-all flex items-center justify-center cursor-pointer ${cls}`;
             btn.innerText = idx + 1;
             btn.onclick = () => {
-                const card = document.getElementById('q-card-' + idx);
-                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const el = document.getElementById(`qbox_${idx}`);
+                if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
             };
             grid.appendChild(btn);
         });
     }
 
     function renderTestContent() {
-        const container = document.getElementById('questions-container');
+        const container = document.getElementById("questions-container");
         if (!container) return;
-        container.innerHTML = '';
-        const questions = getTestQuestions(currentCategory, currentUnit, currentTest);
+        container.innerHTML = "";
+
+        const questions = getQuestionsList(currentCategory, currentUnit, currentTest);
         renderQuestionPalette(questions);
 
-        // Nếu là Cấp độ 4 (Speaking AI), hiển thị Banner Phòng Luyện Nói AI ở đầu bài
-        if (currentTest === 'Test 4') {
-            const speakBanner = document.createElement('div');
-            speakBanner.className = 'bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white p-4 md:p-5 rounded-2xl shadow-md mb-5';
-            speakBanner.innerHTML = `
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-                    <div>
-                        <span class="inline-block bg-white/20 text-yellow-200 text-xs font-extrabold px-2.5 py-0.5 rounded-full mb-1">🎙️ PHÒNG LUYỆN NÓI &amp; CHẤM PHÁT ÂM AI (SPEAKING STUDIO)</span>
-                        <h3 class="text-base md:text-lg font-extrabold">Luyện Phản Xạ Giao Tiếp &amp; Chấm Điểm Phát Âm Từng Câu</h3>
-                        <p class="text-xs text-purple-100 mt-0.5">Ở mỗi câu hỏi bên dưới, em hãy vừa chọn đáp án đúng vừa bấm <b>"🔊 Nghe mẫu AI"</b> và <b>"🎤 Luyện nói &amp; Chấm điểm AI"</b> để luyện phát âm trực tiếp!</p>
-                    </div>
-                </div>
-            `;
-            container.appendChild(speakBanner);
+        if (!questions.length) {
+            container.innerHTML = `<div class="p-8 text-center text-gray-500 font-semibold bg-gray-50 rounded-xl border border-gray-200">Chưa có câu hỏi trong cấp độ này.</div>`;
+            return;
         }
 
-        let lastScript = null;
-        let lastPassage = null;
+        if (String(currentTest) === "4") {
+            const spkBanner = document.createElement("div");
+            spkBanner.className = "bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white p-4 md:p-5 rounded-2xl shadow-md mb-4";
+            spkBanner.innerHTML = `
+                <span class="inline-block bg-white/20 text-yellow-200 text-xs font-extrabold px-2.5 py-0.5 rounded-full mb-1">🎙️ PHÒNG LUYỆN NÓI &amp; GIAO TIẾP AI (SPEAKING AI STUDIO)</span>
+                <h3 class="text-base md:text-lg font-extrabold">Luyện Phản Xạ Giao Tiếp &amp; Chấm Điểm Phát Âm Từng Câu</h3>
+                <p class="text-xs text-purple-100 mt-0.5">Hãy chọn phương án đúng cho mỗi câu, đồng thời bấm <b>"🔊 Nghe mẫu AI"</b> và <b>"🎤 Bấm để nói &amp; Chấm điểm"</b> ở khung luyện nói bên dưới câu hỏi!</p>
+            `;
+            container.appendChild(spkBanner);
+        }
 
-        questions.forEach((qItem, idx) => {
-            // Render Audio Studio nếu có script mới
-            if (qItem.script && qItem.script !== lastScript) {
-                lastScript = qItem.script;
-                const statusId = `audio-status-${idx}`;
-                const scriptBoxId = `audio-script-box-${idx}`;
-                const audioCard = document.createElement('div');
-                audioCard.className = 'bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 md:p-5 shadow-sm mb-4';
-                audioCard.innerHTML = `
+        let lastInstruction = "";
+        const letters = ["A", "B", "C", "D"];
+
+        questions.forEach((q, idx) => {
+            const qInst = q.instruction || "";
+            if (qInst && qInst !== lastInstruction) {
+                lastInstruction = qInst;
+                const instDiv = document.createElement("div");
+                instDiv.className = "bg-blue-50 border-l-4 border-blue-600 px-4 py-2.5 rounded-r-xl font-extrabold text-blue-950 text-xs md:text-sm shadow-sm";
+                instDiv.innerHTML = qInst;
+                container.appendChild(instDiv);
+            }
+
+            const scriptText = q.tapescript || q.script || "";
+            if (scriptText) {
+                const statusId = `listen_status_${idx}`;
+                const scriptBoxId = `listen_script_box_${idx}`;
+                const audioBox = document.createElement("div");
+                audioBox.className = "bg-amber-50 border-2 border-amber-300 rounded-2xl p-4 md:p-5 shadow-sm";
+                audioBox.innerHTML = `
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-amber-200">
                         <div>
-                            <span class="inline-block bg-amber-600 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-md mb-1">🎧 BỘ PHÁT AUDIO LISTENING AI (PART ${qItem.audioPart || 1})</span>
-                            <h4 class="font-extrabold text-amber-950 text-sm md:text-base">Nghe đoạn thu âm tiếng Anh và trả lời các câu hỏi bên dưới</h4>
+                            <span class="inline-block bg-amber-600 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-md mb-1">🎧 BỘ PHÁT AUDIO LISTENING AI</span>
+                            <h4 class="font-extrabold text-amber-950 text-sm md:text-base">Bấm nút Phát Audio để nghe giọng đọc AI phân vai Nam/Nữ</h4>
                         </div>
                         <div class="flex flex-wrap gap-2">
-                            <button type="button" id="play-btn-${idx}" class="bg-amber-600 hover:bg-amber-700 text-white font-extrabold py-2 px-4 rounded-xl text-xs md:text-sm shadow flex items-center gap-1.5 cursor-pointer">
+                            <button type="button" id="btn_play_audio_${idx}" class="bg-amber-600 hover:bg-amber-700 text-white font-extrabold py-2 px-4 rounded-xl text-xs md:text-sm shadow cursor-pointer">
                                 ▶️ Phát Audio Bài Nghe
                             </button>
                             <button type="button" onclick="stopListeningAudio()" class="bg-white hover:bg-gray-100 text-gray-800 border border-gray-300 font-bold py-2 px-3 rounded-xl text-xs md:text-sm cursor-pointer">
                                 ⏹️ Dừng
                             </button>
-                            <button type="button" onclick="document.getElementById('${scriptBoxId}').classList.toggle('hidden-element')" class="bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold py-2 px-3 rounded-xl text-xs md:text-sm cursor-pointer">
+                            <button type="button" id="btn_toggle_script_${idx}" class="bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold py-2 px-3 rounded-xl text-xs md:text-sm cursor-pointer">
                                 📜 Xem / Ẩn Tapescript
                             </button>
                         </div>
                     </div>
-                    <p id="${statusId}" class="text-xs font-bold text-amber-800 mt-2.5">💡 Bấm "▶️ Phát Audio Bài Nghe" để nghe giọng đọc AI phân vai Nam/Nữ chuẩn bản ngữ.</p>
-                    <div id="${scriptBoxId}" class="${isSubmitted ? '' : 'hidden-element'} mt-3 bg-white p-3.5 rounded-xl border border-amber-200 text-xs md:text-sm text-gray-800 whitespace-pre-line leading-relaxed font-medium">
-                        <div class="font-extrabold text-amber-900 mb-1">📜 Nội dung bài nghe (Audio Tapescript):</div>${qItem.script}
+                    <p id="${statusId}" class="text-xs font-bold text-amber-800 mt-2">💡 Bấm "▶️ Phát Audio Bài Nghe" để bắt đầu nghe.</p>
+                    <div id="${scriptBoxId}" class="${isSubmitted ? "" : "hidden-element"} mt-3 bg-white p-3.5 rounded-xl border border-amber-200 text-xs md:text-sm text-gray-800 whitespace-pre-line leading-relaxed">
+                        <div class="font-extrabold text-amber-900 mb-1">📜 Nội dung Tapescript:</div>${scriptText}
                     </div>
                 `;
-                container.appendChild(audioCard);
+                container.appendChild(audioBox);
                 setTimeout(() => {
-                    const pBtn = document.getElementById(`play-btn-${idx}`);
-                    if (pBtn) pBtn.onclick = () => playListeningScript(qItem.script, statusId);
+                    const pBtn = document.getElementById(`btn_play_audio_${idx}`);
+                    const tBtn = document.getElementById(`btn_toggle_script_${idx}`);
+                    const sBox = document.getElementById(scriptBoxId);
+                    if (pBtn) pBtn.onclick = () => playListeningScript(scriptText, statusId);
+                    if (tBtn && sBox) tBtn.onclick = () => sBox.classList.toggle("hidden-element");
                 }, 0);
             }
 
-            // Render Reading Passage nếu có passage mới
-            if (qItem.passage && qItem.passage !== lastPassage) {
-                lastPassage = qItem.passage;
-                const passCard = document.createElement('div');
-                passCard.className = 'bg-emerald-50/80 border-2 border-emerald-200 rounded-2xl p-4 md:p-5 shadow-sm mb-4 text-gray-800 text-xs md:text-sm whitespace-pre-line leading-relaxed font-medium';
-                passCard.innerText = qItem.passage;
-                container.appendChild(passCard);
+            if (q.passage) {
+                const passDiv = document.createElement("div");
+                passDiv.className = "bg-emerald-50/70 border-2 border-emerald-200 rounded-2xl p-4 md:p-5 shadow-sm text-gray-800 text-xs md:text-sm whitespace-pre-line leading-relaxed";
+                passDiv.innerHTML = q.passage;
+                container.appendChild(passDiv);
             }
 
-            // Card câu hỏi
-            const qCard = document.createElement('div');
-            qCard.id = 'q-card-' + idx;
-            qCard.className = 'bg-white border border-gray-200 rounded-2xl p-4 md:p-5 shadow-sm hover:shadow-md transition-shadow';
+            const qCard = document.createElement("div");
+            qCard.id = `qbox_${idx}`;
+            qCard.className = "question-box bg-white border border-gray-200 rounded-2xl p-4 md:p-5 shadow-sm";
 
-            const qHeader = document.createElement('div');
-            qHeader.className = 'font-extrabold text-gray-900 text-sm md:text-base mb-3.5 leading-snug';
-            qHeader.innerHTML = `<span class="inline-block bg-blue-600 text-white text-xs px-2 py-0.5 rounded-md mr-2">Câu ${idx + 1}</span>${qItem.q}`;
+            const qQuestionText = q.text || q.q || `Chọn phương án đúng cho ô trống số (${q.origNum || (idx + 1)}):`;
+            const qAns = (q.answer !== undefined) ? q.answer : q.ans;
+            const qExp = q.explanation || q.exp || "";
+            const qSpeak = q.speakPrompt || q.speakText || "";
+
+            const qHeader = document.createElement("div");
+            qHeader.className = "font-bold text-gray-900 text-sm md:text-base mb-3.5 whitespace-pre-line leading-relaxed";
+            qHeader.innerHTML = `<span class="inline-block bg-blue-600 text-white text-xs font-extrabold px-2.5 py-0.5 rounded-md mr-2">Câu ${idx + 1}</span>${qQuestionText}`;
             qCard.appendChild(qHeader);
 
-            const optsGrid = document.createElement('div');
-            optsGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-2.5';
-            const letters = ['A', 'B', 'C', 'D'];
+            const optsGrid = document.createElement("div");
+            optsGrid.className = "grid grid-cols-1 md:grid-cols-2 gap-2.5";
 
-            qItem.options.forEach((optText, oIdx) => {
-                const optBtn = document.createElement('button');
-                optBtn.type = 'button';
+            (q.options || []).forEach((optVal, oIdx) => {
                 const isSelected = (userAnswers[idx] === oIdx);
-                let optCls = 'bg-gray-50 hover:bg-blue-50 text-gray-800 border-gray-200';
+                const optBtn = document.createElement("button");
+                optBtn.type = "button";
+                let cls = "bg-gray-50 hover:bg-blue-50 text-gray-800 border-gray-200";
 
                 if (isSubmitted) {
-                    if (oIdx === qItem.ans) {
-                        optCls = 'correct-answer font-bold';
-                    } else if (isSelected && oIdx !== qItem.ans) {
-                        optCls = 'wrong-answer font-bold';
+                    if (oIdx === qAns) {
+                        cls = "correct-ans-box correct-ans-text";
+                    } else if (isSelected && oIdx !== qAns) {
+                        cls = "wrong-ans-box wrong-ans-text";
                     } else {
-                        optCls = 'bg-gray-50 text-gray-500 border-gray-200 opacity-75';
+                        cls = "bg-gray-50 text-gray-500 border-gray-200 opacity-75";
                     }
                 } else if (isSelected) {
-                    optCls = 'bg-blue-600 text-white border-blue-700 font-bold shadow-sm';
+                    cls = "bg-blue-600 text-white border-blue-700 font-bold shadow-sm";
                 }
 
-                optBtn.className = `option-btn w-full text-left px-3.5 py-2.5 rounded-xl border text-xs md:text-sm flex items-start gap-2.5 ${optCls}`;
-                optBtn.innerHTML = `<span class="font-extrabold flex-shrink-0">${letters[oIdx]}.</span><span class="leading-snug">${optText}</span>`;
+                optBtn.className = `w-full text-left px-3.5 py-2.5 rounded-xl border text-xs md:text-sm flex items-start gap-2 transition-all cursor-pointer ${cls}`;
+                optBtn.innerHTML = `<span class="font-extrabold flex-shrink-0">${letters[oIdx]}.</span><span class="leading-snug">${optVal}</span>`;
                 if (!isSubmitted) {
                     optBtn.onclick = () => {
                         userAnswers[idx] = oIdx;
@@ -3448,47 +3769,45 @@ initThcsGlobalSuccessPortal();
             });
             qCard.appendChild(optsGrid);
 
-            // Nếu câu hỏi có speakText (Cấp độ 4 Speaking AI hoặc Phần Speaking trong Cấp độ 6)
-            if (qItem.speakText) {
-                const speakBoxId = `speak-eval-box-${idx}`;
-                const spkWrap = document.createElement('div');
-                spkWrap.className = 'mt-3.5 pt-3 border-t border-purple-100 bg-purple-50/60 rounded-xl p-3';
+            if (qSpeak) {
+                const spkBoxId = `speak_eval_${idx}`;
+                const spkWrap = document.createElement("div");
+                spkWrap.className = "mt-3.5 pt-3 border-t border-purple-100 bg-purple-50/60 rounded-xl p-3";
                 spkWrap.innerHTML = `
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div class="text-xs text-purple-950">
-                            <span class="font-extrabold text-purple-800">🗣️ Câu mẫu luyện phát âm AI:</span>
-                            <span class="italic font-semibold">"${qItem.speakText}"</span>
+                            <span class="font-extrabold text-purple-800">🗣️ Câu mẫu Luyện Nói AI:</span>
+                            <span class="italic font-semibold">“${qSpeak}”</span>
                         </div>
                         <div class="flex flex-wrap gap-2 flex-shrink-0">
-                            <button type="button" id="spk-listen-${idx}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs shadow-sm cursor-pointer">
+                            <button type="button" id="btn_spk_sample_${idx}" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs shadow-sm cursor-pointer">
                                 🔊 Nghe mẫu AI
                             </button>
-                            <button type="button" id="spk-rec-${idx}" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs shadow-sm cursor-pointer">
+                            <button type="button" id="btn_spk_record_${idx}" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-1.5 px-3 rounded-lg text-xs shadow-sm cursor-pointer">
                                 🎤 Bấm để nói &amp; Chấm điểm
                             </button>
                         </div>
                     </div>
-                    <div id="${speakBoxId}"></div>
+                    <div id="${spkBoxId}"></div>
                 `;
                 qCard.appendChild(spkWrap);
                 setTimeout(() => {
-                    const lBtn = document.getElementById(`spk-listen-${idx}`);
-                    const rBtn = document.getElementById(`spk-rec-${idx}`);
-                    if (lBtn) lBtn.onclick = () => speakModelSentence(qItem.speakText);
-                    if (rBtn) rBtn.onclick = () => startSpeakingPractice(qItem.speakText, speakBoxId, rBtn);
+                    const sBtn = document.getElementById(`btn_spk_sample_${idx}`);
+                    const rBtn = document.getElementById(`btn_spk_record_${idx}`);
+                    if (sBtn) sBtn.onclick = () => speakModelSentence(qSpeak, "en-US");
+                    if (rBtn) rBtn.onclick = () => startSpeakingPractice(qSpeak, spkBoxId, rBtn);
                 }, 0);
             }
 
-            // Hiển thị giải thích sau khi nộp bài
             if (isSubmitted) {
-                const isCorrect = (userAnswers[idx] === qItem.ans);
-                const expDiv = document.createElement('div');
-                expDiv.className = `mt-3 p-3 rounded-xl text-xs md:text-sm border ${isCorrect ? 'bg-emerald-50 border-emerald-200 text-emerald-950' : 'bg-amber-50 border-amber-200 text-amber-950'}`;
+                const isRight = (userAnswers[idx] === qAns);
+                const expDiv = document.createElement("div");
+                expDiv.className = `mt-3 p-3 rounded-xl text-xs md:text-sm border ${isRight ? "bg-emerald-50 border-emerald-200 text-emerald-950" : "bg-amber-50 border-amber-200 text-amber-950"}`;
                 expDiv.innerHTML = `
                     <div class="font-extrabold mb-1">
-                        ${isCorrect ? '✅ Chính xác!' : `❌ Chưa đúng! Đáp án đúng là: ${letters[qItem.ans]}. ${qItem.options[qItem.ans]}`}
+                        ${isRight ? "✅ Chính xác!" : `❌ Chưa đúng! Đáp án đúng là: ${letters[qAns]}. ${(q.options && q.options[qAns]) || ""}`}
                     </div>
-                    <div>💡 <b>Giải thích:</b> ${qItem.exp || 'Áp dụng kiến thức trọng tâm trong đơn vị bài học.'}</div>
+                    <div>💡 <b>Giải thích:</b> ${qExp || "Áp dụng kiến thức trọng tâm của Unit."}</div>
                 `;
                 qCard.appendChild(expDiv);
             }
@@ -3498,542 +3817,632 @@ initThcsGlobalSuccessPortal();
     }
 
     function submitTest() {
-        const questions = getTestQuestions(currentCategory, currentUnit, currentTest);
+        const questions = getQuestionsList(currentCategory, currentUnit, currentTest);
         if (!questions.length) return;
 
         isSubmitted = true;
+        if (timerInterval) clearInterval(timerInterval);
+
         let correct = 0;
         questions.forEach((q, idx) => {
-            if (userAnswers[idx] === q.ans) correct++;
+            const ansVal = (q.answer !== undefined) ? q.answer : q.ans;
+            if (userAnswers[idx] === ansVal) correct++;
         });
-        const wrong = questions.length - correct;
-        const percent = Math.round((correct / questions.length) * 100);
-        const score10 = ((correct / questions.length) * 10).toFixed(1);
+        const total = questions.length;
+        const wrong = total - correct;
+        const percent = Math.round((correct / total) * 100);
+        const score10 = ((correct / total) * 10).toFixed(1);
 
-        // Lưu lịch sử điểm
+        saveProgress(currentCategory, currentUnit, currentTest, correct, total, percent);
+
         try {
-            const raw = safeGetItem(STORAGE_KEY_SCORES, '[]');
-            const arr = JSON.parse(raw);
+            const raw = safeGetItem(STORAGE_KEY_SCORES, "[]");
+            const arr = JSON.parse(raw) || [];
             const cfg = window.categoryConfig[currentCategory];
-            const uMeta = cfg.units[currentUnit];
+            const uMeta = getUnitMeta(currentCategory, currentUnit);
             arr.unshift({
-                time: new Date().toLocaleString('vi-VN'),
-                grade: cfg.badge,
-                unit: uMeta ? uMeta.name : currentUnit,
-                level: LEVEL_SHORT_LABELS[currentTest] || currentTest,
-                correct: `${correct}/${questions.length}`,
+                time: new Date().toLocaleString("vi-VN"),
+                grade: cfg ? cfg.name : currentCategory,
+                unit: uMeta.title,
+                level: LEVEL_SHORT_NAMES[String(currentTest)] || `Cấp độ ${currentTest}`,
+                correct: `${correct}/${total}`,
                 score10: score10,
-                percent: percent + '%'
+                percent: `${percent}%`
             });
             safeSetItem(STORAGE_KEY_SCORES, JSON.stringify(arr.slice(0, 200)));
         } catch (e) {}
 
+        renderSidebar();
         renderTestContent();
 
-        const submitBtn = document.getElementById('submit-btn');
-        if (submitBtn) submitBtn.classList.add('hidden-element');
+        const submitBtn = document.getElementById("submit-btn");
+        if (submitBtn) submitBtn.classList.add("hidden-element");
 
-        const resScreen = document.getElementById('result-screen');
-        resScreen.classList.remove('hidden-element');
-        document.getElementById('score-display').innerText = `${score10} điểm (${correct}/${questions.length})`;
-        document.getElementById('correct-display').innerText = correct;
-        document.getElementById('wrong-display').innerText = wrong;
-        document.getElementById('percent-display').innerText = percent + '%';
+        const resScreen = document.getElementById("result-screen");
+        if (resScreen) resScreen.classList.remove("hidden-element");
 
-        let msg = '';
-        if (percent >= 90) msg = '🏆 Xuất sắc! Em đã nắm vững kiến thức của cấp độ này!';
-        else if (percent >= 70) msg = '🌟 Rất đáng khen! Em hãy xem lại giải thích một vài câu sai để đạt điểm tuyệt đối nhé!';
-        else if (percent >= 50) msg = '💪 Cố gắng lên! Em hãy đọc kỹ phần giải thích chi tiết từng câu ở phía trên và làm lại nhé!';
-        else msg = '📚 Em hãy ôn lại Sổ tay Ngữ pháp & Từ vựng của Unit rồi thử sức lại nhé!';
-        document.getElementById('motivation-message').innerText = msg;
+        document.getElementById("score-display").innerText = `${score10}đ (${correct}/${total})`;
+        document.getElementById("correct-display").innerText = String(correct);
+        document.getElementById("wrong-display").innerText = String(wrong);
+        document.getElementById("percent-display").innerText = `${percent}%`;
 
-        resScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        let msg = "";
+        if (percent >= 90) msg = "🏆 Xuất sắc! Em đã nắm vững kiến thức của cấp độ này!";
+        else if (percent >= 70) msg = "🌟 Rất tốt! Em hãy xem lại giải thích một vài câu sai để đạt điểm tối đa nhé!";
+        else if (percent >= 50) msg = "💪 Khá lắm! Hãy đọc kỹ phần giải thích chi tiết từng câu ở phía trên nhé!";
+        else msg = "📚 Em hãy ôn lại Từ vựng & Ngữ pháp của Unit rồi thử sức lại nhé!";
+        document.getElementById("motivation-message").innerText = msg;
+
+        showToast(`🎉 Đã chấm điểm: ${score10}/10 (${correct}/${total} câu đúng)!`, "success");
+        resScreen.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     function continueAfterResult() {
-        const order = ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5", "Test 6"];
-        const idx = order.indexOf(currentTest);
-        if (idx >= 0 && idx < order.length - 1) {
-            selectTest(currentUnit, order[idx + 1]);
+        if (currentTest < 6) {
+            selectTest(currentUnit, currentTest + 1);
         } else {
-            const units = Object.keys(window.categoryConfig[currentCategory].units);
-            const uIdx = units.indexOf(currentUnit);
-            const nextU = units[(uIdx + 1) % units.length];
-            selectTest(nextU, "Test 1");
+            const nextU = currentUnit < 12 ? currentUnit + 1 : 1;
+            selectTest(nextU, 1);
         }
     }
 
-    // ==================== PASSWORD MODAL (CHỈ DÀNH CHO QUẢN TRỊ ADMIN CMS) ====================
-    function openAdminAuthModal() {
-        pendingAuthMode = 'admin';
-        const modal = document.getElementById('password-modal');
-        const input = document.getElementById('password-input');
-        const err = document.getElementById('password-error');
-        if (err) err.classList.add('hidden-element');
-        if (input) input.value = '';
-        if (modal) modal.classList.remove('hidden-element');
-        setTimeout(() => { if (input) input.focus(); }, 60);
-    }
-
-    function closeModal() {
-        const modal = document.getElementById('password-modal');
-        if (modal) modal.classList.add('hidden-element');
-        pendingAuthMode = null;
-    }
-
-    function checkPassword() {
-        const input = document.getElementById('password-input');
-        const err = document.getElementById('password-error');
-        const val = (input ? input.value : '').trim();
-        const adminPwd = getAdminPassword();
-
-        if (val === adminPwd || val === "tienhuongsonkiet28011981@") {
-            isAdminUnlocked = true;
-            safeSetItem(STORAGE_KEY_ADMIN_AUTH, 'true');
-            closeModal();
-            showAdminNow();
-        } else {
-            if (err) err.classList.remove('hidden-element');
-        }
-    }
-
-    // ==================== FLASHCARD 3D & SỔ TAY NGỮ PHÁP ====================
-    let currentFcIndex = 0;
-
-    function openFlashcardHub() {
+    // -------------------- STUDY HUB: FLASHCARDS & GRAMMAR NOTES --------------------
+    function openStudyHub() {
         stopListeningAudio();
-        updateTopNavActive('flashcards');
-        const sidebarEl = document.getElementById('sidebar-panel');
-        if (sidebarEl) sidebarEl.classList.add('hidden-element');
+        if (timerInterval) clearInterval(timerInterval);
         hideAllMainScreens();
-        document.getElementById('flashcard-screen').classList.remove('hidden-element');
-        renderFlashcardView();
-        renderGrammarHub();
+        document.getElementById("study-hub-screen").classList.remove("hidden-element");
+        renderFlashcard();
+        renderGrammarNotes();
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function renderFlashcardView() {
-        const list = (window.portalData && window.portalData.flashcards) || [];
+    function getFlashcardsList() {
+        return (window.portalData && Array.isArray(window.portalData.flashcards)) ? window.portalData.flashcards : [];
+    }
+
+    function renderFlashcard() {
+        const list = getFlashcardsList();
         if (!list.length) return;
         if (currentFcIndex >= list.length) currentFcIndex = 0;
         if (currentFcIndex < 0) currentFcIndex = list.length - 1;
-
         const item = list[currentFcIndex];
-        const card3d = document.getElementById('fc-card-3d');
-        if (card3d) card3d.classList.remove('flipped');
 
-        document.getElementById('fc-word').innerText = item.word || '';
-        document.getElementById('fc-ipa').innerText = item.ipa || '';
-        document.getElementById('fc-pos').innerText = item.pos || 'Vocabulary';
-        document.getElementById('fc-meaning').innerText = item.meaning || '';
-        document.getElementById('fc-example').innerText = item.example ? `"${item.example}"` : '';
-        document.getElementById('fc-counter').innerText = `${currentFcIndex + 1} / ${list.length}`;
+        document.getElementById("fc-counter").innerText = `Thẻ ${currentFcIndex + 1} / ${list.length}`;
+        document.getElementById("fc-topic").innerText = item.topic || item.ipa || "Từ vựng trọng tâm";
+        document.getElementById("fc-word").innerText = item.word || "";
+        document.getElementById("fc-ipa").innerText = item.ipa || "";
+        document.getElementById("fc-pos").innerText = item.pos || "Vocabulary";
+        document.getElementById("fc-meaning").innerText = item.meaning || "";
+        document.getElementById("fc-example").innerText = `“${item.example || ""}”`;
 
-        const quickList = document.getElementById('fc-quick-list');
-        if (quickList) {
-            quickList.innerHTML = '';
-            list.forEach((fc, idx) => {
-                const d = document.createElement('div');
-                d.className = `p-2.5 rounded-xl border text-xs cursor-pointer transition-all flex justify-between items-center ${idx === currentFcIndex ? 'bg-emerald-600 text-white border-emerald-700 font-bold shadow-sm' : 'bg-gray-50 hover:bg-emerald-50 text-gray-800 border-gray-200'}`;
-                d.innerHTML = `<span class="font-bold truncate pr-2">${idx + 1}. ${fc.word}</span><span class="text-[11px] opacity-85 truncate">${fc.ipa}</span>`;
-                d.onclick = () => {
-                    currentFcIndex = idx;
-                    renderFlashcardView();
-                };
-                quickList.appendChild(d);
-            });
-        }
+        document.getElementById("fc-front").classList.remove("hidden-element");
+        document.getElementById("fc-back").classList.add("hidden-element");
     }
 
-    function flipCurrentFlashcard() {
-        const card3d = document.getElementById('fc-card-3d');
-        if (card3d) card3d.classList.toggle('flipped');
+    function flipFlashcard() {
+        document.getElementById("fc-front").classList.toggle("hidden-element");
+        document.getElementById("fc-back").classList.toggle("hidden-element");
     }
+
     function prevFlashcard() {
         currentFcIndex--;
-        renderFlashcardView();
+        renderFlashcard();
     }
+
     function nextFlashcard() {
         currentFcIndex++;
-        renderFlashcardView();
+        renderFlashcard();
     }
-    function shuffleFlashcards() {
-        const list = (window.portalData && window.portalData.flashcards) || [];
-        if (list.length > 1) {
-            currentFcIndex = Math.floor(Math.random() * list.length);
-            renderFlashcardView();
-        }
-    }
-    function speakCurrentFlashcard(ev) {
-        if (ev) ev.stopPropagation();
-        const list = (window.portalData && window.portalData.flashcards) || [];
+
+    function speakFlashcard(lang) {
+        const list = getFlashcardsList();
+        if (!list.length) return;
         const item = list[currentFcIndex];
-        if (!item) return;
-        speakModelSentence(`${item.word}. ${item.example || ''}`);
+        speakModelSentence(`${item.word}. ${item.example || ""}`, lang || "en-GB");
     }
 
-    function renderGrammarHub() {
-        const container = document.getElementById('grammar-hub-container');
+    function renderGrammarNotes() {
+        const container = document.getElementById("grammar-notes-container");
         if (!container) return;
-        container.innerHTML = '';
-        const notes = (window.portalData && window.portalData.grammarNotes) || [];
-        notes.forEach(n => {
-            const card = document.createElement('div');
-            card.className = 'bg-white border border-blue-200 rounded-2xl p-4 md:p-5 shadow-sm flex flex-col justify-between';
-            const formulasHtml = (n.formulas || []).map(f => `<li class="bg-blue-50/70 px-3 py-1.5 rounded-lg border border-blue-100 font-mono text-xs text-blue-950 font-semibold">${f}</li>`).join('');
-            card.innerHTML = `
-                <div>
-                    <span class="inline-block bg-blue-100 text-blue-800 text-[11px] font-extrabold px-2.5 py-0.5 rounded-md mb-1.5">${n.level || 'Global Success'}</span>
-                    <h4 class="font-extrabold text-blue-900 text-sm md:text-base mb-1">${n.title}</h4>
-                    <p class="text-xs text-gray-600 mb-3">${n.summary || ''}</p>
-                    <ul class="space-y-1.5 mb-3">${formulasHtml}</ul>
+        const notes = (window.portalData && Array.isArray(window.portalData.grammarNotes)) ? window.portalData.grammarNotes : [];
+        container.innerHTML = notes.map(g => `
+            <div class="bg-white border border-blue-100 rounded-xl p-4 shadow-sm hover:shadow-md transition-all">
+                <div class="flex justify-between items-start gap-2 mb-2">
+                    <h4 class="font-extrabold text-blue-900 text-sm md:text-base">${g.title}</h4>
+                    <span class="text-[10px] font-bold bg-blue-50 text-blue-700 px-2 py-0.5 rounded border border-blue-200 flex-shrink-0">${g.level || "Global Success"}</span>
                 </div>
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-2.5 text-xs text-amber-900 font-semibold">
-                    💡 <b>Mẹo ghi nhớ:</b> ${n.tips || ''}
+                <p class="text-xs text-gray-600 mb-2.5">${g.summary || ""}</p>
+                <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1 mb-2.5">
+                    ${(g.formulas || []).map(f => `<div class="text-xs font-mono text-indigo-900 font-semibold">• ${f}</div>`).join("")}
                 </div>
-            `;
-            container.appendChild(card);
-        });
+                <div class="text-xs text-emerald-800 bg-emerald-50/80 px-3 py-1.5 rounded-lg border border-emerald-200">
+                    <b>💡 Mẹo ghi nhớ:</b> ${g.tips || ""}
+                </div>
+            </div>
+        `).join("");
     }
 
-    // ==================== ADMIN CMS CONTROLLER ====================
-    function openAdminDashboard() {
+    // -------------------- ADMIN CMS & PASSWORD MODAL --------------------
+    function openAdminPanel() {
         stopListeningAudio();
         if (!isAdminUnlocked) {
-            openAdminAuthModal();
+            const modal = document.getElementById("password-modal");
+            const inp = document.getElementById("password-input");
+            const err = document.getElementById("password-error");
+            if (err) err.classList.add("hidden-element");
+            if (inp) inp.value = "";
+            if (modal) modal.classList.remove("hidden-element");
+            setTimeout(() => { if (inp) inp.focus(); }, 50);
             return;
         }
-        showAdminNow();
+        showAdminScreenNow();
     }
 
-    function showAdminNow() {
-        updateTopNavActive('admin');
-        const sidebarEl = document.getElementById('sidebar-panel');
-        if (sidebarEl) sidebarEl.classList.add('hidden-element');
+    function closeModal() {
+        const modal = document.getElementById("password-modal");
+        if (modal) modal.classList.add("hidden-element");
+    }
+
+    function checkPassword() {
+        const inp = document.getElementById("password-input");
+        const err = document.getElementById("password-error");
+        const val = (inp ? inp.value : "").trim();
+        if (val === getAdminPassword() || val === "tienhuongsonkiet28011981@") {
+            isAdminUnlocked = true;
+            safeSetItem(STORAGE_KEY_ADMIN, "true");
+            closeModal();
+            showToast("🔓 Đăng nhập Quản trị viên (Admin CMS) thành công!", "success");
+            showAdminScreenNow();
+        } else {
+            if (err) err.classList.remove("hidden-element");
+        }
+    }
+
+    function showAdminScreenNow() {
+        if (timerInterval) clearInterval(timerInterval);
         hideAllMainScreens();
-        document.getElementById('admin-screen').classList.remove('hidden-element');
+        document.getElementById("admin-screen").classList.remove("hidden-element");
         initAdminSelectors();
+        updateAdminDashboardStats();
+        renderAdminFlashcardList();
+        renderAdminGrammarList();
+        renderAdminScoresTable();
         loadAdminSettingsForm();
+        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function switchAdminTab(tabName) {
-        ['questions', 'bulk', 'flashcards', 'scores', 'settings'].forEach(t => {
-            const panel = document.getElementById('adm-panel-' + t);
-            const btn = document.getElementById('adm-tab-' + t);
-            if (panel) {
-                if (t === tabName) panel.classList.remove('hidden-element');
-                else panel.classList.add('hidden-element');
-            }
+    function updateAdminDashboardStats() {
+        const cats = Object.keys(window.categoryConfig || {});
+        const totalUnits = cats.reduce((acc, c) => acc + ((window.categoryConfig[c].units || []).length), 0);
+        const statCats = document.getElementById("stat-total-cats");
+        if (statCats) statCats.innerText = `${cats.length} Khối (${totalUnits} Unit)`;
+
+        let totalQ = 0;
+        cats.forEach(c => {
+            const uMap = window.examDatabase[c] || {};
+            Object.keys(uMap).forEach(u => {
+                const tMap = uMap[u] || {};
+                Object.keys(tMap).forEach(t => {
+                    totalQ += (tMap[t] || []).length;
+                });
+            });
+        });
+        const statQ = document.getElementById("stat-total-questions");
+        if (statQ) statQ.innerText = `${totalQ.toLocaleString("vi-VN")} câu`;
+
+        const fcLen = getFlashcardsList().length;
+        const grLen = (window.portalData && Array.isArray(window.portalData.grammarNotes)) ? window.portalData.grammarNotes.length : 0;
+        const statFc = document.getElementById("stat-total-fc");
+        if (statFc) statFc.innerText = `${fcLen} Thẻ / ${grLen} CĐ`;
+    }
+
+    function switchAdminTab(tab) {
+        ["questions", "bulk", "flashcards", "scores", "settings"].forEach(t => {
+            const btn = document.getElementById(`adm-tab-${t}`);
+            const panel = document.getElementById(`adm-panel-${t}`);
             if (btn) {
-                if (t === tabName) {
-                    btn.className = 'px-4 py-2 rounded-lg font-bold text-xs md:text-sm bg-blue-600 text-white shadow';
-                } else {
-                    btn.className = 'px-4 py-2 rounded-lg font-bold text-xs md:text-sm bg-white text-gray-700 border border-gray-300';
-                }
+                btn.className = (t === tab)
+                    ? "px-3.5 py-2 bg-blue-600 text-white font-bold rounded-lg text-xs md:text-sm shadow-sm"
+                    : "px-3.5 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded-lg text-xs md:text-sm";
+            }
+            if (panel) {
+                if (t === tab) panel.classList.remove("hidden-element");
+                else panel.classList.add("hidden-element");
             }
         });
-        if (tabName === 'flashcards') {
-            renderAdminFlashcardsList();
+        if (tab === "scores") renderAdminScoresTable();
+        if (tab === "flashcards") {
+            renderAdminFlashcardList();
             renderAdminGrammarList();
-        } else if (tabName === 'scores') {
-            renderAdminScoresTable();
         }
     }
 
     function initAdminSelectors() {
-        const catSel = document.getElementById('adm-sel-cat');
+        const catSel = document.getElementById("adm-sel-cat");
         if (!catSel) return;
-        catSel.innerHTML = '';
-        Object.keys(window.categoryConfig).forEach(cKey => {
-            const opt = document.createElement('option');
-            opt.value = cKey;
-            opt.innerText = window.categoryConfig[cKey].title;
-            catSel.appendChild(opt);
-        });
-        catSel.value = currentCategory || 'gs6';
+        catSel.innerHTML = Object.keys(window.categoryConfig).map(k => `<option value="${k}">${window.categoryConfig[k].name}</option>`).join("");
+        catSel.value = currentCategory || "gs6";
         onAdminCatChange();
     }
 
     function onAdminCatChange() {
-        const catSel = document.getElementById('adm-sel-cat');
-        const unitSel = document.getElementById('adm-sel-unit');
-        if (!catSel || !unitSel) return;
-        const cKey = catSel.value;
-        const unitsObj = window.categoryConfig[cKey].units;
-        unitSel.innerHTML = '';
-        Object.keys(unitsObj).forEach(uKey => {
-            const opt = document.createElement('option');
-            opt.value = uKey;
-            opt.innerText = unitsObj[uKey].name;
-            unitSel.appendChild(opt);
-        });
-        onAdminUnitChange();
-    }
-
-    function onAdminUnitChange() {
-        const testSel = document.getElementById('adm-sel-test');
-        if (!testSel) return;
-        const prevVal = testSel.value;
-        testSel.innerHTML = '';
-        ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5", "Test 6"].forEach(tKey => {
-            const opt = document.createElement('option');
-            opt.value = tKey;
-            opt.innerText = `${tKey} — ${LEVEL_SHORT_LABELS[tKey] || tKey}`;
-            testSel.appendChild(opt);
-        });
-        if (prevVal && ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5", "Test 6"].includes(prevVal)) {
-            testSel.value = prevVal;
-        }
-        onAdminTestChange();
-    }
-
-    function onAdminTestChange() {
-        resetAdminQuestionForm();
+        const cat = document.getElementById("adm-sel-cat").value;
+        const unitSel = document.getElementById("adm-sel-unit");
+        const units = (window.categoryConfig[cat] && window.categoryConfig[cat].units) ? window.categoryConfig[cat].units : [];
+        unitSel.innerHTML = units.map(u => `<option value="${u.id}">${u.title}</option>`).join("");
         renderAdminQuestionList();
     }
 
-    function getAdminSelectedContext() {
-        const cat = document.getElementById('adm-sel-cat').value;
-        const unit = document.getElementById('adm-sel-unit').value;
-        const test = document.getElementById('adm-sel-test').value;
+    function getAdminSelection() {
+        const cat = document.getElementById("adm-sel-cat").value || "gs6";
+        const unit = normalizeUnitId(document.getElementById("adm-sel-unit").value || "1");
+        const test = normalizeTestId(document.getElementById("adm-sel-test").value || "1");
         return { cat, unit, test };
     }
 
     function renderAdminQuestionList() {
-        const { cat, unit, test } = getAdminSelectedContext();
-        const questions = getTestQuestions(cat, unit, test);
-        const countBadge = document.getElementById('adm-q-count-badge');
-        if (countBadge) countBadge.innerText = `${questions.length} câu`;
+        const { cat, unit, test } = getAdminSelection();
+        window.examDatabase[cat] = window.examDatabase[cat] || {};
+        window.examDatabase[cat][unit] = window.examDatabase[cat][unit] || {};
+        const list = window.examDatabase[cat][unit][test] || [];
 
-        const listEl = document.getElementById('adm-question-list');
-        if (!listEl) return;
-        listEl.innerHTML = '';
-        const kw = (document.getElementById('adm-search-q')?.value || '').trim().toLowerCase();
-        const letters = ['A', 'B', 'C', 'D'];
+        const cfg = window.categoryConfig[cat];
+        const uMeta = getUnitMeta(cat, unit);
+        const pathEl = document.getElementById("adm-current-path");
+        if (pathEl) pathEl.innerText = `${cfg ? cfg.name : cat} — ${uMeta.title} — Cấp độ ${test}`;
 
-        questions.forEach((q, idx) => {
-            if (kw && !q.q.toLowerCase().includes(kw) && !(q.exp || '').toLowerCase().includes(kw)) return;
-            const item = document.createElement('div');
-            item.className = 'p-3 bg-gray-50 border border-gray-200 rounded-xl flex flex-col md:flex-row justify-between gap-2 text-xs';
-            item.innerHTML = `
-                <div class="space-y-1 pr-2">
-                    <div class="font-extrabold text-blue-900">Câu ${idx + 1}: ${q.q}</div>
-                    <div class="text-gray-700">Đáp án đúng: <b class="text-emerald-700">${letters[q.ans]}. ${q.options[q.ans]}</b></div>
-                    <div class="text-gray-500 italic">Giải thích: ${q.exp || ''}</div>
-                </div>
-                <div class="flex gap-1.5 items-start flex-shrink-0">
-                    <button type="button" onclick="editAdminQuestion(${idx})" class="bg-blue-100 hover:bg-blue-200 text-blue-800 font-bold px-2.5 py-1.5 rounded-lg">✏️ Sửa</button>
-                    <button type="button" onclick="deleteAdminQuestion(${idx})" class="bg-rose-100 hover:bg-rose-200 text-rose-800 font-bold px-2.5 py-1.5 rounded-lg">🗑️ Xóa</button>
+        const countEl = document.getElementById("adm-q-count");
+        if (countEl) countEl.innerText = String(list.length);
+
+        const kw = (document.getElementById("adm-search-q")?.value || "").trim().toLowerCase();
+        const container = document.getElementById("adm-question-list");
+        if (!container) return;
+
+        if (!list.length) {
+            container.innerHTML = `<div class="p-4 bg-gray-50 rounded-lg text-xs text-gray-500 text-center">Cấp độ này hiện chưa có câu hỏi. Hãy thêm câu hỏi ở form trên hoặc dùng Tab Nhập Đề Hàng Loạt.</div>`;
+            return;
+        }
+        const labels = ["A", "B", "C", "D"];
+        container.innerHTML = list.map((q, idx) => {
+            const qTxt = q.text || q.q || "";
+            const qExp = q.explanation || q.exp || "";
+            const qAns = (q.answer !== undefined) ? q.answer : q.ans;
+            if (kw && !qTxt.toLowerCase().includes(kw) && !qExp.toLowerCase().includes(kw)) return "";
+            return `
+                <div class="p-3 bg-gray-50 hover:bg-blue-50/40 rounded-lg border border-gray-200 flex justify-between items-start gap-3">
+                    <div class="text-xs space-y-1 flex-grow">
+                        <div class="font-bold text-blue-900">Câu ${idx + 1} (Đáp án đúng: <span class="text-emerald-700">${labels[qAns] || "A"}</span>): <span class="font-normal text-gray-800">${qTxt || "[Câu hỏi điền khuyết theo bài đọc]"}</span></div>
+                        <div class="text-[11px] text-gray-600 grid grid-cols-2 md:grid-cols-4 gap-1">
+                            ${(q.options || []).map((o, oi) => `<span class="${oi === qAns ? "font-bold text-emerald-700" : ""}">${labels[oi]}. ${o}</span>`).join("")}
+                        </div>
+                        ${qExp ? `<div class="text-[11px] text-emerald-800 italic">💡 ${qExp}</div>` : ""}
+                    </div>
+                    <div class="flex gap-1.5 flex-shrink-0">
+                        <button type="button" onclick="editAdminQuestion(${idx})" class="px-2.5 py-1 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded font-bold text-xs cursor-pointer">Sửa</button>
+                        <button type="button" onclick="deleteAdminQuestion(${idx})" class="px-2.5 py-1 bg-red-100 hover:bg-red-200 text-red-700 rounded font-bold text-xs cursor-pointer">Xóa</button>
+                    </div>
                 </div>
             `;
-            listEl.appendChild(item);
-        });
+        }).join("");
     }
 
     function resetAdminQuestionForm() {
-        document.getElementById('adm-edit-index').value = '-1';
-        document.getElementById('adm-form-title').innerText = '➕ Thêm Câu Hỏi Mới vào Cấp độ đang chọn';
-        ['adm-q-text', 'adm-opt-0', 'adm-opt-1', 'adm-opt-2', 'adm-opt-3', 'adm-q-exp', 'adm-q-passage', 'adm-q-script'].forEach(id => {
+        document.getElementById("adm-edit-index").value = "-1";
+        document.getElementById("adm-form-title").innerText = "➕ Thêm Câu Hỏi Mới vào Cấp độ đang chọn";
+        ["adm-q-inst", "adm-q-text", "adm-q-opt0", "adm-q-opt1", "adm-q-opt2", "adm-q-opt3", "adm-q-exp", "adm-q-passage", "adm-q-script"].forEach(id => {
             const el = document.getElementById(id);
-            if (el) el.value = '';
+            if (el) el.value = "";
         });
-        document.getElementById('adm-q-ans').value = '0';
+        document.getElementById("adm-q-ans").value = "0";
     }
 
     function editAdminQuestion(idx) {
-        const { cat, unit, test } = getAdminSelectedContext();
-        const questions = getTestQuestions(cat, unit, test);
-        const q = questions[idx];
+        const { cat, unit, test } = getAdminSelection();
+        const list = window.examDatabase[cat][unit][test] || [];
+        const q = list[idx];
         if (!q) return;
-        document.getElementById('adm-edit-index').value = String(idx);
-        document.getElementById('adm-form-title').innerText = `✏️ Đang Chỉnh Sửa Câu Hỏi số ${idx + 1}`;
-        document.getElementById('adm-q-text').value = q.q || '';
-        document.getElementById('adm-opt-0').value = q.options[0] || '';
-        document.getElementById('adm-opt-1').value = q.options[1] || '';
-        document.getElementById('adm-opt-2').value = q.options[2] || '';
-        document.getElementById('adm-opt-3').value = q.options[3] || '';
-        document.getElementById('adm-q-ans').value = String(q.ans || 0);
-        document.getElementById('adm-q-exp').value = q.exp || '';
-        document.getElementById('adm-q-passage').value = q.passage || '';
-        document.getElementById('adm-q-script').value = q.script || '';
+        document.getElementById("adm-edit-index").value = String(idx);
+        document.getElementById("adm-form-title").innerText = `✏️ Đang sửa Câu số ${idx + 1}`;
+        document.getElementById("adm-q-inst").value = q.instruction || "";
+        document.getElementById("adm-q-text").value = q.text || q.q || "";
+        document.getElementById("adm-q-opt0").value = (q.options && q.options[0]) || "";
+        document.getElementById("adm-q-opt1").value = (q.options && q.options[1]) || "";
+        document.getElementById("adm-q-opt2").value = (q.options && q.options[2]) || "";
+        document.getElementById("adm-q-opt3").value = (q.options && q.options[3]) || "";
+        document.getElementById("adm-q-ans").value = String((q.answer !== undefined) ? q.answer : (q.ans || 0));
+        document.getElementById("adm-q-exp").value = q.explanation || q.exp || "";
+        document.getElementById("adm-q-passage").value = q.passage || "";
+        document.getElementById("adm-q-script").value = q.tapescript || q.script || "";
+        document.getElementById("adm-question-form-card").scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
     function saveAdminQuestion() {
-        const { cat, unit, test } = getAdminSelectedContext();
-        const questions = getTestQuestions(cat, unit, test);
-        const editIdx = parseInt(document.getElementById('adm-edit-index').value, 10);
+        const { cat, unit, test } = getAdminSelection();
+        window.examDatabase[cat] = window.examDatabase[cat] || {};
+        window.examDatabase[cat][unit] = window.examDatabase[cat][unit] || {};
+        window.examDatabase[cat][unit][test] = window.examDatabase[cat][unit][test] || [];
+        const list = window.examDatabase[cat][unit][test];
+        const editIdx = parseInt(document.getElementById("adm-edit-index").value, 10);
 
-        const qText = document.getElementById('adm-q-text').value.trim();
-        const opts = [
-            document.getElementById('adm-opt-0').value.trim(),
-            document.getElementById('adm-opt-1').value.trim(),
-            document.getElementById('adm-opt-2').value.trim(),
-            document.getElementById('adm-opt-3').value.trim()
-        ];
-        if (!qText || opts.some(o => !o)) {
-            alert("Vui lòng nhập đầy đủ nội dung câu hỏi và cả 4 đáp án A, B, C, D!");
-            return;
-        }
-        const newQ = {
-            q: qText,
-            options: opts,
-            ans: parseInt(document.getElementById('adm-q-ans').value, 10) || 0,
-            exp: document.getElementById('adm-q-exp').value.trim() || 'Áp dụng kiến thức trọng tâm của bài học.'
+        const qObj = {
+            origNum: editIdx >= 0 && list[editIdx] ? (list[editIdx].origNum || editIdx + 1) : (list.length + 1),
+            instruction: document.getElementById("adm-q-inst").value.trim() || "Choose the best option A, B, C, or D to complete each sentence.",
+            text: document.getElementById("adm-q-text").value.trim(),
+            options: [
+                document.getElementById("adm-q-opt0").value.trim() || "Option A",
+                document.getElementById("adm-q-opt1").value.trim() || "Option B",
+                document.getElementById("adm-q-opt2").value.trim() || "Option C",
+                document.getElementById("adm-q-opt3").value.trim() || "Option D"
+            ],
+            answer: parseInt(document.getElementById("adm-q-ans").value, 10) || 0,
+            explanation: document.getElementById("adm-q-exp").value.trim()
         };
-        const passVal = document.getElementById('adm-q-passage').value.trim();
-        const scriptVal = document.getElementById('adm-q-script').value.trim();
-        if (passVal) newQ.passage = passVal;
-        if (scriptVal) newQ.script = scriptVal;
+        const pas = document.getElementById("adm-q-passage").value.trim();
+        const scr = document.getElementById("adm-q-script").value.trim();
+        if (pas) qObj.passage = pas;
+        if (scr) qObj.tapescript = scr;
 
-        if (editIdx >= 0 && editIdx < questions.length) {
-            questions[editIdx] = Object.assign({}, questions[editIdx], newQ);
+        if (editIdx >= 0 && editIdx < list.length) {
+            list[editIdx] = Object.assign({}, list[editIdx], qObj);
         } else {
-            questions.push(newQ);
+            list.push(qObj);
         }
-        window.examDatabase[cat][unit][test] = questions;
-        savePortalCustomizations(cat, unit, test, questions);
+        persistAdminDatabase(cat, unit, test, list);
         resetAdminQuestionForm();
         renderAdminQuestionList();
-        alert("Đã lưu câu hỏi thành công!");
+        updateAdminDashboardStats();
+        showToast("💾 Đã lưu câu hỏi thành công!", "success");
     }
 
     function deleteAdminQuestion(idx) {
-        if (!confirm(`Bạn có chắc chắn muốn xóa Câu ${idx + 1} không?`)) return;
-        const { cat, unit, test } = getAdminSelectedContext();
-        const questions = getTestQuestions(cat, unit, test);
-        questions.splice(idx, 1);
-        window.examDatabase[cat][unit][test] = questions;
-        savePortalCustomizations(cat, unit, test, questions);
+        openActionModal({
+            title: "🗑️ Xác nhận xóa câu hỏi",
+            message: `Bạn có chắc chắn muốn xóa Câu số ${idx + 1} khỏi cấp độ này không?`,
+            onConfirm: () => {
+                const { cat, unit, test } = getAdminSelection();
+                const list = window.examDatabase[cat][unit][test] || [];
+                list.splice(idx, 1);
+                persistAdminDatabase(cat, unit, test, list);
+                renderAdminQuestionList();
+                updateAdminDashboardStats();
+                showToast("🗑️ Đã xóa câu hỏi.", "info");
+            }
+        });
+    }
+
+    function previewSelectedAdminTest() {
+        const { cat, unit, test } = getAdminSelection();
+        selectCategory(cat);
+        selectTest(Number(unit), Number(test));
+    }
+
+    function shuffleAdminTest() {
+        const { cat, unit, test } = getAdminSelection();
+        const list = window.examDatabase[cat][unit][test] || [];
+        if (!list.length) {
+            showToast("⚠️ Không có câu hỏi nào để đảo phương án!", "warning");
+            return;
+        }
+        list.forEach((q, idx) => {
+            const ansVal = (q.answer !== undefined) ? q.answer : q.ans;
+            const r = rotateOpts(q.options, ansVal, (idx % 3) + 1);
+            q.options = r.opts;
+            q.answer = r.ans;
+        });
+        persistAdminDatabase(cat, unit, test, list);
         renderAdminQuestionList();
+        showToast("🔀 Đã đảo ngẫu nhiên vị trí phương án A-B-C-D cho toàn bộ câu hỏi!", "success");
+    }
+
+    function cloneAdminTestToAnotherSlot() {
+        const { cat, unit, test } = getAdminSelection();
+        const list = window.examDatabase[cat][unit][test] || [];
+        openActionModal({
+            title: "📋 Sao chép sang Cấp độ khác",
+            message: `Nhập số Cấp độ đích (1 → 6) trong ${getUnitMeta(cat, unit).title} để sao chép ${list.length} câu hỏi sang:`,
+            showInput: true,
+            inputDefault: String(test === "6" ? 1 : Number(test) + 1),
+            inputPlaceholder: "Nhập số từ 1 đến 6...",
+            onConfirm: (val) => {
+                const targetTest = normalizeTestId(val);
+                if (!["1", "2", "3", "4", "5", "6"].includes(targetTest)) {
+                    showToast("⚠️ Cấp độ đích phải từ 1 đến 6!", "error");
+                    return;
+                }
+                const cloned = JSON.parse(JSON.stringify(list));
+                window.examDatabase[cat][unit][targetTest] = cloned;
+                persistAdminDatabase(cat, unit, targetTest, cloned);
+                document.getElementById("adm-sel-test").value = targetTest;
+                renderAdminQuestionList();
+                updateAdminDashboardStats();
+                showToast(`📋 Đã sao chép ${cloned.length} câu hỏi sang Cấp độ ${targetTest}!`, "success");
+            }
+        });
+    }
+
+    function exportSelectedAdminTestDocx() {
+        const { cat, unit, test } = getAdminSelection();
+        currentCategory = cat;
+        currentUnit = Number(unit);
+        currentTest = Number(test);
+        exportDocx(true);
+    }
+
+    function clearSelectedAdminTest() {
+        openActionModal({
+            title: "🗑️ Xác nhận xóa trắng Cấp độ",
+            message: "Bạn có chắc chắn muốn xóa toàn bộ câu hỏi trong Cấp độ đang chọn không?",
+            onConfirm: () => {
+                const { cat, unit, test } = getAdminSelection();
+                window.examDatabase[cat][unit][test] = [];
+                persistAdminDatabase(cat, unit, test, []);
+                renderAdminQuestionList();
+                updateAdminDashboardStats();
+                showToast("🗑️ Đã xóa trắng câu hỏi trong Cấp độ đang chọn.", "info");
+            }
+        });
     }
 
     function insertSampleBulkQuestions() {
-        const sample = `Câu 1: Students at Sunrise ______ School wear their uniforms every Monday.\nA. Boarding\nB. Primary\nC. Village\nD. International\nĐáp án: A\nGiải thích: boarding school = trường nội trú.\n\nCâu 2: My brother ______ judo in the school sports club twice a week.\nA. plays\nB. does\nC. has\nD. studies\nĐáp án: B\nGiải thích: do judo = tập võ judo.\n\nCâu 3: Look! The children ______ badminton in the schoolyard right now.\nA. play\nB. plays\nC. are playing\nD. played\nĐáp án: C\nGiải thích: Dấu hiệu Look! + right now chia Hiện tại tiếp diễn.`;
-        document.getElementById('adm-bulk-input').value = sample;
+        const sample = `Question 1: Students at Sunrise ______ School live and study at school from Monday to Friday.\nA. Boarding\nB. Primary\nC. Village\nD. International\nAnswer: A\nExplanation: boarding school = trường nội trú.\n\nQuestion 2: Look! Phuc and Duong ______ badminton in the schoolyard at the moment.\nA. play\nB. plays\nC. are playing\nD. played\nAnswer: C\nExplanation: Dấu hiệu Look! + at the moment chia Hiện tại tiếp diễn.\n\nQuestion 3: If we ______ more trees around our school, the air will be much fresher.\nA. plant\nB. will plant\nC. planted\nD. planting\nAnswer: A\nExplanation: Câu điều kiện loại 1 mệnh đề If chia Hiện tại đơn.`;
+        const box = document.getElementById("adm-bulk-input");
+        if (box) box.value = sample;
+        showToast("📋 Đã chèn 3 câu hỏi mẫu chuẩn định dạng!", "info");
     }
 
     function runSmartBulkImport(overwrite) {
-        const raw = document.getElementById('adm-bulk-input').value.trim();
+        const raw = (document.getElementById("adm-bulk-input")?.value || "").trim();
         if (!raw) {
-            alert("Vui lòng dán nội dung câu hỏi vào ô văn bản trước!");
+            showToast("⚠️ Vui lòng dán nội dung câu hỏi vào ô văn bản trước!", "warning");
             return;
         }
-        const blocks = raw.split(/\n\s*\n/).map(b => b.trim()).filter(Boolean);
+        const blocks = raw.split(/\n\s*\n+/).map(b => b.trim()).filter(Boolean);
         const parsed = [];
-        blocks.forEach(block => {
-            const lines = block.split('\n').map(l => l.trim()).filter(Boolean);
+        blocks.forEach((b, bIdx) => {
+            const lines = b.split("\n").map(l => l.trim()).filter(Boolean);
             if (lines.length < 5) return;
-            const qLine = lines[0].replace(/^(Câu|Question)\s*\d+\s*[:.]\s*/i, '');
-            const opts = [];
+            const qText = lines[0].replace(/^(Question|Câu)\s*\d+[\.:]\s*/i, "");
+            const opts = ["Option A", "Option B", "Option C", "Option D"];
             let ans = 0;
-            let exp = 'Áp dụng kiến thức trọng tâm trong đơn vị bài học.';
+            let exp = "";
             lines.slice(1).forEach(line => {
-                const mOpt = line.match(/^([A-D])[.:\)]\s*(.+)$/i);
-                if (mOpt && opts.length < 4) {
-                    opts.push(mOpt[2].trim());
-                    return;
-                }
-                const mAns = line.match(/^(Đáp án|Answer|Ans)\s*[:.]?\s*([A-D])/i);
-                if (mAns) {
-                    ans = ['A', 'B', 'C', 'D'].indexOf(mAns[2].toUpperCase());
-                    return;
-                }
-                const mExp = line.match(/^(Giải thích|Explanation|Exp)\s*[:.]?\s*(.+)$/i);
-                if (mExp) {
-                    exp = mExp[2].trim();
+                const mOpt = line.match(/^([A-D])[\.:\)]\s*(.+)$/i);
+                if (mOpt) {
+                    const idx = "ABCD".indexOf(mOpt[1].toUpperCase());
+                    if (idx >= 0) opts[idx] = mOpt[2].trim();
+                } else if (/^(Answer|Đáp án|Ans)\s*[:.]?\s*([A-D])/i.test(line)) {
+                    const mAns = line.match(/^(Answer|Đáp án|Ans)\s*[:.]?\s*([A-D])/i);
+                    ans = Math.max(0, "ABCD".indexOf(mAns[2].toUpperCase()));
+                } else if (/^(Explanation|Giải thích|Exp)\s*[:.]?\s*(.+)/i.test(line)) {
+                    exp = line.replace(/^(Explanation|Giải thích|Exp)\s*[:.]?\s*/i, "").trim();
                 }
             });
-            if (qLine && opts.length === 4) {
-                parsed.push({ q: qLine, options: opts, ans: Math.max(0, ans), exp });
-            }
+            parsed.push({
+                origNum: bIdx + 1,
+                instruction: "Choose the correct option A, B, C, or D to complete each sentence.",
+                text: qText,
+                options: opts,
+                answer: ans,
+                explanation: exp
+            });
         });
 
         if (!parsed.length) {
-            alert("Không nhận diện được câu hỏi hợp lệ. Hãy bấm 'Chèn 3 câu mẫu chuẩn' để xem định dạng mẫu!");
+            showToast("⚠️ Không nhận diện được câu hỏi hợp lệ. Hãy bấm 'Chèn 3 câu mẫu chuẩn' để xem mẫu!", "error");
             return;
         }
-        const { cat, unit, test } = getAdminSelectedContext();
-        const existing = overwrite ? [] : getTestQuestions(cat, unit, test).slice();
-        const updated = existing.concat(parsed);
+        const { cat, unit, test } = getAdminSelection();
+        window.examDatabase[cat] = window.examDatabase[cat] || {};
+        window.examDatabase[cat][unit] = window.examDatabase[cat][unit] || {};
+        const updated = overwrite ? parsed : (window.examDatabase[cat][unit][test] || []).concat(parsed);
         window.examDatabase[cat][unit][test] = updated;
-        savePortalCustomizations(cat, unit, test, updated);
+        persistAdminDatabase(cat, unit, test, updated);
         renderAdminQuestionList();
-        alert(`Đã nhập thành công ${parsed.length} câu hỏi vào ${test}! Tổng số câu hiện tại: ${updated.length} câu.`);
+        updateAdminDashboardStats();
+        switchAdminTab("questions");
+        showToast(`✅ Đã nạp thành công ${parsed.length} câu hỏi vào Cấp độ ${test}!`, "success");
     }
 
-    function renderAdminFlashcardsList() {
-        const wrap = document.getElementById('adm-fc-list');
-        if (!wrap) return;
-        wrap.innerHTML = '';
-        const list = (window.portalData && window.portalData.flashcards) || [];
-        list.forEach((fc, idx) => {
-            const d = document.createElement('div');
-            d.className = 'p-2.5 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center text-xs';
-            d.innerHTML = `<div><b>${fc.word}</b> (${fc.ipa}) — ${fc.meaning}</div><button type="button" onclick="deleteAdminFlashcard(${idx})" class="text-rose-600 font-bold px-2">Xóa</button>`;
-            wrap.appendChild(d);
-        });
+    function renderAdminFlashcardList() {
+        const list = getFlashcardsList();
+        const container = document.getElementById("adm-fc-list");
+        if (!container) return;
+        container.innerHTML = list.map((f, i) => `
+            <div class="p-2.5 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center gap-2">
+                <div class="text-xs truncate">
+                    <b class="text-blue-900">${f.word}</b> <span class="text-indigo-600 font-mono">(${f.ipa || ""})</span> — <span class="text-emerald-700 font-semibold">${f.meaning}</span>
+                </div>
+                <button type="button" onclick="deleteAdminFlashcard(${i})" class="text-xs text-red-600 font-bold hover:underline flex-shrink-0 cursor-pointer">Xóa</button>
+            </div>
+        `).join("");
     }
 
     function addAdminFlashcard() {
-        const word = document.getElementById('adm-fc-word').value.trim();
-        const ipa = document.getElementById('adm-fc-ipa').value.trim();
-        const pos = document.getElementById('adm-fc-pos').value.trim();
-        const meaning = document.getElementById('adm-fc-meaning').value.trim();
-        const example = document.getElementById('adm-fc-example').value.trim();
+        const word = (document.getElementById("adm-fc-word")?.value || "").trim();
+        const meaning = (document.getElementById("adm-fc-meaning")?.value || "").trim();
         if (!word || !meaning) {
-            alert("Vui lòng nhập Từ vựng và Nghĩa tiếng Việt!");
+            showToast("⚠️ Vui lòng nhập Từ vựng và Nghĩa tiếng Việt!", "warning");
             return;
         }
-        window.portalData.flashcards.unshift({ word, ipa, pos, meaning, example });
-        savePortalCustomizations();
-        renderAdminFlashcardsList();
+        window.portalData.flashcards.unshift({
+            id: "v" + Date.now(),
+            word,
+            ipa: (document.getElementById("adm-fc-ipa")?.value || "").trim() || "Global Success",
+            pos: (document.getElementById("adm-fc-pos")?.value || "").trim() || "Vocabulary",
+            meaning,
+            example: (document.getElementById("adm-fc-example")?.value || "").trim(),
+            topic: "Từ vựng bổ sung"
+        });
+        persistAdminDatabase();
+        renderAdminFlashcardList();
+        updateAdminDashboardStats();
+        ["adm-fc-word", "adm-fc-ipa", "adm-fc-pos", "adm-fc-meaning", "adm-fc-example"].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = "";
+        });
+        showToast("🎴 Đã thêm thẻ Flashcard mới!", "success");
     }
 
     function deleteAdminFlashcard(idx) {
         window.portalData.flashcards.splice(idx, 1);
-        savePortalCustomizations();
-        renderAdminFlashcardsList();
+        persistAdminDatabase();
+        renderAdminFlashcardList();
+        updateAdminDashboardStats();
+        showToast("🗑️ Đã xóa thẻ Flashcard.", "info");
     }
 
     function renderAdminGrammarList() {
-        const wrap = document.getElementById('adm-gr-list');
-        if (!wrap) return;
-        wrap.innerHTML = '';
-        const list = (window.portalData && window.portalData.grammarNotes) || [];
-        list.forEach((gr, idx) => {
-            const d = document.createElement('div');
-            d.className = 'p-2.5 bg-gray-50 border border-gray-200 rounded-lg flex justify-between items-center text-xs';
-            d.innerHTML = `<div><b>${gr.title}</b> (${gr.level})</div><button type="button" onclick="deleteAdminGrammar(${idx})" class="text-rose-600 font-bold px-2">Xóa</button>`;
-            wrap.appendChild(d);
-        });
+        const list = (window.portalData && Array.isArray(window.portalData.grammarNotes)) ? window.portalData.grammarNotes : [];
+        const container = document.getElementById("adm-gr-list");
+        if (!container) return;
+        container.innerHTML = list.map((g, i) => `
+            <div class="p-2.5 bg-gray-50 rounded-lg border border-gray-200 flex justify-between items-center gap-2">
+                <div class="text-xs truncate">
+                    <b class="text-blue-900">${g.title}</b> <span class="text-indigo-600">(${g.level || ""})</span>
+                </div>
+                <button type="button" onclick="deleteAdminGrammar(${i})" class="text-xs text-red-600 font-bold hover:underline flex-shrink-0 cursor-pointer">Xóa</button>
+            </div>
+        `).join("");
     }
 
     function addAdminGrammarNote() {
-        const title = document.getElementById('adm-gr-title').value.trim();
-        const level = document.getElementById('adm-gr-level').value.trim() || 'Global Success';
-        const summary = document.getElementById('adm-gr-summary').value.trim();
-        const formulas = document.getElementById('adm-gr-formulas').value.split('\n').map(s => s.trim()).filter(Boolean);
-        const tips = document.getElementById('adm-gr-tips').value.trim();
+        const title = (document.getElementById("adm-gr-title")?.value || "").trim();
         if (!title) {
-            alert("Vui lòng nhập tên chuyên đề ngữ pháp!");
+            showToast("⚠️ Vui lòng nhập Tên chuyên đề ngữ pháp!", "warning");
             return;
         }
-        window.portalData.grammarNotes.push({ title, level, summary, formulas, tips });
-        savePortalCustomizations();
+        const level = (document.getElementById("adm-gr-level")?.value || "").trim() || "Global Success";
+        const summary = (document.getElementById("adm-gr-summary")?.value || "").trim();
+        const formulas = (document.getElementById("adm-gr-formulas")?.value || "").split("\n").map(s => s.trim()).filter(Boolean);
+        const tips = (document.getElementById("adm-gr-tips")?.value || "").trim();
+
+        window.portalData.grammarNotes.push({ id: "gr_" + Date.now(), title, level, summary, formulas, tips });
+        persistAdminDatabase();
         renderAdminGrammarList();
+        updateAdminDashboardStats();
+        ["adm-gr-title", "adm-gr-level", "adm-gr-summary", "adm-gr-formulas", "adm-gr-tips"].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = "";
+        });
+        showToast("📐 Đã thêm chuyên đề Ngữ pháp mới!", "success");
     }
 
     function deleteAdminGrammar(idx) {
         window.portalData.grammarNotes.splice(idx, 1);
-        savePortalCustomizations();
+        persistAdminDatabase();
         renderAdminGrammarList();
+        updateAdminDashboardStats();
+        showToast("🗑️ Đã xóa chuyên đề Ngữ pháp.", "info");
     }
 
     function renderAdminScoresTable() {
-        const wrap = document.getElementById('adm-scores-table-wrap');
+        const wrap = document.getElementById("adm-scores-table-wrap");
         if (!wrap) return;
-        const arr = JSON.parse(safeGetItem(STORAGE_KEY_SCORES, '[]'));
+        let arr = [];
+        try { arr = JSON.parse(safeGetItem(STORAGE_KEY_SCORES, "[]")) || []; } catch (e) {}
         if (!arr.length) {
-            wrap.innerHTML = '<div class="p-6 text-center text-xs text-gray-500">Chưa có lịch sử nộp bài nào trên thiết bị này.</div>';
+            wrap.innerHTML = `<div class="p-6 text-center text-xs text-gray-500">Chưa có lịch sử nộp bài nào trên thiết bị này.</div>`;
             return;
         }
         const rows = arr.map((r, i) => `
@@ -4046,7 +4455,7 @@ initThcsGlobalSuccessPortal();
                 <td class="px-3 py-2 font-extrabold text-emerald-700">${r.score10}đ (${r.correct})</td>
                 <td class="px-3 py-2 font-bold text-purple-700">${r.percent}</td>
             </tr>
-        `).join('');
+        `).join("");
         wrap.innerHTML = `
             <table class="w-full text-left border-collapse">
                 <thead class="bg-slate-100 text-slate-700 text-xs font-extrabold uppercase">
@@ -4065,78 +4474,106 @@ initThcsGlobalSuccessPortal();
         `;
     }
 
+    function triggerBlobDownload(blob, filename) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+            a.remove();
+            URL.revokeObjectURL(url);
+        }, 200);
+    }
+
     function exportScoresCsv() {
-        const arr = JSON.parse(safeGetItem(STORAGE_KEY_SCORES, '[]'));
+        let arr = [];
+        try { arr = JSON.parse(safeGetItem(STORAGE_KEY_SCORES, "[]")) || []; } catch (e) {}
         if (!arr.length) {
-            alert("Chưa có dữ liệu điểm để xuất!");
+            showToast("⚠️ Chưa có dữ liệu điểm để xuất!", "warning");
             return;
         }
         const header = "STT,Thoi gian,Khoi Lop,Unit,Cap do,Ket qua,Thang diem 10,Ty le\n";
-        const body = arr.map((r, i) => `${i + 1},"${r.time}","${r.grade}","${r.unit}","${r.level}","${r.correct}",${r.score10},${r.percent}`).join('\n');
-        const blob = new Blob(["\uFEFF" + header + body], { type: 'text/csv;charset=utf-8;' });
-        saveAs(blob, "Bang_Diem_Tieng_Anh_THCS_Thay_Tien.csv");
+        const body = arr.map((r, i) => `${i + 1},"${r.time}","${r.grade}","${r.unit}","${r.level}","${r.correct}",${r.score10},${r.percent}`).join("\n");
+        const blob = new Blob(["\uFEFF" + header + body], { type: "text/csv;charset=utf-8;" });
+        triggerBlobDownload(blob, "Bang_Diem_Tieng_Anh_THCS_Thay_Tien.csv");
+        showToast("📥 Đã tải xuống Bảng điểm (.CSV)!", "success");
     }
 
     function resetStudentProgress() {
-        if (!confirm("Bạn có chắc chắn muốn xóa lịch sử điểm trên thiết bị này?")) return;
-        safeRemoveItem(STORAGE_KEY_SCORES);
-        renderAdminScoresTable();
+        openActionModal({
+            title: "🗑️ Xác nhận xóa lịch sử điểm",
+            message: "Bạn có chắc chắn muốn xóa toàn bộ lịch sử làm bài và bảng điểm trên thiết bị này không?",
+            onConfirm: () => {
+                safeRemoveItem(STORAGE_KEY_SCORES);
+                safeRemoveItem(STORAGE_KEY_PROGRESS);
+                renderAdminScoresTable();
+                renderSidebar();
+                showToast("🗑️ Đã xóa lịch sử làm bài và bảng điểm.", "info");
+            }
+        });
     }
 
     function loadAdminSettingsForm() {
-        const pwdEl = document.getElementById('adm-set-pwd');
-        const contactEl = document.getElementById('adm-set-contact');
+        const pwdEl = document.getElementById("adm-set-pwd");
+        const contactEl = document.getElementById("adm-set-contact");
         if (pwdEl) pwdEl.value = getAdminPassword();
-        if (contactEl) contactEl.value = getContactText();
+        if (contactEl) contactEl.value = getContactBanner();
     }
 
     function saveAdminSettings() {
-        const pwdVal = document.getElementById('adm-set-pwd').value.trim() || "tienhuongsonkiet28011981@";
-        const contactVal = document.getElementById('adm-set-contact').value.trim() || "LH Thầy Tiến qua ĐT: 0943930787";
-        if (window.portalData && window.portalData.settings) {
-            window.portalData.settings.adminPassword = pwdVal;
-            window.portalData.settings.contactText = contactVal;
-            window.portalData.settings.lockAfterTest1 = false;
-        }
-        savePortalCustomizations();
-        updateContactBanners();
-        alert("Đã lưu cấu hình Mật khẩu Quản trị viên và thông tin Liên hệ thành công!");
+        const s = getSiteSettings();
+        s.adminPassword = (document.getElementById("adm-set-pwd")?.value || "").trim() || "tienhuongsonkiet28011981@";
+        s.contactBanner = (document.getElementById("adm-set-contact")?.value || "").trim() || "LH Thầy Tiến qua ĐT: 0943930787";
+        s.lockAfterTest1 = false;
+        persistAdminDatabase();
+        applySiteSettingsToUI();
+        showToast("💾 Đã lưu cấu hình Mật khẩu Quản trị & Liên hệ!", "success");
     }
 
     function lockStudentSessionForTesting() {
         isAdminUnlocked = false;
-        safeRemoveItem(STORAGE_KEY_ADMIN_AUTH);
-        selectCategory(currentCategory || 'gs6');
-        alert("Đã đăng xuất khỏi Trang Quản trị (Admin CMS) và quay về giao diện Học sinh!");
+        safeRemoveItem(STORAGE_KEY_ADMIN);
+        showWelcomeHome();
+        showToast("🔒 Đã đăng xuất khỏi Quản trị CMS và chuyển về chế độ Học sinh!", "info");
     }
 
     function exportPortalDataJs() {
-        const jsContent = `window.categoryConfig = ${JSON.stringify(window.categoryConfig, null, 2)};\nwindow.examDatabase = ${JSON.stringify(window.examDatabase, null, 2)};\nwindow.portalData = ${JSON.stringify(window.portalData, null, 2)};\n`;
-        const blob = new Blob([jsContent], { type: "application/javascript;charset=utf-8" });
-        saveAs(blob, "portal_data.js");
+        const payload = {
+            siteSettings: getSiteSettings(),
+            grammarNotes: window.portalData.grammarNotes || [],
+            flashcards: window.portalData.flashcards || [],
+            extraCategories: window.categoryConfig,
+            extraDatabase: window.examDatabase
+        };
+        const content = `// DỮ LIỆU HỆ THỐNG TIẾNG ANH THCS LỚP 6, 7, 8, 9 GLOBAL SUCCESS — THẦY TIẾN\nwindow.categoryConfig = ${JSON.stringify(window.categoryConfig, null, 2)};\nwindow.examDatabase = ${JSON.stringify(window.examDatabase, null, 2)};\nwindow.portalData = ${JSON.stringify(payload, null, 2)};\n`;
+        const blob = new Blob([content], { type: "application/javascript;charset=utf-8" });
+        triggerBlobDownload(blob, "portal_data.js");
+        showToast("💾 Đã xuất file portal_data.js thành công!", "success");
     }
 
     function exportStandaloneHtml() {
         const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
         const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
-        saveAs(blob, "index.html");
+        triggerBlobDownload(blob, "index.html");
+        showToast("📦 Đã tải xuống file index.html đầy đủ!", "success");
     }
 
     async function pushToGitHubApi() {
-        const repo = document.getElementById('adm-gh-repo').value.trim();
-        const branch = document.getElementById('adm-gh-branch').value.trim() || 'main';
-        const token = document.getElementById('adm-gh-token').value.trim();
-        const statusEl = document.getElementById('adm-gh-status');
+        const repo = (document.getElementById("adm-gh-repo")?.value || "").trim();
+        const branch = (document.getElementById("adm-gh-branch")?.value || "").trim() || "main";
+        const token = (document.getElementById("adm-gh-token")?.value || "").trim();
+        const statusEl = document.getElementById("adm-gh-status");
         if (!repo || !token) {
-            alert("Vui lòng nhập đầy đủ Tên Repo (VD: thaytien/tienganh-thcs) và GitHub Token!");
+            showToast("⚠️ Vui lòng nhập đầy đủ Tên Repo và GitHub Token!", "warning");
             return;
         }
-        statusEl.innerText = "⏳ Đang đồng bộ portal_data.js lên GitHub...";
+        if (statusEl) statusEl.innerText = "⏳ Đang đồng bộ portal_data.js lên GitHub...";
         try {
             const path = "portal_data.js";
-            const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
             let sha = undefined;
-            const getRes = await fetch(`${apiUrl}?ref=${branch}`, {
+            const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}?ref=${branch}`, {
                 headers: { "Authorization": `Bearer ${token}`, "Accept": "application/vnd.github+json" }
             });
             if (getRes.ok) {
@@ -4145,7 +4582,7 @@ initThcsGlobalSuccessPortal();
             }
             const jsContent = `window.categoryConfig = ${JSON.stringify(window.categoryConfig)};\nwindow.examDatabase = ${JSON.stringify(window.examDatabase)};\nwindow.portalData = ${JSON.stringify(window.portalData)};\n`;
             const b64 = btoa(unescape(encodeURIComponent(jsContent)));
-            const putRes = await fetch(apiUrl, {
+            const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
                 method: "PUT",
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -4160,96 +4597,95 @@ initThcsGlobalSuccessPortal();
                 })
             });
             if (putRes.ok) {
-                statusEl.innerText = "✅ Đã đẩy thành công portal_data.js lên GitHub Pages!";
+                if (statusEl) statusEl.innerText = "✅ Đã đẩy thành công portal_data.js lên GitHub Pages!";
+                showToast("☁️ Đồng bộ lên GitHub thành công!", "success");
             } else {
-                statusEl.innerText = "❌ Lỗi xác thực hoặc không tìm thấy Repo. Hãy kiểm tra lại Token/Repo.";
+                if (statusEl) statusEl.innerText = "❌ Lỗi xác thực hoặc không tìm thấy Repo. Hãy kiểm tra lại Token/Repo.";
             }
         } catch (e) {
-            statusEl.innerText = "❌ Lỗi kết nối tới GitHub API.";
+            if (statusEl) statusEl.innerText = "❌ Không thể kết nối GitHub API từ môi trường hiện tại.";
         }
     }
 
-    // ==================== WORD (.DOCX) EXPORTER ====================
-    async function exportDocx(includeAnswers) {
-        const questions = getTestQuestions(currentCategory, currentUnit, currentTest);
-        if (!questions.length) return;
-        const cfg = window.categoryConfig[currentCategory];
-        const uMeta = cfg.units[currentUnit];
-        const testTitle = `${cfg.badge} - ${uMeta.name} - ${LEVEL_FULL_TITLES[currentTest] || currentTest}`;
-
-        if (!window.docx) {
-            alert("Thư viện xuất Word đang tải, vui lòng thử lại sau giây lát!");
+    // -------------------- WORD (.DOC) EXPORTER (ZERO EXTERNAL DEPENDENCIES) --------------------
+    function exportDocx(includeAnswers) {
+        const questions = getQuestionsList(currentCategory, currentUnit, currentTest);
+        if (!questions.length) {
+            showToast("⚠️ Không có câu hỏi nào để xuất file Word!", "warning");
             return;
         }
-        const { Document, Packer, Paragraph, TextRun, HeadingLevel, AlignmentType } = window.docx;
-        const children = [
-            new Paragraph({
-                alignment: AlignmentType.CENTER,
-                children: [new TextRun({ text: "HỆ THỐNG LUYỆN TIẾNG ANH THCS LỚP 6, 7, 8, 9 GLOBAL SUCCESS — THẦY TIẾN", bold: true, size: 26, color: "1E3A8A" })]
-            }),
-            new Paragraph({
-                alignment: AlignmentType.CENTER,
-                children: [new TextRun({ text: testTitle, bold: true, size: 24, color: "DC2626" })]
-            }),
-            new Paragraph({
-                alignment: AlignmentType.CENTER,
-                children: [new TextRun({ text: `${uMeta.focus} | ${getContactText()}`, italics: true, size: 20 })]
-            }),
-            new Paragraph({ text: "" })
-        ];
+        const cfg = window.categoryConfig[currentCategory];
+        const uMeta = getUnitMeta(currentCategory, currentUnit);
+        const levelName = LEVEL_SHORT_NAMES[String(currentTest)] || `Cấp độ ${currentTest}`;
+        const letters = ["A", "B", "C", "D"];
 
-        const letters = ['A', 'B', 'C', 'D'];
-        let lastScript = null;
-        let lastPassage = null;
+        let bodyHtml = `
+            <div style="text-align:center; margin-bottom: 16pt;">
+                <p style="font-size:13pt; font-weight:bold; color:#1e3a8a; margin:0;">HỆ THỐNG LUYỆN TIẾNG ANH THCS LỚP 6, 7, 8, 9 GLOBAL SUCCESS — THẦY TIẾN</p>
+                <p style="font-size:14pt; font-weight:bold; color:#dc2626; margin:4pt 0;">${cfg ? cfg.name.toUpperCase() : ""} — ${uMeta.title.toUpperCase()}</p>
+                <p style="font-size:12pt; font-weight:bold; color:#1e40af; margin:2pt 0;">${levelName}</p>
+                <p style="font-size:10.5pt; font-style:italic; color:#374151; margin:2pt 0;">${uMeta.desc || ""} | ${getContactBanner()}</p>
+                <hr style="border:1px solid #93c5fd; margin-top:8pt;"/>
+            </div>
+        `;
 
-        questions.forEach((qItem, idx) => {
-            if (qItem.script && qItem.script !== lastScript && includeAnswers) {
-                lastScript = qItem.script;
-                children.push(new Paragraph({
-                    children: [new TextRun({ text: `[TAPESCRIPT BÀI NGHE]: ${qItem.script}`, italics: true, size: 20, color: "92400E" })]
-                }));
+        let lastInst = "";
+        questions.forEach((q, idx) => {
+            if (q.instruction && q.instruction !== lastInst) {
+                lastInst = q.instruction;
+                bodyHtml += `<p style="font-size:11.5pt; font-weight:bold; color:#1e3a8a; background:#eff6ff; padding:6pt; margin-top:10pt; margin-bottom:6pt;">${q.instruction}</p>`;
             }
-            if (qItem.passage && qItem.passage !== lastPassage) {
-                lastPassage = qItem.passage;
-                children.push(new Paragraph({
-                    children: [new TextRun({ text: qItem.passage, size: 21, color: "065F46" })]
-                }));
+            const scriptTxt = q.tapescript || q.script || "";
+            if (scriptTxt && includeAnswers) {
+                bodyHtml += `<div style="border:1px dashed #d97706; background:#fffbeb; padding:8pt; margin-bottom:8pt; font-size:11pt;"><b>[TAPESCRIPT BÀI NGHE]:</b><br/>${scriptTxt.replace(/\n/g, "<br/>")}</div>`;
             }
-            const cleanQ = qItem.q.replace(/<\/?u>/g, '');
-            children.push(new Paragraph({
-                children: [new TextRun({ text: `Câu ${idx + 1}: ${cleanQ}`, bold: true, size: 22 })]
-            }));
-            qItem.options.forEach((opt, oIdx) => {
-                const isAns = includeAnswers && (oIdx === qItem.ans);
-                children.push(new Paragraph({
-                    children: [new TextRun({ text: `    ${letters[oIdx]}. ${opt}`, bold: isAns, color: isAns ? "15803D" : "000000", size: 22 })]
-                }));
+            if (q.passage) {
+                bodyHtml += `<div style="border:1px solid #10b981; background:#ecfdf5; padding:8pt; margin-bottom:8pt; font-size:11pt;">${q.passage.replace(/\n/g, "<br/>")}</div>`;
+            }
+            const qTxt = (q.text || q.q || `Blank (${idx + 1})`).replace(/\n/g, "<br/>");
+            const ansVal = (q.answer !== undefined) ? q.answer : q.ans;
+            bodyHtml += `<p style="font-size:11.5pt; margin-top:8pt; margin-bottom:4pt;"><b>Question ${idx + 1}:</b> ${qTxt}</p>`;
+            bodyHtml += `<table style="width:100%; border-collapse:collapse; margin-bottom:4pt; font-size:11pt;"><tr>`;
+            (q.options || []).forEach((opt, oIdx) => {
+                const isCorrect = includeAnswers && (oIdx === ansVal);
+                const style = isCorrect ? "font-weight:bold; color:#15803d; text-decoration:underline;" : "color:#111827;";
+                bodyHtml += `<td style="width:25%; padding:2pt 4pt; ${style}">${letters[oIdx]}. ${opt}</td>`;
             });
+            bodyHtml += `</tr></table>`;
             if (includeAnswers) {
-                children.push(new Paragraph({
-                    children: [new TextRun({ text: `    👉 Đáp án đúng: ${letters[qItem.ans]} | Giải thích: ${qItem.exp || ''}`, italics: true, size: 20, color: "1D4ED8" })]
-                }));
+                bodyHtml += `<p style="font-size:10.5pt; color:#1d4ed8; font-style:italic; margin-top:2pt; margin-bottom:6pt;">👉 <b>Đáp án: ${letters[ansVal]}</b> — ${q.explanation || q.exp || ""}</p>`;
             }
-            children.push(new Paragraph({ text: "" }));
         });
 
-        const doc = new Document({ sections: [{ properties: {}, children }] });
-        const blob = await Packer.toBlob(doc);
-        const safeName = `${currentCategory}_${currentUnit}_${currentTest.replace(/\s+/g, '')}_${includeAnswers ? 'CoDapAn' : 'DeThi'}.docx`;
-        saveAs(blob, safeName);
+        const fullDoc = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head><meta charset='utf-8'><title>${uMeta.title}</title>
+        <style>body { font-family: 'Times New Roman', Times, serif; line-height: 1.45; }</style>
+        </head><body>${bodyHtml}</body></html>`;
+
+        const blob = new Blob(["\uFEFF", fullDoc], { type: "application/msword;charset=utf-8" });
+        const safeFile = `${currentCategory}_Unit${currentUnit}_CapDo${currentTest}_${includeAnswers ? "CoDapAn" : "DeLuyenTap"}.doc`;
+        triggerBlobDownload(blob, safeFile);
+        showToast(`📄 Đã tải file Word (${safeFile})!`, "success");
     }
 
-    // ==================== INITIALIZE ON LOAD ====================
-    window.addEventListener('DOMContentLoaded', () => {
-        applySavedPortalCustomizations();
-        selectCategory('gs6');
-        const pwdInput = document.getElementById('password-input');
+    // -------------------- INITIALIZATION --------------------
+    window.addEventListener("DOMContentLoaded", () => {
+        loadCustomPortalStorage();
+        selectCategory("gs6");
+        const pwdInput = document.getElementById("password-input");
         if (pwdInput) {
-            pwdInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') checkPassword();
+            pwdInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") checkPassword();
+            });
+        }
+        const actInput = document.getElementById("action-modal-input");
+        if (actInput) {
+            actInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") confirmActionModal();
             });
         }
     });
+
     </script>
 </body>
 </html>
