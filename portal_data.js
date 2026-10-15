@@ -9,7 +9,7 @@
 //   + Cấp độ 4 (Test 4): Luyện Kỹ năng Nói & Giao tiếp - Speaking AI (10 câu + Phòng Luyện Nói AI)
 //   + Cấp độ 5 (Test 5): Luyện Kỹ năng Đọc hiểu - Reading (10 câu: Cloze & Comprehension)
 //   + Cấp độ 6 (Test 6): Bài kiểm tra cuối Unit - End-of-Unit Test (25 câu tổng hợp 45 phút)
-// - Học sinh luyện tập tự do 100% (không khóa đề); chỉ dùng mật khẩu cho Quản trị: tienhuongsonkiet28011981@
+// - Chế độ dùng thử miễn phí 10 ngày; hết 10 ngày nhập mật khẩu theo Lớp (Lớp 6: tien123@, Lớp 7: huong123@, Lớp 8: son123@, Lớp 9: kiet123@); Mật khẩu Quản trị CMS: tienhuongsonkiet28011981@
 // ============================================================================
 
 const G6_SPECS = [
@@ -2348,9 +2348,18 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
     window.examDatabase = examDb;
     window.portalData = {
         siteSettings: {
-            schemaVersion: "2026.10.15.thcs.v1",
+            schemaVersion: "2026.10.15.thcs.v2",
             adminPassword: "tienhuongsonkiet28011981@",
             contactBanner: "LH Thầy Tiến qua ĐT: 0943930787",
+            trialDays: 10,
+            trialModeEnabled: true,
+            forceExpiredTrial: false,
+            gradePasswords: {
+                gs6: "tien123@",
+                gs7: "huong123@",
+                gs8: "son123@",
+                gs9: "kiet123@"
+            },
             lockAfterTest1: false
         },
         grammarNotes: grammarNotes,
