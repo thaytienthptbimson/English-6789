@@ -484,12 +484,9 @@
                     <div class="bg-white p-5 rounded-xl border border-gray-200 space-y-4">
                         <h4 class="font-extrabold text-blue-900 text-base">🔐 1. Cấu hình Dùng thử 10 Ngày, Mật khẩu 4 Khối Lớp &amp; Quản trị</h4>
                         <div class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-xs text-amber-950 font-semibold leading-relaxed space-y-1">
-                            <div>⏳ <b>Chế độ Dùng thử 10 ngày:</b> Học sinh được dùng thử miễn phí trong <b>10 ngày đầu</b> kể từ lần truy cập đầu tiên. Khi hết 10 ngày, học sinh phải nhập đúng <b>Mật khẩu theo từng Khối Lớp</b> để mở khóa:</div>
-                            <div class="grid grid-cols-2 gap-1 pt-1 text-blue-900 font-bold">
-                                <span>• Lớp 6: <code class="bg-white px-1.5 py-0.5 rounded border">tien123@</code></span>
-                                <span>• Lớp 7: <code class="bg-white px-1.5 py-0.5 rounded border">huong123@</code></span>
-                                <span>• Lớp 8: <code class="bg-white px-1.5 py-0.5 rounded border">son123@</code></span>
-                                <span>• Lớp 9: <code class="bg-white px-1.5 py-0.5 rounded border">kiet123@</code></span>
+                            <div>⏳ <b>Chế độ Dùng thử 10 ngày:</b> Học sinh được dùng thử miễn phí trong <b>10 ngày đầu</b> kể từ lần truy cập đầu tiên. Khi hết 10 ngày, học sinh phải nhập đúng <b>Mật khẩu</b> để mở khóa (hiệu lực <b>365 ngày</b> kể từ ngày kích hoạt):</div>
+                            <div class="pt-1 text-blue-900 font-bold">
+                                <span>• Lớp 6 – 9: <code class="bg-white px-1.5 py-0.5 rounded border">tien@123</code> (hiệu lực 365 ngày kể từ ngày kích hoạt)</span>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -505,19 +502,19 @@
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
                             <div>
                                 <label class="block text-[11px] font-extrabold text-emerald-800 mb-1">📗 MK Lớp 6:</label>
-                                <input id="adm-set-pwd-gs6" type="text" value="tien123@" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
+                                <input id="adm-set-pwd-gs6" type="text" value="tien@123" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-extrabold text-blue-800 mb-1">📘 MK Lớp 7:</label>
-                                <input id="adm-set-pwd-gs7" type="text" value="huong123@" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
+                                <input id="adm-set-pwd-gs7" type="text" value="tien@123" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-extrabold text-amber-800 mb-1">📙 MK Lớp 8:</label>
-                                <input id="adm-set-pwd-gs8" type="text" value="son123@" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
+                                <input id="adm-set-pwd-gs8" type="text" value="tien@123" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-extrabold text-rose-800 mb-1">📕 MK Lớp 9:</label>
-                                <input id="adm-set-pwd-gs9" type="text" value="kiet123@" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
+                                <input id="adm-set-pwd-gs9" type="text" value="tien@123" class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-gray-900 bg-white">
                             </div>
                         </div>
                         <div>
@@ -690,7 +687,7 @@
 //   + Cấp độ 4 (Test 4): Luyện Kỹ năng Nói & Giao tiếp - Speaking AI (10 câu + Phòng Luyện Nói AI)
 //   + Cấp độ 5 (Test 5): Luyện Kỹ năng Đọc hiểu - Reading (10 câu: Cloze & Comprehension)
 //   + Cấp độ 6 (Test 6): Bài kiểm tra cuối Unit - End-of-Unit Test (25 câu tổng hợp 45 phút)
-// - Chế độ dùng thử miễn phí 10 ngày; hết 10 ngày nhập mật khẩu theo Lớp (Lớp 6: tien123@, Lớp 7: huong123@, Lớp 8: son123@, Lớp 9: kiet123@); Mật khẩu Quản trị CMS: tienhuongsonkiet28011981@
+// - Chế độ dùng thử miễn phí 10 ngày; hết 10 ngày nhập mật khẩu theo Lớp (mật khẩu tien@123 dùng chung Lớp 6-9, hiệu lực 365 ngày kể từ ngày kích hoạt); Mật khẩu Quản trị CMS: tienhuongsonkiet28011981@
 // ============================================================================
 
 const G6_SPECS = [
@@ -3029,17 +3026,17 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
     window.examDatabase = examDb;
     window.portalData = {
         siteSettings: {
-            schemaVersion: "2026.10.15.thcs.v2",
+            schemaVersion: "2026.10.16.thcs.v3",
             adminPassword: "tienhuongsonkiet28011981@",
             contactBanner: "LH Thầy Tiến qua ĐT: 0943930787",
             trialDays: 10,
             trialModeEnabled: true,
             forceExpiredTrial: false,
             gradePasswords: {
-                gs6: "tien123@",
-                gs7: "huong123@",
-                gs8: "son123@",
-                gs9: "kiet123@"
+                gs6: "tien@123",
+                gs7: "tien@123",
+                gs8: "tien@123",
+                gs9: "tien@123"
             },
             lockAfterTest1: false
         },
@@ -3079,11 +3076,16 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
     const STORAGE_KEY_TRIAL_START     = "thaytien_thcs_gs6789_trial_start_v6";
     const STORAGE_KEY_UNLOCKED_GRADES = "thaytien_thcs_gs6789_unlocked_grades_v6";
 
+    // Mật khẩu truy cập mới (dùng chung Lớp 6-9) — hiệu lực 365 ngày kể từ ngày kích hoạt
+    const ACCESS_PASSWORD = "tien@123";
+    const ACCESS_DAYS = 365;
+    function fmtVN(ms) { return new Date(ms).toLocaleDateString("vi-VN"); }
+
     const DEFAULT_GRADE_PASSWORDS = {
-        gs6: "tien123@",
-        gs7: "huong123@",
-        gs8: "son123@",
-        gs9: "kiet123@"
+        gs6: ACCESS_PASSWORD,
+        gs7: ACCESS_PASSWORD,
+        gs8: ACCESS_PASSWORD,
+        gs9: ACCESS_PASSWORD
     };
     const GRADE_DISPLAY_NAMES = {
         gs6: "Lớp 6 Global Success",
@@ -3210,7 +3212,7 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
 
     function getGradePassword(cat) {
         const gp = getSiteSettings().gradePasswords || DEFAULT_GRADE_PASSWORDS;
-        return gp[cat] || DEFAULT_GRADE_PASSWORDS[cat] || "tien123@";
+        return gp[cat] || DEFAULT_GRADE_PASSWORDS[cat] || ACCESS_PASSWORD;
     }
 
     function getUnlockedGradesMap() {
@@ -3222,17 +3224,27 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         }
     }
 
-    function setGradeUnlocked(cat, unlocked = true) {
+    // Mỗi lớp lưu MỐC HẾT HẠN (ms). Giá trị cũ "true" (mở khóa vĩnh viễn bằng mật khẩu cũ) không còn hiệu lực.
+    function getGradeExpiry(cat) {
+        const v = Number(getUnlockedGradesMap()[cat]);
+        return v > 1 ? v : 0;
+    }
+
+    function setGradeUnlocked(cat, unlocked = true, expiryMs) {
         const map = getUnlockedGradesMap();
-        if (unlocked) map[cat] = true;
+        if (unlocked) map[cat] = expiryMs || (Date.now() + ACCESS_DAYS * 24 * 60 * 60 * 1000);
         else delete map[cat];
         safeSetItem(STORAGE_KEY_UNLOCKED_GRADES, JSON.stringify(map));
     }
 
     function isGradeUnlocked(cat) {
         if (isAdminUnlocked) return true;
-        const map = getUnlockedGradesMap();
-        return !!map[cat];
+        return getGradeExpiry(cat) > Date.now();
+    }
+
+    function isGradeExpired(cat) {
+        const e = getGradeExpiry(cat);
+        return e > 0 && Date.now() >= e;
     }
 
     function ensureTrialInitialized() {
@@ -3273,6 +3285,9 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
     function updateTrialUIElements() {
         const st = getTrialStatus();
         const curUnlocked = isGradeUnlocked(currentCategory);
+        const gExp = isAdminUnlocked ? 0 : getGradeExpiry(currentCategory);
+        const gExpTxt = gExp ? ` đến ngày ${fmtVN(gExp)}` : "";
+        const gExpired = !curUnlocked && isGradeExpired(currentCategory);
         const gName = GRADE_DISPLAY_NAMES[currentCategory] || "Khối Lớp";
         const headerBadge = document.getElementById("header-trial-badge");
         const welcomeTxt = document.getElementById("welcome-trial-status-text");
@@ -3281,23 +3296,23 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         if (headerBadge) {
             if (curUnlocked) {
                 headerBadge.className = "ml-auto inline-flex items-center gap-1.5 text-[11px] bg-emerald-500/30 hover:bg-emerald-500/45 border border-emerald-300/60 text-emerald-100 px-3 py-0.5 rounded-full font-extrabold cursor-pointer transition-all shadow-sm";
-                headerBadge.innerHTML = `✅ Đã mở khóa vĩnh viễn ${gName}`;
+                headerBadge.innerHTML = `✅ Đã mở khóa ${gName}${gExpTxt}`;
             } else if (!st.isExpired) {
                 headerBadge.className = "ml-auto inline-flex items-center gap-1.5 text-[11px] bg-amber-400/25 hover:bg-amber-400/40 border border-amber-300/60 text-amber-100 px-3 py-0.5 rounded-full font-extrabold cursor-pointer transition-all shadow-sm";
                 headerBadge.innerHTML = `⏳ Dùng thử miễn phí: Còn ${st.daysLeft} ngày ${st.hoursLeft} giờ • 🔑 Nhập MK Lớp`;
             } else {
                 headerBadge.className = "ml-auto inline-flex items-center gap-1.5 text-[11px] bg-rose-600 hover:bg-rose-500 border border-rose-300 text-white px-3 py-0.5 rounded-full font-extrabold cursor-pointer transition-all shadow";
-                headerBadge.innerHTML = `🔒 Hết ${st.trialDays} ngày dùng thử — Bấm nhập mật khẩu ${gName}`;
+                headerBadge.innerHTML = gExpired ? `🔒 Mật khẩu ${gName} đã hết hạn — Bấm để gia hạn` : `🔒 Hết ${st.trialDays} ngày dùng thử — Bấm nhập mật khẩu ${gName}`;
             }
         }
 
         if (welcomeTxt) {
             if (curUnlocked) {
-                welcomeTxt.innerHTML = `✅ <b>${gName}</b> đã được kích hoạt mở khóa vĩnh viễn trên thiết bị này •`;
+                welcomeTxt.innerHTML = `✅ <b>${gName}</b> đã được kích hoạt mở khóa${gExpTxt ? ', dùng được<b>' + gExpTxt + '</b>' : ''} trên thiết bị này •`;
             } else if (!st.isExpired) {
                 welcomeTxt.innerHTML = `⏳ <b>Chế độ Dùng thử ${st.trialDays} ngày:</b> Còn <b>${st.daysLeft} ngày ${st.hoursLeft} giờ</b> miễn phí (Hết hạn nhập mật khẩu theo Lớp) •`;
             } else {
-                welcomeTxt.innerHTML = `🔒 <b>Đã hết ${st.trialDays} ngày dùng thử miễn phí:</b> Vui lòng nhập mật khẩu riêng của từng Khối Lớp để làm bài •`;
+                welcomeTxt.innerHTML = `🔒 <b>Đã hết ${st.trialDays} ngày dùng thử miễn phí:</b> ${gExpired ? 'Mật khẩu của bạn đã hết hạn, vui lòng liên hệ để gia hạn' : 'Vui lòng nhập mật khẩu để làm bài'} •`;
             }
         }
 
@@ -3341,6 +3356,13 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
                 if (saved.siteSettings && window.portalData) {
                     window.portalData.siteSettings = Object.assign({}, window.portalData.siteSettings, saved.siteSettings);
                     window.portalData.siteSettings.lockAfterTest1 = false;
+                    const curSchema = window.__authoritativePortalData && window.__authoritativePortalData.siteSettings
+                        ? window.__authoritativePortalData.siteSettings.schemaVersion : null;
+                    if (curSchema && saved.siteSettings.schemaVersion !== curSchema) {
+                        // Cấu hình lưu từ bản cũ: bỏ mật khẩu Lớp cũ, dùng mật khẩu mới
+                        window.portalData.siteSettings.gradePasswords = Object.assign({}, window.__authoritativePortalData.siteSettings.gradePasswords);
+                        window.portalData.siteSettings.schemaVersion = curSchema;
+                    }
                 }
                 if (Array.isArray(saved.flashcards) && window.portalData) {
                     window.portalData.flashcards = saved.flashcards;
@@ -4199,11 +4221,14 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         if (titleEl) titleEl.innerText = `🔑 Mở Khóa ${gName}`;
         if (descEl) {
             if (alreadyUnlocked) {
-                descEl.innerHTML = `✅ <b>${gName}</b> đã được kích hoạt mở khóa vĩnh viễn trên thiết bị này! Bạn có thể đóng hộp thoại này và làm bài bình thường.`;
+                const _e = getGradeExpiry(targetCat);
+                descEl.innerHTML = `✅ <b>${gName}</b> đã được kích hoạt mở khóa${_e ? ', dùng được đến ngày <b>' + fmtVN(_e) + '</b>' : ''} trên thiết bị này! Bạn có thể đóng hộp thoại này và làm bài bình thường.`;
+            } else if (isGradeExpired(targetCat)) {
+                descEl.innerHTML = `⏰ <b>Mật khẩu đã hết hạn ngày ${fmtVN(getGradeExpiry(targetCat))}.</b><br>Vui lòng ${getContactBanner()} để được gia hạn.`;
             } else if (st.isExpired) {
-                descEl.innerHTML = `⏰ <b>Đã hết ${st.trialDays} ngày dùng thử miễn phí!</b><br>Vui lòng nhập <b>Mật khẩu ${gName}</b> để mở khóa toàn bộ 12 Unit × 6 Cấp độ của khối lớp này.`;
+                descEl.innerHTML = `⏰ <b>Đã hết ${st.trialDays} ngày dùng thử miễn phí!</b><br>Vui lòng nhập <b>Mật khẩu ${gName}</b> để mở khóa toàn bộ 12 Unit × 6 Cấp độ (hiệu lực ${ACCESS_DAYS} ngày kể từ ngày kích hoạt).`;
             } else {
-                descEl.innerHTML = `⏳ Bạn đang trong thời gian dùng thử miễn phí (còn <b>${st.daysLeft} ngày ${st.hoursLeft} giờ</b>).<br>Nhập <b>Mật khẩu ${gName}</b> bên dưới nếu muốn kích hoạt mở khóa vĩnh viễn ngay hôm nay:`;
+                descEl.innerHTML = `⏳ Bạn đang trong thời gian dùng thử miễn phí (còn <b>${st.daysLeft} ngày ${st.hoursLeft} giờ</b>).<br>Nhập <b>Mật khẩu ${gName}</b> bên dưới nếu muốn kích hoạt mở khóa ${ACCESS_DAYS} ngày ngay hôm nay:`;
             }
         }
         if (err) err.classList.add("hidden-element");
@@ -4228,31 +4253,46 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
 
         if (pendingAuthMode === "grade") {
             const targetCat = pendingAuthCategory || currentCategory || "gs6";
-            const expectedPwd = getGradePassword(targetCat);
             const gName = GRADE_DISPLAY_NAMES[targetCat] || "Khối Lớp";
+            const DAY_MS = 24 * 60 * 60 * 1000;
 
-            // 1. Khớp mật khẩu của Lớp đang chọn hoặc mật khẩu Admin
-            if (val === expectedPwd || val === getAdminPassword() || val === "tienhuongsonkiet28011981@") {
-                setGradeUnlocked(targetCat, true);
+            // 1. Mật khẩu Admin: cấp mới 365 ngày cho lớp đang chọn (dùng để gia hạn)
+            if (val === getAdminPassword() || val === "tienhuongsonkiet28011981@") {
+                const exp = Date.now() + ACCESS_DAYS * DAY_MS;
+                setGradeUnlocked(targetCat, true, exp);
                 const savedTarget = pendingTestTarget;
                 closeModal();
                 updateTrialUIElements();
                 renderSidebar();
-                showToast(`🎉 Đã mở khóa vĩnh viễn ${gName} thành công!`, "success");
-                if (savedTarget && savedTarget.unit && savedTarget.test) {
-                    selectTest(savedTarget.unit, savedTarget.test);
-                }
+                showToast(`🎉 Đã mở khóa ${gName} ${ACCESS_DAYS} ngày, dùng được đến ngày ${fmtVN(exp)}!`, "success");
+                if (savedTarget && savedTarget.unit && savedTarget.test) selectTest(savedTarget.unit, savedTarget.test);
                 return;
             }
 
-            // 2. Nếu học sinh nhập đúng mật khẩu của một Khối Lớp khác (VD đang ở trang đầu Lớp 6 nhưng nhập mật khẩu Lớp 7/8/9)
-            const matchedOtherCat = ["gs6", "gs7", "gs8", "gs9"].find(c => val === getGradePassword(c));
-            if (matchedOtherCat) {
-                const otherName = GRADE_DISPLAY_NAMES[matchedOtherCat];
-                setGradeUnlocked(matchedOtherCat, true);
+            // 2. Mật khẩu Lớp: kích hoạt tất cả các lớp dùng chung mật khẩu này (mốc 365 ngày tính từ lần kích hoạt đầu)
+            const matched = ["gs6", "gs7", "gs8", "gs9"].filter(c => val === getGradePassword(c));
+            if (matched.length) {
+                const live = matched.filter(c => !isGradeExpired(c));
+                if (!live.length) {
+                    if (err) {
+                        err.innerText = `Mật khẩu đã hết hạn ngày ${fmtVN(getGradeExpiry(matched[0]))}. ${getContactBanner()} để được gia hạn.`;
+                        err.classList.remove("hidden-element");
+                    }
+                    return;
+                }
+                const newExp = Date.now() + ACCESS_DAYS * DAY_MS;
+                live.forEach(c => { if (!getGradeExpiry(c)) setGradeUnlocked(c, true, newExp); });
+                const shownCat = live.includes(targetCat) ? targetCat : live[0];
+                const shownName = GRADE_DISPLAY_NAMES[shownCat] || gName;
+                const savedTarget = pendingTestTarget;
                 closeModal();
-                selectCategory(matchedOtherCat);
-                showToast(`🎉 Đã mở khóa vĩnh viễn ${otherName} và chuyển sang ${otherName}!`, "success");
+                updateTrialUIElements();
+                renderSidebar();
+                if (shownCat !== targetCat) selectCategory(shownCat);
+                showToast(`🎉 Đã mở khóa ${shownName}, dùng được đến ngày ${fmtVN(getGradeExpiry(shownCat))} (${ACCESS_DAYS} ngày)!`, "success");
+                if (shownCat === targetCat && savedTarget && savedTarget.unit && savedTarget.test) {
+                    selectTest(savedTarget.unit, savedTarget.test);
+                }
                 return;
             }
 
@@ -4816,10 +4856,10 @@ function buildSixLevelsFromTuple(tup, gradeNum) {
         const tDays = parseInt(document.getElementById("adm-set-trial-days")?.value || "10", 10);
         s.trialDays = isNaN(tDays) ? 10 : Math.max(0, tDays);
         s.gradePasswords = {
-            gs6: (document.getElementById("adm-set-pwd-gs6")?.value || "").trim() || "tien123@",
-            gs7: (document.getElementById("adm-set-pwd-gs7")?.value || "").trim() || "huong123@",
-            gs8: (document.getElementById("adm-set-pwd-gs8")?.value || "").trim() || "son123@",
-            gs9: (document.getElementById("adm-set-pwd-gs9")?.value || "").trim() || "kiet123@"
+            gs6: (document.getElementById("adm-set-pwd-gs6")?.value || "").trim() || ACCESS_PASSWORD,
+            gs7: (document.getElementById("adm-set-pwd-gs7")?.value || "").trim() || ACCESS_PASSWORD,
+            gs8: (document.getElementById("adm-set-pwd-gs8")?.value || "").trim() || ACCESS_PASSWORD,
+            gs9: (document.getElementById("adm-set-pwd-gs9")?.value || "").trim() || ACCESS_PASSWORD
         };
         s.lockAfterTest1 = false;
         persistAdminDatabase();
